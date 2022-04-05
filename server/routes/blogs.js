@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
     if (id) {
         connection.query(
             `SELECT * FROM BLOGS WHERE id = '${id}' LIMIT 1;`,
-            function (err, results, fields) {
+            function(err, results, fields) {
                 if (err) {
                     res.status(400).send({
                         Error: err.message,
@@ -32,7 +32,7 @@ router.get("/", (req, res) => {
     } else {
         connection.query(
             "SELECT * FROM BLOGS;",
-            function (err, results, fields) {
+            function(err, results, fields) {
                 if (err) {
                     res.status(400).send(err.message);
                 } else {
@@ -53,7 +53,7 @@ router.delete("/delete_blog", VerifyLogin, (req, res) => {
             } else {
                 connection.query(
                     `DELETE FROM BLOGS WHERE id = '${blogId}'`,
-                    function (err, results, fields) {
+                    function(err, results, fields) {
                         if (err) {
                             res.status(400).send(err.message);
                         } else {
@@ -70,7 +70,7 @@ router.post("/new_blog", VerifyLogin, validateBlog, (req, res) => {
     const { title, content, coverPicture, date } = req.body;
     connection.query(
         `INSERT INTO BLOGS(title, content, coverPicture, date) VALUES('${title}', '${content}', '${coverPicture}', '${date}');`,
-        function (err, results, fields) {
+        function(err, results, fields) {
             if (err) {
                 res.status(400).send(err.message);
             } else {
@@ -98,4 +98,4 @@ router.patch("/update_blog", VerifyLogin, validateBlog, (req, res) => {
 module.exports = router;
 
 // Create a blogs table
-// CREATE TABLE BLOGS(id int(6) PRIMARY KEY AUTO_INCREMENT, title text, content text, coverPicture text, date text)
+// CREATE TABLE BLOGS(id int(6) PRIMARY KEY AUTO_INCREMENT, title text, content text, coverPicture text, date text);

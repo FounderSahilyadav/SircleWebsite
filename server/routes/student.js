@@ -18,7 +18,7 @@ const validateStudent = (req, res, next) => {
 router.get("/", VerifyLogin, (req, res) => {
     connection.query(
         "SELECT * FROM Students;",
-        function (err, results, fields) {
+        function(err, results, fields) {
             if (err) {
                 res.status(400).send(err.message);
             } else {
@@ -33,14 +33,14 @@ router.post("/register", validateStudent, (req, res) => {
         const { name, email, phone, institute, grade } = req.body;
         connection.query(
             `SELECT * FROM Students WHERE email = '${email}'`,
-            function (err, results, fields) {
+            function(err, results, fields) {
                 if (err) {
                     res.send(400).send(err.message);
                 } else {
                     if (results.length === 0) {
                         connection.query(
                             `INSERT INTO Students(name, phone, grade, institute, email) VALUES('${name}', '${phone}', '${grade}', '${institute}', '${email}');`,
-                            function (err, results, fields) {
+                            function(err, results, fields) {
                                 if (err) {
                                     res.status(400).send(err.message);
                                 } else {
@@ -62,3 +62,5 @@ router.post("/register", validateStudent, (req, res) => {
 });
 
 module.exports = router;
+// Create table
+// CREATE TABLE Students(id int(6) PRIMARY KEY AUTO_INCREMENT, name text, phone text, grade text, institute text, email text);

@@ -25,7 +25,7 @@ router.post("/login", validateAdmin, (req, res) => {
     const { key, password } = req.body;
     connection.query(
         `SELECT * FROM ADMIN WHERE login_key = '${key}'`,
-        async (err, results) => {
+        async(err, results) => {
             if (err) {
                 res.status(400).send(err.message);
             } else if (results.length === 0) {
@@ -36,17 +36,13 @@ router.post("/login", validateAdmin, (req, res) => {
                     res.status(400).send("Wrong Password");
                 } else {
                     const id = results[0].id;
-                    const accessToken = jwt.sign(
-                        { id, key },
-                        process.env.ACCESS_TOKEN_SECRET,
-                        {
+                    const accessToken = jwt.sign({ id, key },
+                        process.env.ACCESS_TOKEN_SECRET, {
                             expiresIn: "15s",
                         }
                     );
-                    const refreshToken = jwt.sign(
-                        { id, key },
-                        process.env.REFRESH_TOKEN_SECRET,
-                        {
+                    const refreshToken = jwt.sign({ id, key },
+                        process.env.REFRESH_TOKEN_SECRET, {
                             expiresIn: "1d",
                         }
                     );
@@ -64,25 +60,25 @@ router.post("/login", validateAdmin, (req, res) => {
     );
 });
 
-// router.post("/register", validateAdmin, async (req, res) => {
-//     const { key, password } = req.body;
-//     const salt = await bcrypt.genSalt();
-//     const hashPassword = await bcrypt.hash(password, salt);
-//     try {
-//         connection.query(
-//             `INSERT INTO ADMIN(login_key, password) VALUES('${key}', '${hashPassword}');`,
-//             (err, results) => {
-//                 if (err) {
-//                     res.status(401).send(err.message);
-//                 } else {
-//                     res.status(202).send("Registration Successful");
-//                 }
-//             }
-//         );
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
+router.post("/register", validateAdmin, async(req, res) => {
+    const { key, password } = req.body;
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(password, salt);
+    try {
+        connection.query(
+            `INSERT INTO ADMIN(login_key, password) VALUES('${key}', '${hashPassword}');`,
+            (err, results) => {
+                if (err) {
+                    res.status(401).send(err.message);
+                } else {
+                    res.status(202).send("Registration Successful");
+                }
+            }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 module.exports = router;
 
