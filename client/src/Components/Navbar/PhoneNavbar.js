@@ -10,6 +10,8 @@ import {
     ListItemText,
     Divider,
     Button,
+    Menu,
+    MenuItem,
 } from "@material-ui/core";
 import { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -75,10 +77,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PhoneNavbar = ({ handleClickOpen }) => {
+const PhoneNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentToken, studentData }) => {
     const classes = useStyles();
     const anchor = "left";
     const [state, setState] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleLogout = () => {
+        setStudentToken("");
+        localStorage.removeItem("token");
+        handleClose();
+        console.log(studentToken);
+    }
 
     const handlemenuOpen = (open) => (event) => {
         if (
@@ -138,6 +154,7 @@ const PhoneNavbar = ({ handleClickOpen }) => {
 
                 {/* To open sialog box for students register */}
                 {/* handleOpenCLick - handles the opening of the disalog box, passes as prop to the component */}
+
                 <Button
                     onClick={handleClickOpen}
                     variant="contained"
@@ -159,7 +176,42 @@ const PhoneNavbar = ({ handleClickOpen }) => {
                         <img src={logo} alt="" />
                     </Link>
                 </Box>
+
                 <Fragment key={anchor}>
+                    {studentToken == "" ? (
+                        <Button
+                            style={{ marginRight: "20px" }}
+                            onClick={handleSignOpen}
+                            variant="contained"
+                            color="primary"
+                        // fullWidth
+                        >
+                            SignIn / SignUp
+                        </Button>) : (
+                        <>
+                            <Button
+                                id="basic-button"
+                                style={{ marginRight: "20px" }}
+                                onClick={handleClick}
+                                variant="contained"
+                                color="primary"
+                            >
+                                Welcome! {studentData.name} &gt;
+                            </Button>
+                            <Menu
+                                id="basic-menu"
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                                MenuListProps={{
+                                    'aria-labelledby': 'basic-button',
+                                }}
+                            >
+                                {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                        <MenuItem onClick={handleClose}></MenuItem> */}
+                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                            </Menu>
+                        </>)}
                     <IconButton
                         aria-label="Open Menu"
                         onClick={handlemenuOpen(true)}

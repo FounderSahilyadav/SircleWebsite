@@ -5,10 +5,14 @@ import {
     Container,
     Button,
     Box,
+    Menu,
+    MenuItem,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+// import 
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -76,8 +80,22 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PCNavbar = ({ handleClickOpen }) => {
+const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentToken, studentData }) => {
     const classes = useStyles();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleLogout = () => {
+        setStudentToken("");
+        localStorage.removeItem("token");
+        handleClose();
+        console.log(studentToken);
+    }
 
     return (
         <AppBar className={classes.appBar}>
@@ -128,6 +146,40 @@ const PCNavbar = ({ handleClickOpen }) => {
                         </Box>
                         <Box className={classes.navButtons}>
                             {/* Direct to products page */}
+                            {studentToken == "" ? (
+                                <Button
+                                    style={{ marginRight: "20px" }}
+                                    onClick={handleSignOpen}
+                                    variant="contained"
+                                    color="primary"
+                                // fullWidth
+                                >
+                                    SignIn / SignUp
+                                </Button>) : (
+                                <>
+                                    <Button
+                                        id="basic-button"
+                                        style={{ marginRight: "20px" }}
+                                        onClick={handleClick}
+                                        variant="contained"
+                                        color="primary"
+                                    >
+                                        Welcome! {studentData.name} &gt;
+                                    </Button>
+                                    <Menu
+                                        id="basic-menu"
+                                        anchorEl={anchorEl}
+                                        open={open}
+                                        onClose={handleClose}
+                                        MenuListProps={{
+                                            'aria-labelledby': 'basic-button',
+                                        }}
+                                    >
+                                        {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                        <MenuItem onClick={handleClose}></MenuItem> */}
+                                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                    </Menu>
+                                </>)}
                             <Box boxShadow={2} className={classes.buyPrograms}>
                                 <Link to={"/our-products"}>
                                     BUY OUR PROGRAMS
@@ -136,12 +188,13 @@ const PCNavbar = ({ handleClickOpen }) => {
 
                             {/* To open sialog box for students register */}
                             {/* handleOpenCLick - handles the opening of the disalog box, passes as prop to the component */}
+
                             <Button
                                 style={{ marginLeft: "20px" }}
                                 onClick={handleClickOpen}
                                 variant="contained"
                                 color="primary"
-                                // fullWidth
+                            // fullWidth
                             >
                                 Book Free Trial Now
                             </Button>

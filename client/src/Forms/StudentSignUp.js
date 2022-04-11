@@ -3,10 +3,12 @@ import {
     Button,
     CircularProgress,
     TextField,
+    DialogActions,
+    DialogContent,
     Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { registerStudent } from "../utils/student";
+import { signUpStudent } from "../utils/student";
 import { makeStyles } from "@material-ui/core/styles";
 import MuiAlert from "@material-ui/lab/Alert";
 
@@ -42,82 +44,52 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
-
 const Alert = (props) => {
     return <MuiAlert {...props} />;
 };
 
 const initialStudentState = {
     name: "",
-    grade: "Class IX",
-    institute: "",
+    grade: "none",
+    institute: "none",
     email: "",
     phone: "",
+    password: "",
+    confirmPassword: "",
 };
 
-const StudentRegistration = () => {
-    const classes = useStyles();
 
+export default function StudentSignIn({ handleClose, setStudentToken }) {
+    const classes = useStyles();
     // Hooks for handling student registration for demo session
     const [studentDetails, setStudentDetails] = useState(initialStudentState); // Storing the student's details
-    const [studentRegisterError, setStudentRegisterError] = useState(null); // If an error occured while registering the student
-    const [studentRegisterSuccess, setStudentRegisterSuccess] = useState(null); // If student registration was successfull
-    const [studentLoader, setStudentLoader] = useState(false); // Loader if the student details are still loading
+    const [loader, setLoader] = useState(false); //Loader, while the student is being registered
+    const [error, setError] = useState(null); // If any error occured while registering the student
+    const [success, setSuccess] = useState(null); // Set success message if thr student is successfully registered
 
-    // Options list for student class selecction drop down list
-    const studentClass = [
-        { value: "Class IX", label: "Class IX" },
-        { value: "Class X", label: "Class X" },
-        { value: "Class XI Science", label: "Class XI Science" },
-        { value: "Class XI Commerce", label: "Class XI Commerce" },
-        { value: "Class XI Humanities", label: "Class XI Humanities" },
-        { value: "Class XII Science", label: "Class XII Science" },
-        { value: "Class XII Commerce", label: "Class XII Commerce" },
-        { value: "Class XII Humanities", label: "Class XII Humanities" },
-    ];
-
-    // Handle student details change
     const handleStudentDetails = (event) => {
         setStudentDetails({
             ...studentDetails,
             [`${event.target.name}`]: event.target.value,
         });
     };
-
-    // Handle student registration
     const handleStudentSubmtRequset = () => {
-        registerStudent(
+        signUpStudent(
             studentDetails,
-            setStudentLoader,
-            setStudentRegisterError,
-            setStudentRegisterSuccess
-        );
+            setLoader, setError, setSuccess, setStudentToken, handleClose);
     };
 
     return (
-        <Box className={classes.contactStudents}>
-            <Typography component={"h5"} variant={"h5"}>
-                FOR STUDENTS
-            </Typography>
-            <Typography component={"h6"} variant="h5">
-                Book a FREE online demo session for youself.
-            </Typography>
+        <DialogContent >
             <Typography variant="body1" component={"p"}>
                 Share your details here!
             </Typography>
             <Typography variant="caption" component={"small"}>
                 Required fields are marked *
             </Typography>
-            {studentRegisterError ? (
-                <Alert severity="error">{studentRegisterError}</Alert>
-            ) : (
-                ""
-            )}
-            {studentRegisterSuccess ? (
-                <Alert severity="success">{studentRegisterSuccess}</Alert>
-            ) : (
-                ""
-            )}
+            {error ? <Alert severity="error">{error}</Alert> : ""}
+            {success ? <Alert severity="success">{success}</Alert> : ""}
+
             <Box component={"form"}>
                 <TextField
                     name="name"
@@ -152,7 +124,7 @@ const StudentRegistration = () => {
                 <TextField
                     name="phone"
                     className={classes.textField}
-                    placeholder="* WhatsApp Phone Number"
+                    placeholder="* Phone Number"
                     type={"number"}
                     fullWidth
                     size="small"
@@ -165,33 +137,9 @@ const StudentRegistration = () => {
                     onChange={handleStudentDetails}
                 />
                 <TextField
-                    name="grade"
-                    select
-                    placeholder="* Select Grade"
-                    value={studentDetails.grade}
-                    helperText="* Please select your current grade"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    SelectProps={{
-                        native: true,
-                    }}
-                    size="small"
-                    margin="normal"
-                    variant="outlined"
-                    fullWidth
-                    onChange={handleStudentDetails}
-                >
-                    {studentClass.map((option, index) => (
-                        <option key={index} value={studentClass.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </TextField>
-                <TextField
                     name="institute"
                     className={classes.textField}
-                    placeholder="* School/Institute Name"
+                    placeholder="School/Institute Name"
                     fullWidth
                     size="small"
                     margin="normal"
@@ -202,7 +150,42 @@ const StudentRegistration = () => {
                     value={studentDetails.institute}
                     onChange={handleStudentDetails}
                 />
-                {studentLoader ? (
+                <TextField
+                    name="password"
+                    type="password"
+                    className={classes.textField}
+                    placeholder="* Enter Password (Minimum 7 characters)"
+                    fullWidth
+                    size="small"
+                    margin="normal"
+                    variant="outlined"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    value={studentDetails.password}
+                    onChange={handleStudentDetails}
+                />
+                <TextField
+                    name="confirmPassword"
+                    type="password"
+                    className={classes.textField}
+                    placeholder="* Confirm Password"
+                    fullWidth
+                    size="small"
+                    margin="normal"
+                    variant="outlined"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    value={studentDetails.confirmPassword}
+                    onChange={handleStudentDetails}
+                />
+            </Box>
+            <DialogActions>
+                <Button onClick={handleClose} color="primary" style={{ marginTop: "15px" }}>
+                    Cancel
+                </Button>
+                {loader ? (
                     <CircularProgress />
                 ) : (
                     <Button
@@ -212,12 +195,24 @@ const StudentRegistration = () => {
                         color="primary"
                         width="100%"
                     >
-                        Submit Request
+                        Sign Up
                     </Button>
-                )}
-            </Box>
-        </Box>
+                )}</DialogActions>
+        </DialogContent>
     );
 };
 
-export default StudentRegistration;
+// import React from 'react';
+// import FormControl from '@mui/material/FormControl';
+
+// export default function StudentSignUp() {
+//     return (
+//         <div>StudentSignUp
+//             <FormControl>
+//                 <label htmlFor="my-input">Email address</label>
+//                 <input id="my-input" aria-describedby="my-helper-text" />
+//             </FormControl>
+//         </div>
+//     )
+// }
+

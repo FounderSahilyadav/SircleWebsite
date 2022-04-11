@@ -25,6 +25,8 @@ import { makeStyles } from "@material-ui/styles";
 import AdminStudents from "./Components/AdminPanel/AdminStudents";
 import AdminMentors from "./Components/AdminPanel/AdminMentors";
 import AdminTeamMembers from "./Components/AdminPanel/AdminTeamMembers";
+import StudentSign from "./Components/StudentRegister/StudentSign";
+import { getStudentDetails } from "./utils/student";
 
 const useStyles = makeStyles((theme) => ({
     circularProgress: {
@@ -40,9 +42,18 @@ function App() {
     const classes = useStyles();
     const [, dispatch] = useStateValue();
     const [open, setOpen] = useState(false);
+    const [signOpen, setSignOpen] = useState(false);
     const [token, setToken] = useState("");
     const [expire, setExpire] = useState("");
     const [loader, setLoader] = useState(true);
+    const [studentData, setStudentData] = useState({});
+
+    const handleSignOpen = () => {
+        setSignOpen(true);
+    }
+    const handleSignClose = () => {
+        setSignOpen(false);
+    }
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -51,20 +62,37 @@ function App() {
     const handleClose = () => {
         setOpen(false);
     };
-
+    const [studentToken, setStudentToken] = useState("");
     useEffect(() => {
         setLoader(true);
-        refreshToken(setToken, setExpire).then((res) => {
-            if (res) {
-                getUsers(token, expire, setToken, setExpire).then((res) => {
-                    if (res) {
-                        dispatch({ type: "SET_ADMIN" });
-                    }
+        console.log("err");
+        const fetchStudentDetails = async () => {
+            refreshToken(setToken, setExpire).then((res) => {
+                if (res) {
+                    getUsers(token, expire, setToken, setExpire).then((res) => {
+                        if (res) {
+                            dispatch({ type: "SET_ADMIN" });
+                        }
+                    });
+                }
+            });
+
+            if (localStorage.getItem("token")) {
+                console.log("running");
+                setStudentToken(localStorage.getItem("token"));
+                getStudentDetails(localStorage.getItem('token')).then(res => {
+                    setStudentData(res);
+                    setLoader(false);
+                }).catch(err => {
+                    console.log(err);
                 });
+            } else {
+                setLoader(false);
             }
-        });
-        setLoader(false);
-    }, []);
+        }
+        fetchStudentDetails();
+        console.log("here");
+    }, [studentToken]);
     return (
         <Router>
             {loader ? (
@@ -74,7 +102,7 @@ function App() {
             ) : (
                 <Fragment>
                     <Box component={"div"} className="App">
-                        <Navbar handleClickOpen={handleClickOpen} />
+                        <Navbar handleClickOpen={handleClickOpen} handleSignOpen={handleSignOpen} studentToken={studentToken} setStudentToken={setStudentToken} studentData={studentData} />
                         <Routes>
                             <Route exact path="/" element={<Home />} />
                             <Route
@@ -134,6 +162,7 @@ function App() {
                             open={open}
                             handleClose={handleClose}
                         />
+                        <StudentSign open={signOpen} handleClose={handleSignClose} setStudentToken={setStudentToken} />
                     </Box>
                 </Fragment>
             )}{" "}

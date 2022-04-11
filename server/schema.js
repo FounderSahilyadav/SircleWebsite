@@ -4,10 +4,20 @@ const Joi = require("joi");
 
 module.exports.studentSchema = Joi.object({
     name: Joi.string().required(),
-    phone: Joi.string().required(),
     grade: Joi.string().required(),
-    institute: Joi.string().required(),
-    email: Joi.string().email().required(),
+    institute: Joi.string(),
+    email: Joi.string().email(),
+    phone: Joi.string(),
+    password: Joi.string().required(),
+    verify: Joi.bool().default(false),
+    token: Joi.string(),
+    expireAt: Joi.date(),
+});
+
+module.exports.verifySchema = Joi.object({
+    token: Joi.string().required,
+    expireAt: Joi.date().required,
+    studentId: Joi.string().required
 });
 
 module.exports.instituteSchema = Joi.object({
@@ -79,3 +89,7 @@ module.exports.squadSchema = Joi.object({
     facebook: Joi.string().required(),
     linkedIn: Joi.string().required(),
 });
+
+// module.exports.userSchema = Joi.object({
+
+// });
