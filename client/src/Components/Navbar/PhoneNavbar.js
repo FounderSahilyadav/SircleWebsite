@@ -20,6 +20,9 @@ import { useState } from "react";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 
+import userLogo from "../../assets/user_logo.png";
+import keyIcon from "../../assets/key_icon.png";
+
 const useStyles = makeStyles((theme) => ({
     appBar: {
         display: "flex",
@@ -32,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
+    },
+    rightItems: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
     },
     brand: {
         marginLeft: "10px",
@@ -74,6 +82,13 @@ const useStyles = makeStyles((theme) => ({
             textDecoration: "none",
             color: "#fff",
         },
+    },
+    userLogo: {
+        height: "40px",
+        marginLeft: "20px",
+    },
+    keyIcon: {
+        height: "40px",
     },
 }));
 
@@ -176,61 +191,72 @@ const PhoneNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudent
                         <img src={logo} alt="" />
                     </Link>
                 </Box>
-
-                <Fragment key={anchor}>
-                    {studentToken == "" ? (
-                        <Button
-                            style={{ marginRight: "20px" }}
-                            onClick={handleSignOpen}
-                            variant="contained"
-                            color="primary"
-                        // fullWidth
-                        >
-                            SignIn / SignUp
-                        </Button>) : (
-                        <>
-                            <Button
-                                id="basic-button"
-                                style={{ marginRight: "20px" }}
-                                onClick={handleClick}
+                <div className={classes.rightItems}>
+                    <Fragment key={anchor} style={{ marginLeft: 'auto' }}>
+                        {studentToken == "" ? (
+                            <span
+                                style={{ marginLeft: "20px", cursor: "pointer" }}
+                                onClick={handleSignOpen}
                                 variant="contained"
                                 color="primary"
+                            // fullWidth
                             >
-                                Welcome! {studentData.name} &gt;
-                            </Button>
-                            <Menu
-                                id="basic-menu"
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose}
-                                MenuListProps={{
-                                    'aria-labelledby': 'basic-button',
-                                }}
-                            >
-                                {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                        <MenuItem onClick={handleClose}></MenuItem> */}
-                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                            </Menu>
-                        </>)}
-                    <IconButton
-                        aria-label="Open Menu"
-                        onClick={handlemenuOpen(true)}
-                        edge="start"
-                    >
-                        <MenuIcon
-                            fontSize="large"
-                            style={{ color: "#fff", width: "40px" }}
-                        />
-                    </IconButton>
-                    <SwipeableDrawer
-                        anchor={anchor}
-                        open={state}
-                        onClose={handlemenuOpen(false)}
-                        onOpen={handlemenuOpen(true)}
-                    >
-                        {list}
-                    </SwipeableDrawer>
-                </Fragment>
+                                SignIn
+                            </span>) : (
+                            <>
+                                <img
+                                    className={classes.userLogo}
+                                    src={userLogo}
+                                    alt="User"
+                                />
+                                <span
+                                    id="basic-button"
+                                    style={{ marginLeft: "10px", cursor: "pointer" }}
+                                    aria-controls={open ? 'basic-menu' : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? 'true' : undefined}
+                                    onClick={handleClick}
+                                >
+                                    {studentData.name.trim().split(' ')[0]} &#9660;
+                                </span>
+                                <Menu
+                                    id="basic-menu"
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                    MenuListProps={{
+                                        'aria-labelledby': 'basic-button',
+                                    }}
+                                >
+                                    <MenuItem onClick={handleClose}>My Profile</MenuItem>
+                                    <MenuItem onClick={handleClose}><img className={classes.keyIcon} src={keyIcon} alt="img" /> Change Password</MenuItem>
+                                    <MenuItem onClick={handleClose}>My Programs</MenuItem>
+                                    <MenuItem onClick={handleClose}>Contact US</MenuItem>
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                </Menu>
+                            </>)}
+
+                        <IconButton
+                            aria-label="Open Menu"
+                            onClick={handlemenuOpen(true)}
+                            edge="start"
+                        >
+                            <MenuIcon
+                                fontSize="large"
+                                style={{ color: "#fff", width: "40px", marginLeft: "20px" }}
+                            />
+                        </IconButton>
+                        <SwipeableDrawer
+                            anchor={anchor}
+                            open={state}
+                            onClose={handlemenuOpen(false)}
+                            onOpen={handlemenuOpen(true)}
+                        >
+                            {list}
+                        </SwipeableDrawer>
+                    </Fragment>
+                </div>
+
             </Toolbar>
         </AppBar>
     );

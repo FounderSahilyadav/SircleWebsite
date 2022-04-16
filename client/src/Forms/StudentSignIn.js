@@ -50,12 +50,11 @@ const Alert = (props) => {
 
 const initialStudentState = {
     email: "",
-    password: "",
-    confirmPassword: ""
+    password: ""
 };
 
 
-export default function StudentSignIn({ handleClose, setStudentToken }) {
+export default function StudentSignIn({ handleClose, setStudentToken, studentToken }) {
     const classes = useStyles();
     // Hooks for handling student registration for demo session
     const [studentDetails, setStudentDetails] = useState(initialStudentState); // Storing the student's details
@@ -72,7 +71,7 @@ export default function StudentSignIn({ handleClose, setStudentToken }) {
     const handleStudentSubmtRequset = () => {
         loginStudent(
             studentDetails,
-            setLoader, setError, setSuccess, setStudentToken, handleClose);
+            setLoader, setError, setSuccess, setStudentToken, handleClose, studentToken);
     };
 
     return (
@@ -115,21 +114,6 @@ export default function StudentSignIn({ handleClose, setStudentToken }) {
                         shrink: true,
                     }}
                     value={studentDetails.password}
-                    onChange={handleStudentDetails}
-                />
-                <TextField
-                    name="confirmPassword"
-                    type={"password"}
-                    className={classes.textField}
-                    placeholder="* Confirm Password"
-                    fullWidth
-                    size="small"
-                    margin="normal"
-                    variant="outlined"
-                    InputLabelProps={{
-                        shrink: true,
-                    }}
-                    value={studentDetails.confirmPassword}
                     onChange={handleStudentDetails}
                 />
             </Box>

@@ -27,6 +27,7 @@ import AdminMentors from "./Components/AdminPanel/AdminMentors";
 import AdminTeamMembers from "./Components/AdminPanel/AdminTeamMembers";
 import StudentSign from "./Components/StudentRegister/StudentSign";
 import { getStudentDetails } from "./utils/student";
+import StudentProfile from "./Components/MyProfile/StudentProfile";
 
 const useStyles = makeStyles((theme) => ({
     circularProgress: {
@@ -80,7 +81,8 @@ function App() {
             if (localStorage.getItem("token")) {
                 console.log("running");
                 setStudentToken(localStorage.getItem("token"));
-                getStudentDetails(localStorage.getItem('token')).then(res => {
+                console.log(studentToken);
+                getStudentDetails(localStorage.getItem('token'), setStudentToken).then(res => {
                     setStudentData(res);
                     setLoader(false);
                 }).catch(err => {
@@ -109,6 +111,7 @@ function App() {
                                 path="/our-products"
                                 element={<Products />}
                             />
+                            <Route exact path="/myprofile" element={<StudentProfile studentData={studentData} studentToken={studentToken} />} />
                             <Route path="/videos" element={<Videos />} />
                             <Route path="/about" element={<About />} />
                             <Route exact path="/blogs" element={<Blogs />} />
@@ -162,7 +165,7 @@ function App() {
                             open={open}
                             handleClose={handleClose}
                         />
-                        <StudentSign open={signOpen} handleClose={handleSignClose} setStudentToken={setStudentToken} />
+                        <StudentSign open={signOpen} handleClose={handleSignClose} setStudentToken={setStudentToken} studentToken={studentToken} />
                     </Box>
                 </Fragment>
             )}{" "}

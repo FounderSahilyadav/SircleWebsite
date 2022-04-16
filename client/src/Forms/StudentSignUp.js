@@ -8,7 +8,7 @@ import {
     Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { signUpStudent } from "../utils/student";
+import { sendOtp, signUpStudent } from "../utils/student";
 import { makeStyles } from "@material-ui/core/styles";
 import MuiAlert from "@material-ui/lab/Alert";
 
@@ -48,14 +48,26 @@ const Alert = (props) => {
     return <MuiAlert {...props} />;
 };
 
+const studentClass = [
+    { value: "Class IX", label: "Class IX" },
+    { value: "Class X", label: "Class X" },
+    { value: "Class XI Science", label: "Class XI Science" },
+    { value: "Class XI Commerce", label: "Class XI Commerce" },
+    { value: "Class XI Humanities", label: "Class XI Humanities" },
+    { value: "Class XII Science", label: "Class XII Science" },
+    { value: "Class XII Commerce", label: "Class XII Commerce" },
+    { value: "Class XII Humanities", label: "Class XII Humanities" },
+];
+
 const initialStudentState = {
     name: "",
-    grade: "none",
-    institute: "none",
+    grade: "",
+    institute: "",
     email: "",
     phone: "",
     password: "",
     confirmPassword: "",
+    otp: "",
 };
 
 
@@ -78,6 +90,12 @@ export default function StudentSignIn({ handleClose, setStudentToken }) {
             studentDetails,
             setLoader, setError, setSuccess, setStudentToken, handleClose);
     };
+
+    const handleOtp = () => {
+        sendOtp(
+            studentDetails,
+            setLoader, setError, setSuccess);
+    }
 
     return (
         <DialogContent >
@@ -107,10 +125,31 @@ export default function StudentSignIn({ handleClose, setStudentToken }) {
                     onChange={handleStudentDetails}
                 />
                 <TextField
+                    select
+                    name="grade"
+                    placeholder="* Select Grade"
+                    // value={studentClass}
+                    helperText="Please select your grade"
+                    SelectProps={{
+                        native: true,
+                    }}
+                    size="small"
+                    margin="normal"
+                    onChange={handleStudentDetails}
+                    value={studentDetails.grade}
+                    fullWidth
+                >
+                    {studentClass.map((option, index) => (
+                        <option key={index} value={studentClass.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                </TextField>
+                <TextField
                     name="email"
                     type="email"
                     className={classes.textField}
-                    placeholder="* Email Address"
+                    placeholder="Email Address"
                     fullWidth
                     size="small"
                     margin="normal"
@@ -124,7 +163,7 @@ export default function StudentSignIn({ handleClose, setStudentToken }) {
                 <TextField
                     name="phone"
                     className={classes.textField}
-                    placeholder="* Phone Number"
+                    placeholder="* WhatsApp Phone Number (10 digits)"
                     type={"number"}
                     fullWidth
                     size="small"
@@ -134,6 +173,23 @@ export default function StudentSignIn({ handleClose, setStudentToken }) {
                         shrink: true,
                     }}
                     value={studentDetails.phone}
+                    onChange={handleStudentDetails}
+                />
+                <Typography style={{ color: "blue", cursor: "pointer" }} variant="caption" component={"small"}>
+                    <span onClick={handleOtp}>Send OTP *</span>
+                </Typography>
+                <TextField
+                    name="otp"
+                    className={classes.textField}
+                    placeholder="* OTP"
+                    fullWidth
+                    size="small"
+                    margin="normal"
+                    variant="outlined"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    value={studentDetails.otp}
                     onChange={handleStudentDetails}
                 />
                 <TextField

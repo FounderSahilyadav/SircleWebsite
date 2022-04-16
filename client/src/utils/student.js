@@ -34,9 +34,51 @@ const validateStudentDetails = (studentDetails, setError) => {
     return true;
 };
 
+const validateOtp = (studentDetails) => {
+    const { phone } = studentDetails;
+    if (!phone || phone.length !== 10 || !filter1.test(phone)) {
+        return false;
+    }
+    return true;
+}
+
+export const sendOtp = async(studentDetails, setLoader, setError, setSuccess) => {
+    const { phone } = studentDetails;
+    setLoader(true);
+    if (validateOtp(studentDetails)) {
+        try {
+            const result = await Axios({
+                method: "POST",
+                url: `${host}/student/verify/phone`,
+                data: qs.stringify({
+                    phone: phone
+                }),
+                withCredentials: true,
+                credentials: "include",
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+                },
+            });
+            setLoader(false);
+            setSuccess(result.data.message);
+        } catch (error) {
+            setError(error.response.data);
+            setLoader(false);
+        }
+    } else {
+        console.log("Invalid phone number");
+        setError("Please enter a valid phone number!");
+        setLoader(false);
+    }
+}
+
+
+
+
+
 const validateStudentSign = (studentDetails, setError) => {
-    const { email, password, confirmPassword } = studentDetails;
-    if (password.length < 7 || password.length > 20 || password !== confirmPassword) {
+    const { email, password } = studentDetails;
+    if (password.length < 7 || password.length > 20) {
         setError("Password must be between 7 and 20 characters and must match!");
         return false;
     }
@@ -52,40 +94,52 @@ const validateStudentSign = (studentDetails, setError) => {
 }
 
 const validateStudentSignUp = (studentDetails, setError) => {
-    const { name, email, phone, password, confirmPassword } = studentDetails;
+    const { name, grade, phone, password, confirmPassword, otp } = studentDetails;
     if (!name || name.length === 0) {
         setError("Student name is required!");
         return false;
     }
-    if (email.length !== 0 || phone.length !== 0) {
-        if (!(filter.test(email) || filter1.test(phone))) {
-            setError("Please enter a valid email or phone number");
-            return false;
-        }
+    if (phone.length !== 10 || phone.length === 0 || !filter1.test(phone)) {
+        setError("Please enter phone number");
+        return false;
+    }
+    if (!otp || otp.length === 0) {
+        setError("Please enter your OTP!");
+        return false;
     }
     if (password.length < 7 || password.length > 20 || password !== confirmPassword) {
         setError("Password must be between 7 and 20 characters and must match!");
+        return false;
+    }
+    if (!grade || grade.length === 0) {
+        setError("Please select your grade!");
         return false;
     }
     return true;
 }
 
 // Get student details
-export const getStudentDetails = async(studentToken) => {
-    const result = await Axios({
-        method: "POST",
-        url: `${host}/student/getstudent`,
-        data: qs.stringify({
-            token: studentToken
-        }),
-        withCredentials: true,
-        credentials: "include",
-        headers: {
-            "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-    });
-    console.log("get student details", result.data);
-    return result.data;
+export const getStudentDetails = async(studentToken, setStudentToken) => {
+    try {
+        const result = await Axios({
+            method: "POST",
+            url: `${host}/student/getstudent`,
+            data: qs.stringify({
+                token: studentToken
+            }),
+            withCredentials: true,
+            credentials: "include",
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+            },
+        });
+        console.log("get student details", result.data);
+        return result.data;
+    } catch (error) {
+        console.log(error);
+        localStorage.removeItem('token');
+        setStudentToken("");
+    }
 }
 
 // Login a student
@@ -95,7 +149,8 @@ export const loginStudent = async(
     setError,
     setSuccess,
     setStudentToken,
-    handleClose
+    handleClose,
+    studentToken
 ) => {
     setLoader(true);
     setError(null);
@@ -121,6 +176,7 @@ export const loginStudent = async(
             setStudentToken(result.data.token);
             setLoader(false);
             setSuccess("Logged in!");
+            console.log({ "studentToken": studentToken });
             handleClose();
         } catch (err) {
             setError(err.response.data);
@@ -157,6 +213,7 @@ export const signUpStudent = async(
                     password: studentDetails.password,
                     institute: studentDetails.institute,
                     grade: studentDetails.grade,
+                    otp: studentDetails.otp,
                 }),
                 withCredentials: true,
                 credentials: "include",

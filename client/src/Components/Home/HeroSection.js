@@ -1,7 +1,7 @@
 import { Box, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import heroBackground from "../../assets/heroBackground.jpg";
-import heroSectionAnim from "../../assets/heroSectionAnim.mp4";
+import heroSectionAnim from "../../assets/Sircle_gif.mp4";
 
 const useStyles = makeStyles((theme) => ({
     heroSectionBackground: {

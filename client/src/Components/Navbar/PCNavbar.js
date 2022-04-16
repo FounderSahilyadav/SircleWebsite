@@ -12,6 +12,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import userLogo from "../../assets/user_logo.png";
+import keyIcon from "../../assets/key_icon.png";
 // import 
 
 const useStyles = makeStyles((theme) => ({
@@ -78,6 +80,13 @@ const useStyles = makeStyles((theme) => ({
             color: "#fff",
         },
     },
+    userLogo: {
+        height: "40px",
+        marginLeft: "20px",
+    },
+    keyIcon: {
+        height: "40px",
+    },
 }));
 
 const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentToken, studentData }) => {
@@ -96,7 +105,6 @@ const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentTok
         handleClose();
         console.log(studentToken);
     }
-
     return (
         <AppBar className={classes.appBar}>
             <CssBaseline />
@@ -145,41 +153,6 @@ const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentTok
                             </Box>
                         </Box>
                         <Box className={classes.navButtons}>
-                            {/* Direct to products page */}
-                            {studentToken == "" ? (
-                                <Button
-                                    style={{ marginRight: "20px" }}
-                                    onClick={handleSignOpen}
-                                    variant="contained"
-                                    color="primary"
-                                // fullWidth
-                                >
-                                    SignIn / SignUp
-                                </Button>) : (
-                                <>
-                                    <Button
-                                        id="basic-button"
-                                        style={{ marginRight: "20px" }}
-                                        onClick={handleClick}
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                        Welcome! {studentData.name} &gt;
-                                    </Button>
-                                    <Menu
-                                        id="basic-menu"
-                                        anchorEl={anchorEl}
-                                        open={open}
-                                        onClose={handleClose}
-                                        MenuListProps={{
-                                            'aria-labelledby': 'basic-button',
-                                        }}
-                                    >
-                                        {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                        <MenuItem onClick={handleClose}></MenuItem> */}
-                                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                    </Menu>
-                                </>)}
                             <Box boxShadow={2} className={classes.buyPrograms}>
                                 <Link to={"/our-products"}>
                                     BUY OUR PROGRAMS
@@ -198,6 +171,50 @@ const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentTok
                             >
                                 Book Free Trial Now
                             </Button>
+                            {/* Direct to products page */}
+                            {studentToken == "" ? (
+                                <span
+                                    style={{ marginLeft: "20px", cursor: "pointer" }}
+                                    onClick={handleSignOpen}
+                                    variant="contained"
+                                    color="primary"
+                                // fullWidth
+                                >
+                                    SignIn
+                                </span>) : (
+                                <>
+                                    <img
+                                        className={classes.userLogo}
+                                        src={userLogo}
+                                        alt="User"
+                                    />
+                                    <span
+                                        id="basic-button"
+                                        style={{ marginLeft: "10px", cursor: "pointer" }}
+                                        aria-controls={open ? 'basic-menu' : undefined}
+                                        aria-haspopup="true"
+                                        aria-expanded={open ? 'true' : undefined}
+                                        onClick={handleClick}
+                                    >
+                                        {studentData.name.trim().split(' ')[0]} &#9660;
+                                    </span>
+                                    <Menu
+                                        id="basic-menu"
+                                        anchorEl={anchorEl}
+                                        open={open}
+                                        onClose={handleClose}
+                                        MenuListProps={{
+                                            'aria-labelledby': 'basic-button',
+                                        }}
+                                    >
+                                        <MenuItem onClick={handleClose}>My Profile</MenuItem>
+                                        <MenuItem onClick={handleClose}><img className={classes.keyIcon} src={keyIcon} alt="img" /> Change Password</MenuItem>
+                                        <MenuItem onClick={handleClose}>My Programs</MenuItem>
+                                        <MenuItem onClick={handleClose}>Contact US</MenuItem>
+                                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                    </Menu>
+                                </>)}
+
                         </Box>
                     </Box>
                 </Container>

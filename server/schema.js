@@ -1,23 +1,30 @@
 // Schemas for various tables
 
 const Joi = require("joi");
+// CREATE TABLE STUDENTS (
+//   id INTEGER PRIMARY KEY,
+//   name TEXT,
+//   email TEXT,
+// phone TEXT unique,
+//   password TEXT,
+//   verify: BOOLEAN DEFAULT false,
+// token TEXT,
+//  expireAt TIMESTAMP
+//   created_at DATETIME DEFAULT CURRENT_TIME
+// );
 
 module.exports.studentSchema = Joi.object({
     name: Joi.string().required(),
+    email: Joi.string().allow(""),
+    institute: Joi.string().allow(""),
     grade: Joi.string().required(),
-    institute: Joi.string(),
-    email: Joi.string().email(),
-    phone: Joi.string(),
+    phone: Joi.string().required(),
     password: Joi.string().required(),
-    verify: Joi.bool().default(false),
-    token: Joi.string(),
-    expireAt: Joi.date(),
+    otp: Joi.string().required(),
 });
 
-module.exports.verifySchema = Joi.object({
-    token: Joi.string().required,
-    expireAt: Joi.date().required,
-    studentId: Joi.string().required
+module.exports.phoneSchema = Joi.object({
+    phone: Joi.string().required(),
 });
 
 module.exports.instituteSchema = Joi.object({
