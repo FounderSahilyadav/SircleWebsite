@@ -9,6 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Facebook, Instagram, LinkedIn } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import facebook from "../../assets/facebook_icon.png";
+import instagram from "../../assets/instagram.png";
 
 const useStyles = makeStyles((theme) => ({
     footer: {
@@ -35,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
     footerSocial: {
         margin: "0px 10px",
+        width: "50px",
     },
     footerBottom: {
         display: "flex",

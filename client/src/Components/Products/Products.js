@@ -10,15 +10,16 @@ import {
     Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Alert } from '@material-ui/lab';
 import PropTypes from "prop-types";
 import { Fragment, useEffect, useState } from "react";
 import dishaImg from "../../assets/dishaImg.jpg";
 import personaImg from "../../assets/personaImg.jpg";
 import sakhaImg from "../../assets/sakhaImg.jpg";
-import productAppointment from "../../assets/productAppointment.png";
 import { Link } from "react-router-dom";
 import InstituteQuery from "../../Forms/InstituteQuery";
 import StudentRegistration from "../../Forms/StudentRegistration";
+import { onPayment } from "../../utils/payment";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -301,6 +302,7 @@ const useStyles = makeStyles((theme) => ({
     },
     productPurchaseSection: {
         marginTop: "70px",
+        marginBottom: "70px",
     },
     productPurchaseSectionHeader: {
         marginBottom: "20px",
@@ -395,535 +397,336 @@ const useStyles = makeStyles((theme) => ({
         border: "1px solid #000",
         transform: "skewX(-20deg)",
     },
+    alert: {
+        position: 'fixed',
+        top: '0px',
+        left: '0px',
+        width: '100%',
+        zIndex: '1',
+        marginTop: '70px',
+    },
 }));
 
-const Products = () => {
+const Products = ({ studentData }) => {
     const classes = useStyles();
     // Hooks for handling the tabs view of the query submission forms
     const [value, setValue] = useState("one");
+
+    const [error, setError] = useState(null); // If any error occured while registering the student
+
 
     // handling change in tabs
     const handleTabsChange = (event, newValue) => {
         setValue(newValue);
     };
+    const handlePayment = (amount, courseName) => {
+        onPayment(amount, courseName, studentData, setError);
+    }
     // Scroll to top when page loads
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0 });
     }, []);
     return (
-        <Fragment>
-            <Box paddingTop={"80px"} marginTop={"50px"}>
-                <Container>
-                    <Grid className={classes.productsHeader}>
-                        <Typography variant="h3">Our Products</Typography>
-                        <Typography variant="body2" component={"p"}>
-                            <Link className={classes.headerLink} to={"/"}>
-                                Home
-                            </Link>{" "}
-                            &#9656; Our Products
-                        </Typography>
-                    </Grid>
+        <>
+            <div className={classes.alert}>
+                {error ? (
+                    <Alert severity="error">{error}</Alert>) : ""}
+            </div>
+            <Fragment>
+                <Box paddingTop={"80px"} marginTop={"50px"}>
+                    <Container>
+                        <Grid className={classes.productsHeader}>
+                            <Typography variant="h3">Our Products</Typography>
+                            <Typography variant="body2" component={"p"}>
+                                <Link className={classes.headerLink} to={"/"}>
+                                    Home
+                                </Link>{" "}
+                                &#9656; Our Products
+                            </Typography>
+                        </Grid>
 
-                    {/* Products detals section */}
-                    <Box className={classes.productsDetails}>
-                        {/* Details about the product */}
-                        <Box
-                            className={classes.product}
-                            style={{ background: "none" }}
-                        >
-                            <Box className={classes.productHeader}>
-                                <Typography variant="h4">DISHA</Typography>
-                            </Box>
-                            <Box className={classes.productImage}>
-                                <img src={dishaImg} alt="" />
-                            </Box>
-                            <Box className={classes.productDetail}>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    Do you know your Superpower?
-                                </Typography>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    Opportunities are in bulk. How many careers
-                                    do you really know?
-                                </Typography>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    What career you should opt for entirenof
-                                    your working life?
-                                </Typography>
-                                <Typography
-                                    style={{ marginBottom: "20px" }}
-                                    component={"h6"}
-                                    variant="h6"
-                                    className={classes.sakhaHeader}
-                                >
-                                    "A thing can't become your Passion if you
-                                    have never heard or done in before."
-                                </Typography>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    Know the most suitable career path by DISHA.
-                                    We are a one stop solution to All
-                                    Councelling Needs. We provide complete
-                                    counselling to make you know your Passion
-                                    and Interest.
-                                </Typography>
-                            </Box>
-                        </Box>
-
-                        {/* Details about the product */}
-                        <Box className={classes.product}>
-                            <Box className={classes.productHeader}>
-                                <Typography variant="h4">PERSONA</Typography>
-                            </Box>
-                            <Box className={classes.productImage}>
-                                <img src={personaImg} alt="" />
-                            </Box>
-                            <Box className={classes.productDetail}>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    Do you have stage phobia?
-                                </Typography>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    Have low self esteem?
-                                </Typography>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    Hesitate to communicate with new People?
-                                </Typography>
-                                <Typography
-                                    style={{ marginBottom: "0px" }}
-                                    component={"h6"}
-                                    variant="h6"
-                                    className={classes.sakhaHeader}
-                                >
-                                    PERSONA MAKES YOU BETTER VERSIONS OF
-                                    YOURSELF BY-
-                                </Typography>
-                                <List
-                                    className={`${classes.productList} ${classes.middleProductList}`}
-                                >
-                                    <ListItem>
-                                        <Typography variant="subtitle2">
-                                            <Typography component={"small"}>
-                                                &#9741;
-                                            </Typography>
-                                            improving your soft skills.
-                                        </Typography>
-                                    </ListItem>
-                                    <ListItem>
-                                        <Typography variant="subtitle2">
-                                            <Typography component={"small"}>
-                                                &#9741;
-                                            </Typography>
-                                            embedding good ethics and values.
-                                        </Typography>
-                                    </ListItem>
-                                    <ListItem>
-                                        <Typography variant="subtitle2">
-                                            <Typography component={"small"}>
-                                                &#9741;
-                                            </Typography>
-                                            help you acquire good etiquettes,
-                                            good body language and leadership
-                                            qualities.
-                                        </Typography>
-                                    </ListItem>
-                                    <ListItem>
-                                        <Typography variant="subtitle2">
-                                            <Typography component={"small"}>
-                                                &#9741;
-                                            </Typography>
-                                            improving your communication skills
-                                            and public speaking.
-                                        </Typography>
-                                    </ListItem>
-                                </List>
-                            </Box>
-                        </Box>
-
-                        {/* Details about the product */}
-                        <Box
-                            style={{ background: "none" }}
-                            className={classes.product}
-                        >
-                            <Box className={classes.productHeader}>
-                                <Typography variant="h4">SAKHA</Typography>
-                            </Box>
-                            <Box className={classes.productImage}>
-                                <img src={sakhaImg} alt="" />
-                            </Box>
-                            <Box className={classes.productDetail}>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    Are you stuck between your capabilities and
-                                    family's expectations?
-                                </Typography>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    Are you mentally disturbed
-                                </Typography>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    Get stuck in bad habits?
-                                </Typography>
-                                <Typography component={"p"} variant="subtitle1">
-                                    <Typography
-                                        style={{
-                                            lineHeight: "1.3",
-                                        }}
-                                        component={"small"}
-                                    >
-                                        &#9755;
-                                    </Typography>{" "}
-                                    Stressed or depressed?
-                                </Typography>
-                                <Typography
-                                    className={classes.sakhaHeader}
-                                    component={"h6"}
-                                    variant="h6"
-                                >
-                                    "HERE COMES SAKHA"
-                                </Typography>
-                                <List className={classes.productList}>
-                                    <ListItem>
-                                        <Typography variant="subtitle2">
-                                            <Typography component={"small"}>
-                                                &#9741;
-                                            </Typography>
-                                            Helps you in emotional and mental
-                                            health issues.
-                                        </Typography>
-                                    </ListItem>
-                                    <ListItem>
-                                        <Typography variant="subtitle2">
-                                            <Typography component={"small"}>
-                                                &#9741;
-                                            </Typography>
-                                            Helps you deal with addiction and
-                                            bad habits.
-                                        </Typography>
-                                    </ListItem>
-                                    <ListItem>
-                                        <Typography variant="subtitle2">
-                                            <Typography component={"small"}>
-                                                &#9741;
-                                            </Typography>
-                                            Provide you 24*7 assistance.
-                                        </Typography>
-                                    </ListItem>
-                                </List>
-                            </Box>
-                        </Box>
-                    </Box>
-
-                    {/* Product purchase section */}
-                    <Box className={classes.productPurchaseSection}>
-                        <Box className={classes.productPurchaseSectionHeader}>
-                            <Typography variant="h5">CHAMPION</Typography>
-                        </Box>
-                        <Box className={classes.purchaseProducts}>
-                            {/* Addition details about product */}
-                            <Box className={classes.purchaseProduct}>
-                                <Box className={classes.purchaseProductHeader}>
-                                    <Typography variant="h6">DISHA</Typography>
-                                </Box>
-                                <Box className={classes.purchasePlanType}>
-                                    <Typography component={"p"} variant="body1">
-                                        A Year-Long student Development Program
-                                    </Typography>
-                                    <Typography variant="h6">
-                                        <sup>₹</sup>2,400 Only/-
-                                    </Typography>
-                                </Box>
-                                <Box
-                                    className={
-                                        classes.purchaseProductFeatureList
-                                    }
-                                >
-                                    <Typography
-                                        className={
-                                            classes.purchaseProductFeature
-                                        }
-                                        variant="subtitle2"
-                                    >
-                                        <Box component={"span"}> &#9755;</Box>
-                                        Interactive Premium Career Guidance
-                                        Workshops Highly-Researched Content on
-                                        hundreds of Career options.
-                                    </Typography>
-                                    <Typography
-                                        className={
-                                            classes.purchaseProductFeature
-                                        }
-                                        variant="subtitle2"
-                                    >
-                                        <Box component={"span"}>&#9755;</Box>
-                                        Exclusive manually designed career
-                                        report. <br /> Detailed report of
-                                        mentors containing top career matches &
-                                        personalised development plans.
-                                    </Typography>
-                                    <Typography
-                                        className={
-                                            classes.purchaseProductFeature
-                                        }
-                                        variant="subtitle2"
-                                    >
-                                        <Box component={"span"}>&#9755;</Box>
-                                        Strategy Sessions <br />
-                                        Face to Face Q&A with Field Experts &
-                                        Rankers
-                                    </Typography>
-                                </Box>
-
-                                {/* Purchase product, not yet implemented */}
-                                <Button
-                                    className={classes.purchaseButton}
-                                    variant="contained"
-                                >
-                                    BUY NOW
-                                </Button>
-                            </Box>
-
-                            {/* Addition details about product */}
-                            <Box className={classes.purchaseProduct}>
-                                <Box className={classes.purchaseProductHeader}>
-                                    <Typography variant="h6">
-                                        PERSONA
-                                    </Typography>
-                                </Box>
-                                <Box className={classes.purchasePlanType}>
-                                    <Typography component={"p"} variant="body1">
-                                        A Year-Long student Development Program
-                                    </Typography>
-                                    <Typography variant="h6">
-                                        <sup>₹</sup>2,400 Only/-
-                                    </Typography>
-                                </Box>
-                                <Box
-                                    className={
-                                        classes.purchaseProductFeatureList
-                                    }
-                                >
-                                    <Typography
-                                        className={
-                                            classes.purchaseProductFeature
-                                        }
-                                        variant="subtitle2"
-                                    >
-                                        <Box component={"span"}> &#9755;</Box>
-                                        Premium New Era Skill Development
-                                        workshops. <br />
-                                        Easy to learn content with tricks &
-                                        visuals
-                                    </Typography>
-                                    <Typography
-                                        className={
-                                            classes.purchaseProductFeature
-                                        }
-                                        variant="subtitle2"
-                                    >
-                                        <Box component={"span"}>&#9755;</Box>
-                                        Open-Mic. <br />
-                                        Supply your learnings & improve your
-                                        speaking skills on live stage.
-                                    </Typography>
-                                    <Typography
-                                        className={
-                                            classes.purchaseProductFeature
-                                        }
-                                        variant="subtitle2"
-                                    >
-                                        <Box component={"span"}>&#9755;</Box>
-                                        Practise on Stage in Audience. <br />
-                                        Practicals on good etiquettes, body
-                                        language, decision making, problem
-                                        solving abilities.
-                                    </Typography>
-                                </Box>
-
-                                {/* Purchase product, not yet implemented */}
-                                <Button
-                                    className={classes.purchaseButton}
-                                    variant="contained"
-                                >
-                                    BUY NOW
-                                </Button>
-                            </Box>
-
-                            {/* Addition details about product */}
-                            <Box className={classes.purchaseProduct}>
-                                <Box className={classes.purchaseProductHeader}>
-                                    <Typography variant="h6">SAKHA</Typography>
-                                </Box>
-                                <Box className={classes.purchasePlanType}>
-                                    <Typography component={"p"} variant="body1">
-                                        A Year-Long student Development Program
-                                    </Typography>
-                                    <Typography variant="h6">
-                                        <sup>₹</sup>2,400 Only/-
-                                    </Typography>
-                                </Box>
-                                <Box
-                                    className={
-                                        classes.purchaseProductFeatureList
-                                    }
-                                >
-                                    <Typography
-                                        className={
-                                            classes.purchaseProductFeature
-                                        }
-                                        variant="subtitle2"
-                                    >
-                                        <Box component={"span"}> &#9755;</Box>
-                                        Emotional & Mental Wellness
-                                        Consultation. <br />
-                                        One to One completely confediential
-                                        meetups with psychology experts.
-                                    </Typography>
-                                    <Typography
-                                        className={
-                                            classes.purchaseProductFeature
-                                        }
-                                        variant="subtitle2"
-                                    >
-                                        <Box component={"span"}>&#9755;</Box>
-                                        Challenge workshops. <br />
-                                        Bad habits & Addictions vanishing
-                                        guidance & mentoring.
-                                    </Typography>
-                                    <Typography
-                                        className={
-                                            classes.purchaseProductFeature
-                                        }
-                                        variant="subtitle2"
-                                    >
-                                        <Box component={"span"}>&#9755;</Box>
-                                        24X7 Direct Call Support. <br />
-                                        Not able to take life decisions,
-                                        misunderstanding with parents, have
-                                        stuck in any bad situation line with
-                                        goons or lost at any place. <br />
-                                        Don't be worry. <br />
-                                        Together we beat the problems.
-                                    </Typography>
-                                </Box>
-
-                                {/* Purchase product, not yet implemented */}
-                                <Button
-                                    className={classes.purchaseButton}
-                                    variant="contained"
-                                >
-                                    BUY NOW
-                                </Button>
-                            </Box>
-                        </Box>
-
-                        {/* Another product purchase section */}
-                        <Box className={classes.productPurchaseSection}>
+                        {/* Products detals section */}
+                        <Box className={classes.productsDetails}>
+                            {/* Details about the product */}
                             <Box
-                                className={classes.productPurchaseSectionHeader}
+                                className={classes.product}
+                                style={{ background: "none" }}
                             >
-                                <Typography variant="h5">ACCELRATOR</Typography>
+                                <Box className={classes.productHeader}>
+                                    <Typography variant="h4">DISHA</Typography>
+                                </Box>
+                                <Box className={classes.productImage}>
+                                    <img src={dishaImg} alt="" />
+                                </Box>
+                                <Box className={classes.productDetail}>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        Do you know your Superpower?
+                                    </Typography>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        Opportunities are in bulk. How many careers
+                                        do you really know?
+                                    </Typography>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        What career you should opt for entirenof
+                                        your working life?
+                                    </Typography>
+                                    <Typography
+                                        style={{ marginBottom: "20px" }}
+                                        component={"h6"}
+                                        variant="h6"
+                                        className={classes.sakhaHeader}
+                                    >
+                                        "A thing can't become your Passion if you
+                                        have never heard or done in before."
+                                    </Typography>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        Know the most suitable career path by DISHA.
+                                        We are a one stop solution to All
+                                        Councelling Needs. We provide complete
+                                        counselling to make you know your Passion
+                                        and Interest.
+                                    </Typography>
+                                </Box>
                             </Box>
 
-                            {/* Product additional details for the plan */}
-                            <Box className={classes.purchaseProducts}>
-                                <Box className={classes.purchaseProduct}>
-                                    <Box
-                                        className={
-                                            classes.purchaseProductHeader
-                                        }
+                            {/* Details about the product */}
+                            <Box className={classes.product}>
+                                <Box className={classes.productHeader}>
+                                    <Typography variant="h4">PERSONA</Typography>
+                                </Box>
+                                <Box className={classes.productImage}>
+                                    <img src={personaImg} alt="" />
+                                </Box>
+                                <Box className={classes.productDetail}>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        Do you have stage phobia?
+                                    </Typography>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        Have low self esteem?
+                                    </Typography>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        Hesitate to communicate with new People?
+                                    </Typography>
+                                    <Typography
+                                        style={{ marginBottom: "0px" }}
+                                        component={"h6"}
+                                        variant="h6"
+                                        className={classes.sakhaHeader}
                                     >
-                                        <Typography variant="h6">
-                                            DISHA(Crash Course)
-                                        </Typography>
+                                        PERSONA MAKES YOU BETTER VERSIONS OF
+                                        YOURSELF BY-
+                                    </Typography>
+                                    <List
+                                        className={`${classes.productList} ${classes.middleProductList}`}
+                                    >
+                                        <ListItem>
+                                            <Typography variant="subtitle2">
+                                                <Typography component={"small"}>
+                                                    &#9741;
+                                                </Typography>
+                                                improving your soft skills.
+                                            </Typography>
+                                        </ListItem>
+                                        <ListItem>
+                                            <Typography variant="subtitle2">
+                                                <Typography component={"small"}>
+                                                    &#9741;
+                                                </Typography>
+                                                embedding good ethics and values.
+                                            </Typography>
+                                        </ListItem>
+                                        <ListItem>
+                                            <Typography variant="subtitle2">
+                                                <Typography component={"small"}>
+                                                    &#9741;
+                                                </Typography>
+                                                help you acquire good etiquettes,
+                                                good body language and leadership
+                                                qualities.
+                                            </Typography>
+                                        </ListItem>
+                                        <ListItem>
+                                            <Typography variant="subtitle2">
+                                                <Typography component={"small"}>
+                                                    &#9741;
+                                                </Typography>
+                                                improving your communication skills
+                                                and public speaking.
+                                            </Typography>
+                                        </ListItem>
+                                    </List>
+                                </Box>
+                            </Box>
+
+                            {/* Details about the product */}
+                            <Box
+                                style={{ background: "none" }}
+                                className={classes.product}
+                            >
+                                <Box className={classes.productHeader}>
+                                    <Typography variant="h4">SAKHA</Typography>
+                                </Box>
+                                <Box className={classes.productImage}>
+                                    <img src={sakhaImg} alt="" />
+                                </Box>
+                                <Box className={classes.productDetail}>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        Are you stuck between your capabilities and
+                                        family's expectations?
+                                    </Typography>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        Are you mentally disturbed
+                                    </Typography>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        Get stuck in bad habits?
+                                    </Typography>
+                                    <Typography component={"p"} variant="subtitle1">
+                                        <Typography
+                                            style={{
+                                                lineHeight: "1.3",
+                                            }}
+                                            component={"small"}
+                                        >
+                                            &#9755;
+                                        </Typography>{" "}
+                                        Stressed or depressed?
+                                    </Typography>
+                                    <Typography
+                                        className={classes.sakhaHeader}
+                                        component={"h6"}
+                                        variant="h6"
+                                    >
+                                        "HERE COMES SAKHA"
+                                    </Typography>
+                                    <List className={classes.productList}>
+                                        <ListItem>
+                                            <Typography variant="subtitle2">
+                                                <Typography component={"small"}>
+                                                    &#9741;
+                                                </Typography>
+                                                Helps you in emotional and mental
+                                                health issues.
+                                            </Typography>
+                                        </ListItem>
+                                        <ListItem>
+                                            <Typography variant="subtitle2">
+                                                <Typography component={"small"}>
+                                                    &#9741;
+                                                </Typography>
+                                                Helps you deal with addiction and
+                                                bad habits.
+                                            </Typography>
+                                        </ListItem>
+                                        <ListItem>
+                                            <Typography variant="subtitle2">
+                                                <Typography component={"small"}>
+                                                    &#9741;
+                                                </Typography>
+                                                Provide you 24*7 assistance.
+                                            </Typography>
+                                        </ListItem>
+                                    </List>
+                                </Box>
+                            </Box>
+                        </Box>
+
+                        {/* Product purchase section */}
+                        <Box className={classes.productPurchaseSection}>
+                            <Box className={classes.productPurchaseSectionHeader}>
+                                <Typography variant="h5">CHAMPION</Typography>
+                            </Box>
+                            <Box className={classes.purchaseProducts}>
+                                {/* Addition details about product */}
+                                <Box className={classes.purchaseProduct}>
+                                    <Box className={classes.purchaseProductHeader}>
+                                        <Typography variant="h6">DISHA</Typography>
                                     </Box>
                                     <Box className={classes.purchasePlanType}>
-                                        <Typography
-                                            component={"p"}
-                                            variant="body1"
-                                        >
-                                            15 days Career Counselling Progran
+                                        <Typography component={"p"} variant="body1">
+                                            A Year-Long student Development Program
                                         </Typography>
                                         <Typography variant="h6">
-                                            <sup>₹</sup>690 Only/-
-                                            <Typography variant="body2">
-                                                (Special Price)
-                                            </Typography>
+                                            <sup>₹</sup>2,400 Only/-
                                         </Typography>
                                     </Box>
                                     <Box
@@ -937,14 +740,10 @@ const Products = () => {
                                             }
                                             variant="subtitle2"
                                         >
-                                            <Box component={"span"}>
-                                                {" "}
-                                                &#9755;
-                                            </Box>
-                                            Premium career workshops with Q&A.{" "}
-                                            <br />
-                                            Well researched 150+ career options
-                                            (all with high pay).
+                                            <Box component={"span"}> &#9755;</Box>
+                                            Interactive Premium Career Guidance
+                                            Workshops Highly-Researched Content on
+                                            hundreds of Career options.
                                         </Typography>
                                         <Typography
                                             className={
@@ -952,163 +751,386 @@ const Products = () => {
                                             }
                                             variant="subtitle2"
                                         >
-                                            <Box component={"span"}>
-                                                &#9755;
-                                            </Box>
-                                            Detailed Career Report. <br />{" "}
-                                            Contain roadmap about opportunities,
-                                            enterance exams, scholarships, etc.
+                                            <Box component={"span"}>&#9755;</Box>
+                                            Exclusive manually designed career
+                                            report. <br /> Detailed report of
+                                            mentors containing top career matches &
+                                            personalised development plans.
+                                        </Typography>
+                                        <Typography
+                                            className={
+                                                classes.purchaseProductFeature
+                                            }
+                                            variant="subtitle2"
+                                        >
+                                            <Box component={"span"}>&#9755;</Box>
+                                            Strategy Sessions <br />
+                                            Face to Face Q&A with Field Experts &
+                                            Rankers
                                         </Typography>
                                     </Box>
 
-                                    {/* Purchase product button, not yet implemented */}
+                                    {/* Purchase product, not yet implemented */}
                                     <Button
                                         className={classes.purchaseButton}
                                         variant="contained"
+                                        onClick={() => handlePayment(2400.00, "DISHA")}
                                     >
                                         BUY NOW
                                     </Button>
                                 </Box>
 
-                                {/* Additional details for the combined product purchase plan */}
-                                <Box
-                                    className={`${classes.purchaseProduct} ${classes.combinedProduct}`}
-                                >
-                                    <Box
-                                        className={
-                                            classes.purchaseProductHeader
-                                        }
-                                    >
+                                {/* Addition details about product */}
+                                <Box className={classes.purchaseProduct}>
+                                    <Box className={classes.purchaseProductHeader}>
                                         <Typography variant="h6">
-                                            ACHIEVER
+                                            PERSONA
                                         </Typography>
-                                    </Box>
-                                    <Box
-                                        className={classes.combinedProductList}
-                                    >
-                                        <Box className={classes.combinedPlan}>
-                                            <Typography variant="body1">
-                                                DISHA
-                                            </Typography>
-                                        </Box>
-                                        <Typography variant="h5">+</Typography>
-                                        <Box className={classes.combinedPlan}>
-                                            <Typography variant="body1">
-                                                PERSONA
-                                            </Typography>
-                                        </Box>
-                                        <Typography variant="h5">+</Typography>
-                                        <Box className={classes.combinedPlan}>
-                                            <Typography variant="body1">
-                                                SAKHA
-                                            </Typography>
-                                        </Box>
                                     </Box>
                                     <Box className={classes.purchasePlanType}>
-                                        <Typography
-                                            component={"p"}
-                                            variant="body1"
-                                        >
-                                            Exclusive Complete Student
-                                            Development Program.
+                                        <Typography component={"p"} variant="body1">
+                                            A Year-Long student Development Program
                                         </Typography>
-                                        <Box className={classes.fullPrice}>
-                                            <Typography variant="h6">
-                                                <sup>₹</sup>{" "}
-                                                <Typography
-                                                    className={
-                                                        classes.lineThroughPrice
-                                                    }
-                                                    component={"span"}
-                                                >
-                                                    7200 Only/-
-                                                </Typography>
-                                            </Typography>
-                                            <Typography variant="body2">
-                                                (25% Discount)
-                                            </Typography>
-                                        </Box>
                                         <Typography variant="h6">
-                                            <sup>₹</sup>5400 Only/-
-                                            <Typography variant="body2">
-                                                (Limited Time Offer)
-                                            </Typography>
+                                            <sup>₹</sup>2,400 Only/-
+                                        </Typography>
+                                    </Box>
+                                    <Box
+                                        className={
+                                            classes.purchaseProductFeatureList
+                                        }
+                                    >
+                                        <Typography
+                                            className={
+                                                classes.purchaseProductFeature
+                                            }
+                                            variant="subtitle2"
+                                        >
+                                            <Box component={"span"}> &#9755;</Box>
+                                            Premium New Era Skill Development
+                                            workshops. <br />
+                                            Easy to learn content with tricks &
+                                            visuals
+                                        </Typography>
+                                        <Typography
+                                            className={
+                                                classes.purchaseProductFeature
+                                            }
+                                            variant="subtitle2"
+                                        >
+                                            <Box component={"span"}>&#9755;</Box>
+                                            Open-Mic. <br />
+                                            Supply your learnings & improve your
+                                            speaking skills on live stage.
+                                        </Typography>
+                                        <Typography
+                                            className={
+                                                classes.purchaseProductFeature
+                                            }
+                                            variant="subtitle2"
+                                        >
+                                            <Box component={"span"}>&#9755;</Box>
+                                            Practise on Stage in Audience. <br />
+                                            Practicals on good etiquettes, body
+                                            language, decision making, problem
+                                            solving abilities.
                                         </Typography>
                                     </Box>
 
-                                    {/* Purchase product button, not yet implemented */}
+                                    {/* Purchase product, not yet implemented */}
                                     <Button
                                         className={classes.purchaseButton}
                                         variant="contained"
+                                        onClick={() => handlePayment(2400.00, "PERSONA")}
+                                    >
+                                        BUY NOW
+                                    </Button>
+                                </Box>
+
+                                {/* Addition details about product */}
+                                <Box className={classes.purchaseProduct}>
+                                    <Box className={classes.purchaseProductHeader}>
+                                        <Typography variant="h6">SAKHA</Typography>
+                                    </Box>
+                                    <Box className={classes.purchasePlanType}>
+                                        <Typography component={"p"} variant="body1">
+                                            A Year-Long student Development Program
+                                        </Typography>
+                                        <Typography variant="h6">
+                                            <sup>₹</sup>2,400 Only/-
+                                        </Typography>
+                                    </Box>
+                                    <Box
+                                        className={
+                                            classes.purchaseProductFeatureList
+                                        }
+                                    >
+                                        <Typography
+                                            className={
+                                                classes.purchaseProductFeature
+                                            }
+                                            variant="subtitle2"
+                                        >
+                                            <Box component={"span"}> &#9755;</Box>
+                                            Emotional & Mental Wellness
+                                            Consultation. <br />
+                                            One to One completely confediential
+                                            meetups with psychology experts.
+                                        </Typography>
+                                        <Typography
+                                            className={
+                                                classes.purchaseProductFeature
+                                            }
+                                            variant="subtitle2"
+                                        >
+                                            <Box component={"span"}>&#9755;</Box>
+                                            Challenge workshops. <br />
+                                            Bad habits & Addictions vanishing
+                                            guidance & mentoring.
+                                        </Typography>
+                                        <Typography
+                                            className={
+                                                classes.purchaseProductFeature
+                                            }
+                                            variant="subtitle2"
+                                        >
+                                            <Box component={"span"}>&#9755;</Box>
+                                            24X7 Direct Call Support. <br />
+                                            Not able to take life decisions,
+                                            misunderstanding with parents, have
+                                            stuck in any bad situation line with
+                                            goons or lost at any place. <br />
+                                            Don't be worry. <br />
+                                            Together we beat the problems.
+                                        </Typography>
+                                    </Box>
+
+                                    {/* Purchase product, not yet implemented */}
+                                    <Button
+                                        className={classes.purchaseButton}
+                                        variant="contained"
+                                        onClick={() => handlePayment(2400.00, "SAKHA")}
                                     >
                                         BUY NOW
                                     </Button>
                                 </Box>
                             </Box>
-                        </Box>
-                    </Box>
 
-                    {/* A simple middle illustration, mind map */}
-                    <Box className={classes.appointment}>
-                        <img src={productAppointment} alt="" />
-                    </Box>
-                </Container>
-            </Box>
+                            {/* Another product purchase section */}
+                            <Box className={classes.productPurchaseSection}>
+                                <Box
+                                    className={classes.productPurchaseSectionHeader}
+                                >
+                                    <Typography variant="h5">ACCELRATOR</Typography>
+                                </Box>
 
-            {/* Forms for institute query and student registration */}
-            <Box>
-                <Container>
-                    <Box boxShadow={4} className={classes.contact}>
-                        <Box>
-                            {/* Tabs to select which form to display */}
-                            <Tabs
-                                value={value}
-                                onChange={handleTabsChange}
-                                aria-label="Contact Forms"
-                            >
-                                <Tab
-                                    value="one"
-                                    label="For Organisations"
-                                    wrapped
-                                    {...a11yProps("one")}
-                                />
-                                <Tab
-                                    value="two"
-                                    label="For Students"
-                                    {...a11yProps("two")}
-                                />
-                            </Tabs>
-                        </Box>
+                                {/* Product additional details for the plan */}
+                                <Box className={classes.purchaseProducts}>
+                                    <Box className={classes.purchaseProduct}>
+                                        <Box
+                                            className={
+                                                classes.purchaseProductHeader
+                                            }
+                                        >
+                                            <Typography variant="h6">
+                                                DISHA(Crash Course)
+                                            </Typography>
+                                        </Box>
+                                        <Box className={classes.purchasePlanType}>
+                                            <Typography
+                                                component={"p"}
+                                                variant="body1"
+                                            >
+                                                15 days Career Counselling Progran
+                                            </Typography>
+                                            <Typography variant="h6">
+                                                <sup>₹</sup>690 Only/-
+                                                <Typography variant="body2">
+                                                    (Special Price)
+                                                </Typography>
+                                            </Typography>
+                                        </Box>
+                                        <Box
+                                            className={
+                                                classes.purchaseProductFeatureList
+                                            }
+                                        >
+                                            <Typography
+                                                className={
+                                                    classes.purchaseProductFeature
+                                                }
+                                                variant="subtitle2"
+                                            >
+                                                <Box component={"span"}>
+                                                    {" "}
+                                                    &#9755;
+                                                </Box>
+                                                Premium career workshops with Q&A.{" "}
+                                                <br />
+                                                Well researched 150+ career options
+                                                (all with high pay).
+                                            </Typography>
+                                            <Typography
+                                                className={
+                                                    classes.purchaseProductFeature
+                                                }
+                                                variant="subtitle2"
+                                            >
+                                                <Box component={"span"}>
+                                                    &#9755;
+                                                </Box>
+                                                Detailed Career Report. <br />{" "}
+                                                Contain roadmap about opportunities,
+                                                enterance exams, scholarships, etc.
+                                            </Typography>
+                                        </Box>
 
-                        {/* Tab panel for dispaying selected form */}
-                        <TabPanel value={value} index="one">
-                            {/* Institute query form */}
-                            <InstituteQuery />
-                        </TabPanel>
+                                        {/* Purchase product button, not yet implemented */}
+                                        <Button
+                                            className={classes.purchaseButton}
+                                            variant="contained"
+                                            onClick={() => handlePayment(690.00, "DISHA_CRASH")}
+                                        >
+                                            BUY NOW
+                                        </Button>
+                                    </Box>
 
-                        {/* Tab panel for student registration */}
-                        <TabPanel value={value} index="two">
-                            <StudentRegistration />
-                        </TabPanel>
+                                    {/* Additional details for the combined product purchase plan */}
+                                    <Box
+                                        className={`${classes.purchaseProduct} ${classes.combinedProduct}`}
+                                    >
+                                        <Box
+                                            className={
+                                                classes.purchaseProductHeader
+                                            }
+                                        >
+                                            <Typography variant="h6">
+                                                ACHIEVER
+                                            </Typography>
+                                        </Box>
+                                        <Box
+                                            className={classes.combinedProductList}
+                                        >
+                                            <Box className={classes.combinedPlan}>
+                                                <Typography variant="body1">
+                                                    DISHA
+                                                </Typography>
+                                            </Box>
+                                            <Typography variant="h5">+</Typography>
+                                            <Box className={classes.combinedPlan}>
+                                                <Typography variant="body1">
+                                                    PERSONA
+                                                </Typography>
+                                            </Box>
+                                            <Typography variant="h5">+</Typography>
+                                            <Box className={classes.combinedPlan}>
+                                                <Typography variant="body1">
+                                                    SAKHA
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                        <Box className={classes.purchasePlanType}>
+                                            <Typography
+                                                component={"p"}
+                                                variant="body1"
+                                            >
+                                                Exclusive Complete Student
+                                                Development Program.
+                                            </Typography>
+                                            <Box className={classes.fullPrice}>
+                                                <Typography variant="h6">
+                                                    <sup>₹</sup>{" "}
+                                                    <Typography
+                                                        className={
+                                                            classes.lineThroughPrice
+                                                        }
+                                                        component={"span"}
+                                                    >
+                                                        7200 Only/-
+                                                    </Typography>
+                                                </Typography>
+                                                <Typography variant="body2">
+                                                    (25% Discount)
+                                                </Typography>
+                                            </Box>
+                                            <Typography variant="h6">
+                                                <sup>₹</sup>5400 Only/-
+                                                <Typography variant="body2">
+                                                    (Limited Time Offer)
+                                                </Typography>
+                                            </Typography>
+                                        </Box>
 
-                        {/* Contact section an bottom of the forms */}
-                        {/* Detals yet to be updated */}
-                        <Box className={classes.contactLeft}>
-                            <Box className={classes.contactLeftBottom}>
-                                <Typography variant="h5">CONTACT US</Typography>
-
-                                <Typography component={"p"} variant="body2">
-                                    &#9993; abc@gmail.com
-                                </Typography>
-                                <Typography component={"p"} variant="body2">
-                                    &#9742; +9189696969
-                                </Typography>
+                                        {/* Purchase product button, not yet implemented */}
+                                        <Button
+                                            className={classes.purchaseButton}
+                                            variant="contained"
+                                            onClick={() => handlePayment(5400.00, "ALL_COURSE")}
+                                        >
+                                            BUY NOW
+                                        </Button>
+                                    </Box>
+                                </Box>
                             </Box>
                         </Box>
-                    </Box>
-                </Container>
-            </Box>
-        </Fragment>
+                    </Container>
+                </Box>
+
+                {/* Forms for institute query and student registration */}
+                <Box>
+                    <Container>
+                        <Box boxShadow={4} className={classes.contact}>
+                            <Box>
+                                {/* Tabs to select which form to display */}
+                                <Tabs
+                                    value={value}
+                                    onChange={handleTabsChange}
+                                    aria-label="Contact Forms"
+                                >
+                                    <Tab
+                                        value="one"
+                                        label="For Organisations"
+                                        wrapped
+                                        {...a11yProps("one")}
+                                    />
+                                    <Tab
+                                        value="two"
+                                        label="For Students"
+                                        {...a11yProps("two")}
+                                    />
+                                </Tabs>
+                            </Box>
+
+                            {/* Tab panel for dispaying selected form */}
+                            <TabPanel value={value} index="one">
+                                {/* Institute query form */}
+                                <InstituteQuery />
+                            </TabPanel>
+
+                            {/* Tab panel for student registration */}
+                            <TabPanel value={value} index="two">
+                                <StudentRegistration />
+                            </TabPanel>
+
+                            {/* Contact section an bottom of the forms */}
+                            {/* Detals yet to be updated */}
+                            <Box className={classes.contactLeft}>
+                                <Box className={classes.contactLeftBottom}>
+                                    <Typography variant="h5">CONTACT US</Typography>
+
+                                    <Typography component={"p"} variant="body2">
+                                        &#9993; abc@gmail.com
+                                    </Typography>
+                                    <Typography component={"p"} variant="body2">
+                                        &#9742; +9189696969
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        </Box>
+                    </Container>
+                </Box>
+            </Fragment>
+        </>
     );
 };
 

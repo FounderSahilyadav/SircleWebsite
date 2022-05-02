@@ -162,6 +162,8 @@ router.post("/login", (req, res) => {
 
     try {
         const { email, password } = req.body;
+        console.log('called');
+        console.log(email, password);
         connection.query(`SELECT * FROM Students WHERE email = '${email}' or phone = '${email}';`,
             function(err, results, fields) {
                 if (err) {
@@ -189,6 +191,7 @@ router.post("/login", (req, res) => {
                                             if (err) {
                                                 res.status(400).send(err.message);
                                             } else {
+                                                console.log(token);
                                                 res.status(202).json({ token });
                                             }
                                         }
@@ -244,7 +247,7 @@ router.post("/verify/phone", validatePhone, (req, res) => {
                                     if (err) {
                                         res.status(400).send(err.message);
                                     } else {
-                                        conosle.log(code);
+                                        // conosole.log(code);
                                         console.log(results);
                                         res.status(202).json({ message: "OTP Sent" });
                                     }
@@ -374,8 +377,135 @@ router.post("/update/email", fetchuser, async(req, res) => {
     }
 });
 
+// Update Education
+router.post("/update/education", fetchuser, async(req, res) => {
+    try {
+        const { institute, grade, board, year } = req.body;
+        connection.query(
+            `UPDATE Students SET institute = '${institute}', grade = '${grade}', board = '${board}', year = '${year}' WHERE id = '${req.user.id}';`,
+            function(err, results, fields) {
+
+                if (err) {
+                    res.status(400).send(err.message);
+                } else {
+                    res.status(202).json({ message: "Education Updated" });
+                }
+            }
+        );
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+// Update Password
+router.post("/update/password", fetchuser, async(req, res) => {
+    try {
+        const { newpassword } = req.body;
+        if (newpassword.length < 8) {
+            return res.status(400).send("Password Must Be Atleast 8 Characters Long");
+        }
+        connection.query(
+            `SELECT * FROM Students WHERE id = '${req.user.id}';`,
+            async function(err, results, fields) {
+                if (err) {
+                    res.status(400).send(err.message);
+                } else {
+                    if (results.length === 0) {
+                        res.status(401).send("Student Not Found");
+                    } else {
+                        const salt = await bcrypt.genSalt(10);
+                        const userPassword = await bcrypt.hash(newpassword, salt);
+                        connection.query(
+                            `UPDATE Students SET password = '${userPassword}' WHERE id = '${req.user.id}';`,
+                            function(err, results, fields) {
+                                if (err) {
+                                    res.status(400).send(err.message);
+                                } else {
+                                    res.status(202).json({ message: "Password Updated" });
+                                }
+                            }
+                        );
+                    }
+                }
+            });
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+// reset password
+router.post("/reset/password", async(req, res) => {
+    try {
+        const { phone, otp } = req.body;
+        connection.query(
+            `SELECT * FROM Students WHERE phone = '${phone}';`,
+            function(err, results, fields) {
+                if (err) {
+                    res.status(400).send(err.message);
+                } else {
+                    if (results.length === 0) {
+                        res.status(401).send("Student Not Found");
+                    } else {
+                        const student = results[0];
+                        connection.query(
+                            `SELECT * FROM PhoneVerify WHERE phone = '${phone}';`,
+                            function(err, results, fields) {
+                                if (err) {
+                                    res.status(400).send(err.message);
+                                } else {
+                                    if (results.length === 0) {
+                                        res.status(401).send("Phone Number Not Verified");
+                                    } else {
+                                        const verify = results[0];
+                                        bcrypt.compare(otp, verify.otp, function(err, result) {
+                                            if (err) {
+                                                res.status(400).send(err.message);
+                                            } else {
+                                                if (result) {
+                                                    const data = {
+                                                        user: {
+                                                            id: student.id
+                                                        }
+                                                    }
+                                                    const token = jwt.sign(data, JWT_SECRET);
+                                                    const expireAt = new Date(Date.now() + 3600000 * 24).toISOString().slice(0, 19).replace('T', ' ');
+                                                    connection.query(
+                                                        `UPDATE Students SET token = '${token}', expireAt = '${expireAt}' WHERE  phone = '${student.phone}';`,
+                                                        function(err, results, fields) {
+                                                            if (err) {
+                                                                res.status(400).send(err.message);
+                                                            } else {
+                                                                res.status(202).json({ token });
+                                                            }
+                                                        }
+                                                    );
+                                                } else {
+                                                    res.status(401).send("OTP Incorrect");
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        );
+                    }
+                }
+            }
+        );
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+//                         
+
+
+
+
+
 
 module.exports = router;
 // Create table
 // CREATE TABLE Students(id int(6) PRIMARY KEY AUTO_INCREMENT, name text not NULL, phone text not NULL, grade text not NULL, institute text, email text, password text, token text, expireAt text, verify bool DEFAULT false);
 // Create table phoneVerify(id int(6) PRIMARY KEY AUTO_INCREMENT, phone text not NULL, otp text, expireAt datetime);
+// Alter TABLE Students ADD Board text, Year text;

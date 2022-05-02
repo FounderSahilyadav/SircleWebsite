@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import Button from '@mui/material/Button';
-import userLogo from '../../assets/user_logo.png';
+import userLogo from '../../assets/profile_logo.png';
 import MuiAlert from "@material-ui/lab/Alert";
 import { CircularProgress } from '@material-ui/core';
-import { changeEmail, changePhone } from '../../utils/student_update'
+import { changeEducation, changeEmail, changePhone } from '../../utils/student_update'
+import { TextField } from '@material-ui/core';
 import { sendOtp } from '../../utils/student';
 const useStyles = makeStyles((theme) => ({
     app: {
-        marginTop: "100px",
+        margin: '0',
+        marginTop: '10px',
+        paddingLeft: '30px',
+        paddingRight: '30px',
+        paddingTop: "100px",
         fontSize: "20px",
-        margin: "5px",
+        background: "rgba(24,169,226,0.1)",
+        fontFamily: "Roboto",
     },
     userLogo: {
-        height: "300px",
+        height: "150px",
         filter: "drop-shadow(5px 5px 5px #000)",
     },
     ml: {
@@ -21,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
     pad: {
         padding: "5px",
+        marginRight: "20px",
     },
     alert: {
         position: 'fixed',
@@ -35,11 +42,39 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '15px',
         marginLeft: '10px',
         cursor: 'pointer',
+    },
+    education: {
+        display: 'flex',
+        flexDirection: 'row',
+        itemsWidth: '50%',
+        marginTop: '20px',
+    },
+    inp: {
+        width: '25%',
+        minWidth: '150px',
+        marginTop: '10px',
+        marginBottom: '10px',
+        fontSize: '20px',
+        height: '30px',
+        borderRadius: '5px',
+        border: '1px solid #18A9E2',
     }
+
 }));
 const Alert = (props) => {
     return <MuiAlert {...props} />;
 };
+
+const studentClass = [
+    { value: "Class IX", label: "Class IX" },
+    { value: "Class X", label: "Class X" },
+    { value: "Class XI Science", label: "Class XI Science" },
+    { value: "Class XI Commerce", label: "Class XI Commerce" },
+    { value: "Class XI Humanities", label: "Class XI Humanities" },
+    { value: "Class XII Science", label: "Class XII Science" },
+    { value: "Class XII Commerce", label: "Class XII Commerce" },
+    { value: "Class XII Humanities", label: "Class XII Humanities" },
+];
 
 const StudentProfile = (props) => {
     const classes = useStyles();
@@ -55,6 +90,22 @@ const StudentProfile = (props) => {
     const [phone, setPhone] = useState(studentData.phone);
     const [newPhone, setNewPhone] = useState('');
     const [otp, setOtp] = useState('');
+
+    // For Education
+    // const [updateEducation, setUpdateEducation] = useState(false);
+    const [institute, setInstitute] = useState(studentData.institute);
+    const [grade, setGrade] = useState(studentData.grade);
+    const [board, setBoard] = useState(studentData.board);
+    const [year, setYear] = useState(studentData.year);
+    const [newInstitute, setNewInstitute] = useState(institute);
+    const [newGrade, setNewGrade] = useState(grade);
+    const [newBoard, setNewBoard] = useState(board);
+    const [newYear, setNewYear] = useState(year);
+    const [openIntitute, setOpenIntitute] = useState(false);
+    const [openGrade, setOpenGrade] = useState(false);
+    const [openBoard, setOpenBoard] = useState(false);
+    const [openYear, setOpenYear] = useState(false);
+
 
     // Alerts and Loaders
     const [loader, setLoader] = useState(false); //Loader, while the student is being registered
@@ -102,46 +153,174 @@ const StudentProfile = (props) => {
         sendOtp({ phone: newPhone }, setLoader, setError, setSuccess);
     }
 
+    // For Education Update function
+    // const handleEducationClose = () => {
+    //     setUpdateEducation(false);
+    // }
+
+    const handleopenGrade = () => {
+        setOpenGrade(true);
+    }
+    const handleopenBoard = () => {
+        setOpenBoard(true);
+    }
+    const handleopenYear = () => {
+        setOpenYear(true);
+    }
+    const handleopenIntitute = () => {
+        setOpenIntitute(true);
+    }
+    const handlecloseGrade = () => {
+        setOpenGrade(false);
+    }
+    const handlecloseBoard = () => {
+        setOpenBoard(false);
+    }
+    const handlecloseYear = () => {
+        setOpenYear(false);
+    }
+    const handlecloseIntitute = () => {
+        setOpenIntitute(false);
+    }
+    const handleEducationChange = (e) => {
+        if (e.target.name === 'institute') {
+            setNewInstitute(e.target.value);
+        }
+        if (e.target.name === 'grade') {
+            setNewGrade(e.target.value);
+        }
+        if (e.target.name === 'board') {
+            setNewBoard(e.target.value);
+        }
+
+        if (e.target.name === 'year') {
+            setNewYear(e.target.value);
+        }
+    }
+    // const handleEudcationUpdate = () => {
+    //     console.log('update education');
+    //     setUpdateEducation(true);
+    // }
+    // const handleInstituteChange = (e) => {
+    //     setNewInstitute(e.target.value);
+    // }
+    // const handleGradeChange = (e) => {
+    //     setNewGrade(e.target.value);
+    // }
+    const handleEducationUpdateSubmit = async () => {
+        console.log(newInstitute);
+        await changeEducation(newInstitute, newGrade, newBoard, newYear, setLoader, setError, setSuccess, studentToken,
+            setInstitute, setGrade, setBoard, setYear);
+        handlecloseYear();
+        handlecloseGrade();
+        handlecloseBoard();
+        handlecloseIntitute();
+
+    }
+
     useEffect(() => {
         setTimeout(() => {
             setError(null);
             setSuccess(null);
-        }, 2000);
+        }, 5000);
     }, [error, success]);
     return (
-        <div className={classes.app}>
-            {studentToken === "" ? <h1>Please Login</h1> :
-                <div>
-                    <div className={classes.alert}>
-                        {error ? <Alert severity="error">{error}</Alert> : ""}
-                        {success ? <Alert severity="success">{success}</Alert> : ""}
-                    </div>
-                    <h3>My Profile</h3>
-                    <p><img className={classes.userLogo} src={userLogo} alt="User" />  {studentData.name}</p>
-                    <p >Your Email: {email}<Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleUpdateEmail}>Change Email</Button></p>
-                    {updateEmail ? (<><input typeof='email' value={newEmail} onChange={handleEmailChange} className={classes.pad} />
-                        <input typeof='number' value={otp} onChange={handleOtpChange} className={classes.pad} placeholder="Enter Email" />
-                        {loader ? (
-                            <CircularProgress />
-                        ) : (
-                            <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleUpdateEmailSubmit}>Update Email</Button>)}
-                        <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleClose}>Cancel</Button>
-                    </>) : null}
-                    <p>Your Phone Number: {phone}<Button style={{ marginLeft: '20px' }} variant="outlined"
-                        onClick={handleUpdatePhone}>Change Phone</Button></p>
-                    {updatePhone ? (<><input typeof='number' value={newPhone} onChange={handlePhoneChange} className={classes.pad} placeholder="Enter Phone" /> <span className={classes.otp} onClick={handleSendOtp}>Send OTP</span><br />
-                        <input typeof='number' value={otp} onChange={handleOtpChange} className={classes.pad} placeholder="Enter Otp" />
+        <div className='myprofile'>
+            <div className={classes.app}>
+                {studentToken === "" ? <h1>Please Login</h1> :
+                    <div>
+                        <div className={classes.alert}>
+                            {error ? <Alert severity="error">{error}</Alert> : ""}
+                            {success ? <Alert severity="success">{success}</Alert> : ""}
+                        </div>
+                        <h2>My Profile</h2>
+                        <div ><img className={classes.userLogo} src={userLogo} alt="User" />
+                            <p><b>Name:</b> {studentData.name}</p></div>
+
+                        {/* Email */}
+                        <p ><b>Your Email</b>: {email}<Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleUpdateEmail}>Change Email</Button></p>
+                        {updateEmail ? (<><input typeof='email' value={newEmail} onChange={handleEmailChange} className={classes.inp} placeholder='Enter Email' />
+                            {loader ? (
+                                <CircularProgress />
+                            ) : (
+                                <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleUpdateEmailSubmit}>Update Email</Button>)}
+                            <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleClose}>Cancel</Button>
+                        </>) : null}
+
+                        {/* Phone */}
+                        <p><b>Your Phone Number</b>: {phone}<Button style={{ marginLeft: '20px' }} variant="outlined"
+                            onClick={handleUpdatePhone}>Change Phone</Button></p>
+                        {updatePhone ? (<><input typeof='number' value={newPhone} onChange={handlePhoneChange} className={classes.inp} placeholder="Enter Phone" /> <span className={classes.otp} onClick={handleSendOtp}>Send OTP</span><br />
+                            <input typeof='number' value={otp} onChange={handleOtpChange} className={classes.inp} placeholder="Enter Otp" />
+                            {loader ? (
+                                <CircularProgress style={{ marginLeft: '20px' }} />
+                            ) : (
+                                <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleUpdatePhoneSubmit}>Update Phone</Button>)}
+                            <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handlePhoneClose}>Cancel</Button>
+                        </>) : null}
+                        <hr />
+                        {/* Intitute Details */}
+                        <h3>Education Details</h3>
+                        <div className={classes.education}>
+                            <div style={{ width: "50%" }}>
+                                <p><b>Institute</b>: {institute}<Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleopenIntitute}>Change Institute</Button></p>
+                                {openIntitute ? (<>
+                                    <input typeof='text' name='institute' value={newInstitute} onChange={handleEducationChange} className={classes.inp} placeholder="Enter Institute" />
+                                    <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handlecloseIntitute}>Cancel</Button>
+                                </>) : null}
+                                <p><b>Grade</b>: {grade}<Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleopenGrade}>Change Grade</Button></p>
+                                {openGrade ? (<>
+                                    <TextField
+                                        style={{ width: "50%" }}
+                                        select
+                                        name="grade"
+                                        placeholder="* Select Grade"
+                                        // value={studentClass}
+                                        helperText="Please select your grade"
+                                        SelectProps={{
+                                            native: true,
+                                        }}
+                                        size="small"
+                                        margin="normal"
+                                        onChange={handleEducationChange}
+                                        value={newGrade}
+                                        fullWidth
+                                    >
+                                        {studentClass.map((option, index) => (
+                                            <option key={index} value={studentClass.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </TextField>
+                                    <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handlecloseGrade}>Cancel</Button>
+                                </>) : null}
+
+                            </div>
+                            <div>
+                                <p><b>Board</b>: {board}<Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleopenBoard}>Change Board</Button></p>
+                                {openBoard ? (<>
+
+                                    <input typeof='text' name='board' value={newBoard} onChange={handleEducationChange} className={classes.inp} placeholder="Enter Board" />
+                                    <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handlecloseBoard}>Cancel</Button>
+                                </>) : null}
+                                <p><b>Year of Passing</b>: {year}<Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleopenYear}>Change Year</Button></p>
+                                {openYear ? (<>
+                                    <input typeof='number' name='year' value={newYear} onChange={handleEducationChange} className={classes.inp} placeholder="Enter Year" />
+                                    <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handlecloseYear}>Cancel</Button>
+                                </>) : null}
+                            </div>
+
+                        </div>
                         {loader ? (
                             <CircularProgress style={{ marginLeft: '20px' }} />
                         ) : (
-                            <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handleUpdatePhoneSubmit}>Update Phone</Button>)}
-                        <Button style={{ marginLeft: '20px' }} variant="outlined" onClick={handlePhoneClose}>Cancel</Button>
-                    </>) : null}
-                    <h3>Your Grade: {studentData.grade}</h3>
-                    <h3>Your Institute: {studentData.institute}</h3>
-                </div>
-            }
-        </div >
+                            <Button variant="outlined" onClick={handleEducationUpdateSubmit}>Update Education</Button>)}
+
+                    </div>
+                }
+                <hr />
+            </div >
+        </div>
     )
 }
 

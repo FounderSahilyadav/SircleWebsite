@@ -1,7 +1,7 @@
 import { Box, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import heroBackground from "../../assets/heroBackground.jpg";
-import heroSectionAnim from "../../assets/Sircle_gif.mp4";
+import heroBackground from "../../assets/hero_background.jpg";
+import heroSectionAnim from "../../assets/Animation.mp4";
 
 const useStyles = makeStyles((theme) => ({
     heroSectionBackground: {
@@ -25,11 +25,19 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
         "& > video": {
             // width: "60%",
-            height: "250px",
+            height: "500px",
             marginTop: "40px",
             background: "none",
+            marginLeft: "70px",
         },
-    },
+        [theme.breakpoints.down("sm")]: {
+            "& > video": {
+                marginLeft: "0px",
+                height: "400px",
+                width: "100%",
+            }
+        },
+    }
 }));
 
 const HeroSection = () => {
@@ -39,14 +47,14 @@ const HeroSection = () => {
     return (
         <Box className={classes.heroSectionBackground}>
             <Box className={classes.heroSection}>
-                <Container>
-                    <Box className={classes.heroContent}>
-                        <video autoPlay={true} controls={false} muted={true}>
-                            <source src={heroSectionAnim} type="video/mp4" />
-                            Sorry, your browser doesn't support embedded videos.
-                        </video>
-                    </Box>
-                </Container>
+                {/* <Container> */}
+                <Box className={classes.heroContent}>
+                    <video autoPlay={true} controls={false} muted={true} >
+                        <source src={heroSectionAnim} type="video/mp4" className={classes.video} />
+                        Sorry, your browser doesn't support embedded videos.
+                    </video>
+                </Box>
+                {/* </Container> */}
             </Box>
         </Box>
     );

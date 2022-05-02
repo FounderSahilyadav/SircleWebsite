@@ -28,6 +28,11 @@ import AdminTeamMembers from "./Components/AdminPanel/AdminTeamMembers";
 import StudentSign from "./Components/StudentRegister/StudentSign";
 import { getStudentDetails } from "./utils/student";
 import StudentProfile from "./Components/MyProfile/StudentProfile";
+import ChangePassword from "./Components/StudentRegister/ChangePassword";
+import ContactUsPopup from "./Components/Home/ContactUsPopup";
+import WhatsApp from "./Components/WhatsApp";
+import CourseBuy from "./Components/Home/CourseBuy";
+import Myproducts from "./Components/Products/Myproducts";
 
 const useStyles = makeStyles((theme) => ({
     circularProgress: {
@@ -48,6 +53,8 @@ function App() {
     const [expire, setExpire] = useState("");
     const [loader, setLoader] = useState(true);
     const [studentData, setStudentData] = useState({});
+    const [openPassword, setOpenPassword] = useState(false);
+    const [openContact, setOpenContact] = useState(false);
 
     const handleSignOpen = () => {
         setSignOpen(true);
@@ -104,12 +111,13 @@ function App() {
             ) : (
                 <Fragment>
                     <Box component={"div"} className="App">
-                        <Navbar handleClickOpen={handleClickOpen} handleSignOpen={handleSignOpen} studentToken={studentToken} setStudentToken={setStudentToken} studentData={studentData} />
+                        <Navbar handleClickOpen={handleClickOpen} handleSignOpen={handleSignOpen} studentToken={studentToken}
+                            setStudentToken={setStudentToken} studentData={studentData} setOpenPassword={setOpenPassword} setOpenContact={setOpenContact} />
                         <Routes>
                             <Route exact path="/" element={<Home />} />
                             <Route
                                 path="/our-products"
-                                element={<Products />}
+                                element={<Products studentData={studentData} />}
                             />
                             <Route exact path="/myprofile" element={<StudentProfile studentData={studentData} studentToken={studentToken} />} />
                             <Route path="/videos" element={<Videos />} />
@@ -157,6 +165,15 @@ function App() {
                                 path="/administrator/squad_members"
                                 element={<AdminTeamMembers />}
                             />
+                            <Route
+                                path="/course/fee"
+                                element={<CourseBuy studentData={studentData} studentToken={studentToken} />}
+                            />
+                            <Route
+                                path="/myprograms"
+                                element={<Myproducts studentToken={studentToken} />}
+                            />
+
                         </Routes>
                         <Footer />
                     </Box>
@@ -166,7 +183,10 @@ function App() {
                             handleClose={handleClose}
                         />
                         <StudentSign open={signOpen} handleClose={handleSignClose} setStudentToken={setStudentToken} studentToken={studentToken} />
+                        <ChangePassword open={openPassword} handleClose={() => setOpenPassword(false)} studentToken={studentToken} />
+                        <ContactUsPopup open={openContact} handleClose={() => setOpenContact(false)} />
                     </Box>
+                    <WhatsApp />
                 </Fragment>
             )}{" "}
         </Router>

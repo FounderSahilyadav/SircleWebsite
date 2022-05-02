@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import StudentSignIn from '../../Forms/StudentSignIn';
 import StudentSignUp from '../../Forms/StudentSignUp';
 import Button from '@mui/material/Button';

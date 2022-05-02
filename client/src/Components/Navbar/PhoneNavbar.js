@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PhoneNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentToken, studentData }) => {
+const PhoneNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentToken, studentData, setOpenPassword, setOpenContact }) => {
     const classes = useStyles();
     const anchor = "left";
     const [state, setState] = useState(false);
@@ -109,6 +109,14 @@ const PhoneNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudent
         localStorage.removeItem("token");
         handleClose();
         console.log(studentToken);
+    }
+    const handleChangePassword = () => {
+        setOpenPassword(true);
+        handleClose();
+    }
+    const handleContact = () => {
+        setOpenContact(true);
+        handleClose();
     }
 
     const handlemenuOpen = (open) => (event) => {
@@ -227,11 +235,12 @@ const PhoneNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudent
                                     MenuListProps={{
                                         'aria-labelledby': 'basic-button',
                                     }}
+                                    className="menu"
                                 >
                                     <MenuItem onClick={handleClose}>My Profile</MenuItem>
-                                    <MenuItem onClick={handleClose}><img className={classes.keyIcon} src={keyIcon} alt="img" /> Change Password</MenuItem>
+                                    <MenuItem onClick={handleChangePassword}><img className={classes.keyIcon} src={keyIcon} alt="img" /> Change Password</MenuItem>
                                     <MenuItem onClick={handleClose}>My Programs</MenuItem>
-                                    <MenuItem onClick={handleClose}>Contact US</MenuItem>
+                                    <MenuItem onClick={handleContact}>Contact US</MenuItem>
                                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                 </Menu>
                             </>)}

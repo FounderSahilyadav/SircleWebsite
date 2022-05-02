@@ -74,6 +74,11 @@ export default function StudentSignIn({ handleClose, setStudentToken, studentTok
             setLoader, setError, setSuccess, setStudentToken, handleClose, studentToken);
     };
 
+    const handleResetPassword = () => {
+        console.log("Reset Password");
+        handleClose();
+    };
+
     return (
         <DialogContent>
             <Typography variant="body1" component={"p"}>
@@ -117,6 +122,9 @@ export default function StudentSignIn({ handleClose, setStudentToken, studentTok
                     onChange={handleStudentDetails}
                 />
             </Box>
+            <Button onClick={handleResetPassword} color="primary" style={{ fontSize: '12px' }}>
+                Forgot password?
+            </Button>
             <DialogActions>
                 <Button onClick={handleClose} color="primary" style={{ marginTop: "15px" }}>
                     Cancel

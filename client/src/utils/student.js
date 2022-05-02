@@ -42,7 +42,7 @@ const validateOtp = (studentDetails) => {
     return true;
 }
 
-export const sendOtp = async(studentDetails, setLoader, setError, setSuccess) => {
+export const sendOtp = async (studentDetails, setLoader, setError, setSuccess) => {
     const { phone } = studentDetails;
     setLoader(true);
     if (validateOtp(studentDetails)) {
@@ -119,7 +119,7 @@ const validateStudentSignUp = (studentDetails, setError) => {
 }
 
 // Get student details
-export const getStudentDetails = async(studentToken, setStudentToken) => {
+export const getStudentDetails = async (studentToken, setStudentToken) => {
     try {
         const result = await Axios({
             method: "POST",
@@ -143,7 +143,7 @@ export const getStudentDetails = async(studentToken, setStudentToken) => {
 }
 
 // Login a student
-export const loginStudent = async(
+export const loginStudent = async (
     studentDetails,
     setLoader,
     setError,
@@ -171,8 +171,8 @@ export const loginStudent = async(
                     "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
                 },
             });
+            console.log(result);
             localStorage.setItem('token', result.data.token);
-            console.log(result.data.token);
             setStudentToken(result.data.token);
             setLoader(false);
             setSuccess("Logged in!");
@@ -189,7 +189,7 @@ export const loginStudent = async(
 }
 
 // Sign up a student
-export const signUpStudent = async(
+export const signUpStudent = async (
     studentDetails,
     setLoader,
     setError,
@@ -222,7 +222,7 @@ export const signUpStudent = async(
                 }
             });
             localStorage.setItem('token', result.data.token);
-            setStudentToken(result.data.token);
+            await setStudentToken(result.data.token);
             setLoader(false);
             setSuccess("Successfully signed up!");
             handleClose();
@@ -238,7 +238,7 @@ export const signUpStudent = async(
 
 
 // Register a student
-export const registerStudent = async(
+export const registerStudent = async (
     studentDetails,
     setLoader,
     setError,
@@ -271,7 +271,7 @@ export const registerStudent = async(
 };
 
 // Get all registered students for demo session (admin)
-export const getAllStudents = async() => {
+export const getAllStudents = async () => {
     try {
         const result = await Axios({ method: "GET", url: "/student" });
         return result.data;

@@ -7,6 +7,8 @@ import {
     Box,
     Menu,
     MenuItem,
+    Fade,
+    ListItemIcon,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
@@ -14,6 +16,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import userLogo from "../../assets/user_logo.png";
 import keyIcon from "../../assets/key_icon.png";
+import Logout from '@mui/icons-material/Logout';
 // import 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,23 +25,28 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: "none",
         paddingTop: "4px",
         paddingBottom: "4px",
+        paddingRight: "20px",
         margin: "0",
         height: "72px",
+        width: "100%",
     },
     toolBar: {
+        display: "flex",
+        justifyContent: "center",
         background: "none",
+        width: "100%",
     },
     navContainer: {
         display: "flex",
         flexDirection: "row",
-        alignItems: "center",
-        width: "100%",
+        width: "fit-content",
+        margin: "0",
     },
     navItems: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
+        justifyContent: "space-between",
         width: "100%",
     },
     brand: {
@@ -61,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
         // color: "rgba(102, 112, 133, 1)",
         color: "#fff",
         textDecoration: "none",
-        fontSize: "16px",
+        fontSize: "17px",
         margin: "auto 0",
         float: "center",
     },
@@ -89,11 +97,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentToken, studentData }) => {
+const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentToken, studentData, setOpenPassword, setOpenContact }) => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
+        event.preventDefault();
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
@@ -105,6 +114,15 @@ const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentTok
         handleClose();
         console.log(studentToken);
     }
+    const handleChangePassword = () => {
+        setOpenPassword(true);
+        handleClose();
+    }
+    const handleContact = () => {
+        setOpenContact(true);
+        handleClose();
+    }
+
     return (
         <AppBar className={classes.appBar}>
             <CssBaseline />
@@ -119,105 +137,134 @@ const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentTok
                             />
                         </Link>
                     </Box>
-
-                    {/* Links in the navbar */}
-                    <Box className={classes.navItems}>
-                        <Box className={classes.navLinks}>
-                            <Box className={classes.navLink}>
-                                <Link to={"/"} className={classes.link}>
-                                    Home
-                                </Link>
-                            </Box>
-                            <Box className={classes.navLink}>
-                                <Link
-                                    to={"/our-products"}
-                                    className={classes.link}
-                                >
-                                    Our Products
-                                </Link>
-                            </Box>
-                            <Box className={classes.navLink}>
-                                <Link to={"/blogs"} className={classes.link}>
-                                    Blogs
-                                </Link>
-                            </Box>
-                            <Box className={classes.navLink}>
-                                <Link to={"/videos"} className={classes.link}>
-                                    Videos
-                                </Link>
-                            </Box>
-                            <Box className={classes.navLink}>
-                                <Link to={"/about"} className={classes.link}>
-                                    About Us
-                                </Link>
-                            </Box>
+                </Container>
+                {/* Links in the navbar */}
+                <Box className={classes.navItems}>
+                    <Box className={classes.navLinks}>
+                        <Box className={classes.navLink}>
+                            <Link to={"/"} className={classes.link}>
+                                Home
+                            </Link>
                         </Box>
-                        <Box className={classes.navButtons}>
-                            <Box boxShadow={2} className={classes.buyPrograms}>
-                                <Link to={"/our-products"}>
-                                    BUY OUR PROGRAMS
-                                </Link>
-                            </Box>
+                        <Box className={classes.navLink}>
+                            <Link
+                                to={"/our-products"}
+                                className={classes.link}
+                            >
+                                Our Products
+                            </Link>
+                        </Box>
+                        <Box className={classes.navLink}>
+                            <Link to={"/blogs"} className={classes.link}>
+                                Blogs
+                            </Link>
+                        </Box>
+                        <Box className={classes.navLink}>
+                            <Link to={"/videos"} className={classes.link}>
+                                Videos
+                            </Link>
+                        </Box>
+                        <Box className={classes.navLink}>
+                            <Link to={"/about"} className={classes.link}>
+                                About Us
+                            </Link>
+                        </Box>
+                    </Box>
+                    <Box className={classes.navButtons}>
+                        <Box boxShadow={2} className={classes.buyPrograms}>
+                            <Link to={"/our-products"}>
+                                BUY OUR PROGRAMS
+                            </Link>
+                        </Box>
 
-                            {/* To open sialog box for students register */}
-                            {/* handleOpenCLick - handles the opening of the disalog box, passes as prop to the component */}
+                        {/* To open sialog box for students register */}
+                        {/* handleOpenCLick - handles the opening of the disalog box, passes as prop to the component */}
 
-                            <Button
-                                style={{ marginLeft: "20px" }}
-                                onClick={handleClickOpen}
+                        <Button
+                            style={{ marginLeft: "20px" }}
+                            onClick={handleClickOpen}
+                            variant="contained"
+                            color="primary"
+                        // fullWidth
+                        >
+                            Book Free Trial Now
+                        </Button>
+                        {/* Direct to products page */}
+                        {studentToken == "" ? (
+                            <span
+                                style={{ marginLeft: "20px", cursor: "pointer" }}
+                                onClick={handleSignOpen}
                                 variant="contained"
                                 color="primary"
                             // fullWidth
                             >
-                                Book Free Trial Now
-                            </Button>
-                            {/* Direct to products page */}
-                            {studentToken == "" ? (
-                                <span
-                                    style={{ marginLeft: "20px", cursor: "pointer" }}
-                                    onClick={handleSignOpen}
-                                    variant="contained"
-                                    color="primary"
-                                // fullWidth
+                                SignIn
+                            </span>) : (
+                            <>
+                                <img
+                                    className={classes.userLogo}
+                                    src={userLogo}
+                                    alt="User"
+                                />
+                                <Box
+                                    id="basic-button"
+                                    style={{ marginLeft: "10px", cursor: "pointer" }}
+                                    aria-controls={open ? 'basic-menu' : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? 'true' : undefined}
+                                    onClick={handleClick}
                                 >
-                                    SignIn
-                                </span>) : (
-                                <>
-                                    <img
-                                        className={classes.userLogo}
-                                        src={userLogo}
-                                        alt="User"
-                                    />
-                                    <span
-                                        id="basic-button"
-                                        style={{ marginLeft: "10px", cursor: "pointer" }}
-                                        aria-controls={open ? 'basic-menu' : undefined}
-                                        aria-haspopup="true"
-                                        aria-expanded={open ? 'true' : undefined}
-                                        onClick={handleClick}
-                                    >
-                                        {studentData.name.trim().split(' ')[0]} &#9660;
-                                    </span>
-                                    <Menu
-                                        id="basic-menu"
-                                        anchorEl={anchorEl}
-                                        open={open}
-                                        onClose={handleClose}
-                                        MenuListProps={{
-                                            'aria-labelledby': 'basic-button',
-                                        }}
-                                    >
-                                        <MenuItem onClick={handleClose}>My Profile</MenuItem>
-                                        <MenuItem onClick={handleClose}><img className={classes.keyIcon} src={keyIcon} alt="img" /> Change Password</MenuItem>
-                                        <MenuItem onClick={handleClose}>My Programs</MenuItem>
-                                        <MenuItem onClick={handleClose}>Contact US</MenuItem>
-                                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                                    </Menu>
-                                </>)}
+                                    {studentData.name.trim().split(' ')[0]} &#9660;
+                                </Box>
+                                <Menu
+                                    anchorEl={anchorEl}
+                                    id="account-menu"
+                                    open={open}
+                                    onClose={handleClose}
+                                    onClick={handleClose}
+                                    PaperProps={{
+                                        elevation: 0,
+                                        sx: {
+                                            overflow: 'visible',
+                                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                            mt: 1.5,
+                                            '& .MuiAvatar-root': {
+                                                width: 32,
+                                                height: 32,
+                                                ml: -0.5,
+                                                mr: 1,
+                                            },
+                                            '&:before': {
+                                                content: '""',
+                                                display: 'block',
+                                                position: 'absolute',
+                                                top: 0,
+                                                right: 14,
+                                                width: 10,
+                                                height: 10,
+                                                bgcolor: 'background.paper',
+                                                transform: 'translateY(-50%) rotate(45deg)',
+                                                zIndex: 0,
+                                            },
+                                        },
+                                    }}
+                                    className="menu"
+                                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                >
+                                    <MenuItem onClick={handleClose}><Link to="/myprofile"> My Profile</Link></MenuItem>
+                                    <MenuItem onClick={handleChangePassword}><img className={classes.keyIcon} src={keyIcon} alt="img" /> Change Password</MenuItem>
+                                    <MenuItem onClick={handleClose}><Link to="/myprograms"> My Programs</Link></MenuItem>
+                                    <MenuItem onClick={handleContact}>Contact US</MenuItem>
+                                    <MenuItem onClick={handleLogout}>
+                                        Logout
+                                    </MenuItem>
+                                </Menu>
+                            </>)}
 
-                        </Box>
                     </Box>
-                </Container>
+                </Box>
+
             </Toolbar>
         </AppBar>
     );
