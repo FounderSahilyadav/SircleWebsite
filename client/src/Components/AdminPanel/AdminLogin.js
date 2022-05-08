@@ -41,10 +41,10 @@ const AdminLogin = () => {
                         "application/x-www-form-urlencoded;charset=utf-8",
                 },
             });
-            console.log(result.data);
+            // console.log(result.data);
             dispatch({ type: "SET_ADMIN" });
         } catch (err) {
-            console.log(err.response);
+            // console.log(err.response);
         }
     };
     return (

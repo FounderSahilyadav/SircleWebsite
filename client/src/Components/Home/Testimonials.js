@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        minWidth: "500px",
         padding: "20px",
         background: "#1D2939",
     },
@@ -225,7 +226,7 @@ const Testimonials = () => {
                     className={classes.videoFrame}
                     src={`https://www.youtube.com/embed/${test.youtubeVideoId}?autostart=0&modestbranding=0&rel=0&fs=0&showinfo=0`}
                     title="YouTube video player"
-                    frameborder="0"
+                    frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                 ></iframe>

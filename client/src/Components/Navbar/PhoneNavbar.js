@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     userLogo: {
-        height: "40px",
+        height: "30px",
         marginLeft: "20px",
     },
     keyIcon: {
@@ -239,7 +239,7 @@ const PhoneNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudent
                                 >
                                     <MenuItem onClick={handleClose}>My Profile</MenuItem>
                                     <MenuItem onClick={handleChangePassword}><img className={classes.keyIcon} src={keyIcon} alt="img" /> Change Password</MenuItem>
-                                    <MenuItem onClick={handleClose}>My Programs</MenuItem>
+                                    <MenuItem onClick={handleClose}><Link to="/myprograms"> My Programs</Link></MenuItem>
                                     <MenuItem onClick={handleContact}>Contact US</MenuItem>
                                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                                 </Menu>

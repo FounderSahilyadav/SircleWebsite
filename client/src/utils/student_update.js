@@ -157,7 +157,7 @@ export const changePassword = async(
     setLoader(true);
     setError(null);
     setSuccess(null);
-    if (!password.newPassword || password.newPassword === 0) {
+    if (!password.newPassword || password.newPassword.length < 7) {
         setError("Please enter a valid password!");
         setLoader(false);
         return;
@@ -169,12 +169,23 @@ export const changePassword = async(
     }
     try {
         console.log(studentToken);
+        let token = studentToken;
+        if (studentToken == "") {
+            if (localStorage.getItem("resetToken") != null) {
+                token = localStorage.getItem("resetToken");
+                localStorage.removeItem("resetToken");
+            } else {
+                setError("Please login again!");
+                setLoader(false);
+                return;
+            }
+        }
         const result = await Axios({
             method: "POST",
             url: `${host}/student/update/password`,
             data: qs.stringify({
                 newpassword: password.newPassword,
-                token: studentToken
+                token: token
             }),
             withCredentials: true,
             credentials: "include",
@@ -185,6 +196,113 @@ export const changePassword = async(
         setLoader(false);
         setSuccess("Password updated!");
         handleClose();
+    } catch (err) {
+        setError(err.response.data);
+        setLoader(false);
+    }
+}
+
+export const resetPassword = async(
+    phone,
+    otp,
+    setLoader,
+    setError,
+    setSuccess,
+    handleClose,
+    handleOpenPassword
+) => {
+    setLoader(true);
+    setError(null);
+    setSuccess(null);
+    if (!phone || phone.length !== 10) {
+        setError("Please enter a valid 10 digit phone number!");
+        setSuccess(null);
+        setLoader(false);
+        return;
+    }
+    if (!otp || otp.length !== 4) {
+        setError("Please enter a valid OTP!");
+        setSuccess(null);
+        setLoader(false);
+        return;
+    }
+    try {
+        const result = await Axios({
+            method: "POST",
+            url: `${host}/student/reset/password`,
+            data: qs.stringify({
+                phone: phone,
+                otp: otp
+            }),
+            withCredentials: true,
+            credentials: "include",
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+            },
+        });
+        localStorage.setItem("resetToken", result.data.token);
+        setLoader(false);
+        setSuccess("Otp Verified!");
+        setError(null);
+        handleClose();
+        handleOpenPassword();
+    } catch (err) {
+        setError(err.response.data);
+        setLoader(false);
+    }
+}
+
+// Request Call Back
+export const requestCallBack = async(
+    name,
+    className,
+    phone,
+    setLoader,
+    setError,
+    setSuccess
+) => {
+    setLoader(true);
+    setError(null);
+    setSuccess(null);
+    if (!name || name.length === 0) {
+        setError("Please enter your name!");
+        setLoader(false);
+        return;
+    }
+    if (!phone || phone.length !== 10) {
+        setError("Please enter a valid 10 digit phone number!");
+        setLoader(false);
+        return;
+    }
+    if (!className || className.length === 0) {
+        setError("Please enter your email!");
+        setLoader(false);
+        return;
+    }
+    if (localStorage.getItem("token") == null) {
+        setError("Please login to request a callback!");
+        setLoader(false);
+        return;
+    }
+    try {
+        const result = await Axios({
+            method: "POST",
+            url: `${host}/api/callback/request`,
+            data: qs.stringify({
+                token: localStorage.getItem("token"),
+                name: name,
+                phone: phone,
+                className: className
+            }),
+            withCredentials: true,
+            credentials: "include",
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+            },
+        });
+        setLoader(false);
+        setSuccess(result.data.msg);
+        setError(null);
     } catch (err) {
         setError(err.response.data);
         setLoader(false);

@@ -27,13 +27,14 @@ router.get("/", (req, res) => {
 
 router.post("/add_member", VerifyLogin, validateSquadMember, (req, res) => {
     const { name, designation, profile, instagram, facebook, linkedIn } =
-        req.body;
+    req.body;
     connection.query(
         `INSERT INTO SQUAD_MEMBERS(name, designation, profile, instagram, facebook, linkedIn) VALUES('${name}', '${designation}', '${profile}', '${instagram}', '${facebook}', '${linkedIn}');`,
         (err) => {
             if (err) {
                 res.status(400).send(err.message);
             } else {
+                console.log("ADDed");
                 res.status(200).send("Squad Member Added");
             }
         }

@@ -10,34 +10,44 @@ import { Facebook, Instagram, LinkedIn } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import facebook from "../../assets/facebook_icon.png";
-import instagram from "../../assets/instagram.png";
+import instagram from "../../assets/instagram_icon.png";
+import linkedin from "../../assets/linkedin_icon.png";
 
 const useStyles = makeStyles((theme) => ({
     footer: {
         alignSelf: "flex-end",
+        marginTop: "70px",
         paddingTop: theme.spacing(5),
         background: "rgb(198, 246, 252)",
     },
     footerHeader: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        margin: "0 auto",
-        marginBottom: theme.spacing(2),
+        width: "50%",
+        alignSelf: "center",
+        marginTop: "-40px",
         "& h5": {
-            textAlign: "center",
-            marginTop: "20px",
+            fontSize: "3rem",
             fontWeight: theme.typography.fontWeightBold,
+        },
+        [theme.breakpoints.down(800)]: {
+            "& h5": {
+                fontSize: "1.5rem",
+                fontWeight: theme.typography.fontWeightBold,
+            },
         },
     },
     footerContactLinks: {
         display: "flex",
-        justifyContent: "center",
-        marginBottom: theme.spacing(8),
+        flexDirection: "column",
+        width: "50%",
+        marginBottom: theme.spacing(5),
     },
     footerSocial: {
+        display: "flex",
+        alignItems: "center",
         margin: "0px 10px",
-        width: "50px",
+        [theme.breakpoints.up(800)]: {
+            fontSize: "1.5rem",
+        },
     },
     footerBottom: {
         display: "flex",
@@ -89,6 +99,16 @@ const useStyles = makeStyles((theme) => ({
     footerBottomSocial: {
         marginRight: "8px",
     },
+    icon: {
+        width: "70px",
+        [theme.breakpoints.down(800)]: {
+            width: "40px",
+        },
+    },
+    footerContent: {
+        display: "flex",
+        justifyContent: "center",
+    }
 }));
 
 const Footer = () => {
@@ -98,45 +118,48 @@ const Footer = () => {
     return (
         <Box className={classes.footer}>
             <Container>
-                <Box className={classes.footerHeader}>
-                    <Typography component={"h5"} variant={"h5"}>
-                        CONNECT WITH US TO GROW MORE
-                    </Typography>
-                </Box>
+                <div className={classes.footerContent}>
 
-                {/* Social media links for the website */}
-                <Box className={classes.footerContactLinks}>
-                    <a
-                        href="https://google.com"
-                        target={"_blank"}
-                        rel="noreferrer"
-                        className={classes.footerSocial}
-                    >
-                        <IconButton>
-                            <LinkedIn style={{ color: "#0A66C2" }} />
-                        </IconButton>
-                    </a>
-                    <a
-                        href="https://google.com"
-                        target={"_blank"}
-                        rel="noreferrer"
-                        className={classes.footerSocial}
-                    >
-                        <IconButton>
-                            <Facebook style={{ color: "#1877F2" }} />
-                        </IconButton>
-                    </a>
-                    <a
-                        href="https://google.com"
-                        target={"_blank"}
-                        rel="noreferrer"
-                        className={classes.footerSocial}
-                    >
-                        <IconButton>
-                            <Instagram style={{ color: "#fb3958" }} />
-                        </IconButton>
-                    </a>
-                </Box>
+
+                    <Box className={classes.footerHeader}>
+                        <Typography component={"h5"} variant={"h5"}>
+                            CONNECT WITH US<br /> TO GROW MORE
+                        </Typography>
+                    </Box>
+
+                    {/* Social media links for the website */}
+                    <Box className={classes.footerContactLinks}>
+                        <a
+                            href="https://www.linkedin.com/company/sircle-education"
+                            target={"_blank"}
+                            rel="noreferrer"
+                            className={classes.footerSocial}
+                        >
+
+                            <img src={facebook} alt="" className={classes.icon} /><span>/Sircleeducation</span>
+                        </a>
+                        {/* <br /> */}
+
+                        <a
+                            href="https://www.instagram.com/sircleeducation"
+                            target={"_blank"}
+                            rel="noreferrer"
+                            className={classes.footerSocial}
+                        >
+                            <img src={instagram} alt="" className={classes.icon} /><span>/sircleeducation</span>
+                        </a>
+                        {/* <br /> */}
+                        <a
+                            href="https://www.facebook.com/Sircleeducation"
+                            target={"_blank"}
+                            rel="noreferrer"
+                            className={classes.footerSocial}
+                        >
+                            <img src={linkedin} alt="" className={classes.icon} /><span>/company/sircle-education</span>
+
+                        </a>
+                    </Box>
+                </div>
             </Container>
             <Divider style={{ background: "gray", height: "1px" }} />
 
@@ -148,7 +171,7 @@ const Footer = () => {
                         className={`${classes.footerBottomItem} ${classes.firstFooterBottomItem}`}
                     >
                         <a
-                            href="https://google.com"
+                            href="https://www.linkedin.com/company/sircle-education"
                             target={"_blank"}
                             rel="noreferrer"
                             className={classes.footerBottomSocial}
@@ -158,23 +181,23 @@ const Footer = () => {
                             </IconButton>
                         </a>
                         <a
-                            href="https://google.com"
-                            target="_blank"
-                            rel="noreferrer"
-                            className={classes.footerBottomSocial}
-                        >
-                            <IconButton>
-                                <Facebook style={{ color: "#1877F2" }} />
-                            </IconButton>
-                        </a>
-                        <a
-                            href="https://google.com"
+                            href="https://www.instagram.com/sircleeducation"
                             target="_blank"
                             rel="noreferrer"
                             className={classes.footerBottomSocial}
                         >
                             <IconButton>
                                 <Instagram style={{ color: "#fb3958" }} />
+                            </IconButton>
+                        </a>
+                        <a
+                            href="https://www.facebook.com/Sircleeducation"
+                            target="_blank"
+                            rel="noreferrer"
+                            className={classes.footerBottomSocial}
+                        >
+                            <IconButton>
+                                <Facebook style={{ color: "#1877F2" }} />
                             </IconButton>
                         </a>
                     </Box>

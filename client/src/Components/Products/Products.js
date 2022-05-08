@@ -1119,10 +1119,14 @@ const Products = ({ studentData }) => {
                                     <Typography variant="h5">CONTACT US</Typography>
 
                                     <Typography component={"p"} variant="body2">
-                                        &#9993; abc@gmail.com
+                                        <a href="mailto:yash69sharma69@gmail.com">
+                                            <span style={{ fontSize: "20px" }}>
+                                                &#9993;</span> abc@gmail.com</a>
                                     </Typography>
                                     <Typography component={"p"} variant="body2">
-                                        &#9742; +9189696969
+                                        <a href="tel:+917673076073">
+                                            <span style={{ fontSize: "15px", marginLeft: "4px" }}>&#9742; </span>
+                                            +91 76 73 076 073</a>
                                     </Typography>
                                 </Box>
                             </Box>

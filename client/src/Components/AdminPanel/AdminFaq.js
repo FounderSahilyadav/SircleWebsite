@@ -135,6 +135,7 @@ const AdminFaq = () => {
                                 />
                                 <TextField
                                     fullWidth
+                                    multiline
                                     size="small"
                                     margin="normal"
                                     variant="outlined"

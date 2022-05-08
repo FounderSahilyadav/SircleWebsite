@@ -38,6 +38,7 @@ app.use("/admin", adminRoute);
 app.use("/mentors", mentorsRoute);
 app.use("/squad", squadRoute);
 app.use('/api/payment', require('./routes/paytm_pay'));
+app.use('/api', require('./routes/different_routes'));
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);

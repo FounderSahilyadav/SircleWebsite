@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 
-const StudentSign = ({ open, handleClose, setStudentToken, studentToken }) => {
+const StudentSign = ({ open, handleClose, setStudentToken, studentToken, handleOpenReset }) => {
 
     const [signIn, setSignIn] = useState(true);
     return (
@@ -22,7 +22,7 @@ const StudentSign = ({ open, handleClose, setStudentToken, studentToken }) => {
                     <Button style={{ color: signIn ? "orange" : "#fff", fontSize: signIn ? '20px' : "15px" }} onClick={() => setSignIn(true)}>Sign In</Button>
                     <Button style={{ color: signIn ? "#fff" : "orange", fontSize: signIn ? '15px' : "20px", marginLeft: '20px' }} onClick={() => setSignIn(false)}>Sign Up</Button>
                 </DialogTitle>
-                {signIn ? (<StudentSignIn handleClose={handleClose} setStudentToken={setStudentToken} studentToken={studentToken} />) : (<StudentSignUp handleClose={handleClose} setStudentToken={setStudentToken} />)}
+                {signIn ? (<StudentSignIn handleClose={handleClose} setStudentToken={setStudentToken} studentToken={studentToken} handleOpenReset={handleOpenReset} />) : (<StudentSignUp handleClose={handleClose} setStudentToken={setStudentToken} />)}
             </Dialog>
         </div>
     )

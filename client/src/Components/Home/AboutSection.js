@@ -70,6 +70,10 @@ const useStyles = makeStyles((theme) => ({
             color: "#667085",
         },
     },
+    videoFrame: {
+        width: "100%",
+        height: "100%",
+    }
 }));
 
 const AboutSection = () => {
@@ -79,9 +83,14 @@ const AboutSection = () => {
             <Box className={classes.about}>
                 {/* Video for the left side of about section, not set yet */}
                 <Box className={classes.aboutLeft}>
-                    <video autoPlay={true}>
-                        <source src="#" type="video/mp4" />
-                    </video>
+                    <iframe
+                        className={classes.videoFrame}
+                        src={`https://www.youtube.com/embed/muWv4jatUt8?autostart=0&modestbranding=0&rel=0&fs=0&showinfo=0`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    ></iframe>
                 </Box>
                 <Box className={classes.aboutRight}>
                     <Box margin="auto 20px">

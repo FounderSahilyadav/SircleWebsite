@@ -33,6 +33,9 @@ import ContactUsPopup from "./Components/Home/ContactUsPopup";
 import WhatsApp from "./Components/WhatsApp";
 import CourseBuy from "./Components/Home/CourseBuy";
 import Myproducts from "./Components/Products/Myproducts";
+import ResetPassword from "./Components/Home/ResetPassword";
+import CallRequests from "./Components/AdminPanel/CallRequests";
+import FreeTrial from "./Components/AdminPanel/FreeTrial";
 
 const useStyles = makeStyles((theme) => ({
     circularProgress: {
@@ -55,6 +58,7 @@ function App() {
     const [studentData, setStudentData] = useState({});
     const [openPassword, setOpenPassword] = useState(false);
     const [openContact, setOpenContact] = useState(false);
+    const [resetPassword, setResetPassword] = useState(false);
 
     const handleSignOpen = () => {
         setSignOpen(true);
@@ -73,7 +77,7 @@ function App() {
     const [studentToken, setStudentToken] = useState("");
     useEffect(() => {
         setLoader(true);
-        console.log("err");
+        // console.log("err");
         const fetchStudentDetails = async () => {
             refreshToken(setToken, setExpire).then((res) => {
                 if (res) {
@@ -86,22 +90,27 @@ function App() {
             });
 
             if (localStorage.getItem("token")) {
-                console.log("running");
+                // console.log("running");
                 setStudentToken(localStorage.getItem("token"));
-                console.log(studentToken);
+                // console.log(studentToken);
                 getStudentDetails(localStorage.getItem('token'), setStudentToken).then(res => {
                     setStudentData(res);
                     setLoader(false);
                 }).catch(err => {
-                    console.log(err);
+                    // console.log(err);
                 });
             } else {
                 setLoader(false);
             }
         }
         fetchStudentDetails();
-        console.log("here");
+        // console.log("here");
     }, [studentToken]);
+    // useEffect(() => {
+
+    const handleStudentToken = (token) => {
+        window.location.reload();
+    }
     return (
         <Router>
             {loader ? (
@@ -112,7 +121,7 @@ function App() {
                 <Fragment>
                     <Box component={"div"} className="App">
                         <Navbar handleClickOpen={handleClickOpen} handleSignOpen={handleSignOpen} studentToken={studentToken}
-                            setStudentToken={setStudentToken} studentData={studentData} setOpenPassword={setOpenPassword} setOpenContact={setOpenContact} />
+                            setStudentToken={handleStudentToken} studentData={studentData} setOpenPassword={setOpenPassword} setOpenContact={setOpenContact} />
                         <Routes>
                             <Route exact path="/" element={<Home />} />
                             <Route
@@ -120,8 +129,8 @@ function App() {
                                 element={<Products studentData={studentData} />}
                             />
                             <Route exact path="/myprofile" element={<StudentProfile studentData={studentData} studentToken={studentToken} />} />
-                            <Route path="/videos" element={<Videos />} />
-                            <Route path="/about" element={<About />} />
+                            <Route exact path="/videos" element={<Videos />} />
+                            <Route exact path="/about" element={<About />} />
                             <Route exact path="/blogs" element={<Blogs />} />
                             <Route path="/blogs/:id" element={<Blog />} />
                             <Route
@@ -130,46 +139,67 @@ function App() {
                                 element={<AdminFaq />}
                             />
                             <Route
+                                exact
+                                path="/administrator/callrequests"
+                                element={<CallRequests />}
+                            />
+                            <Route
+                                exact
+                                path="/administrator/freetrail"
+                                element={<FreeTrial />}
+                            />
+                            <Route
+                                exact
                                 path="/administrator/write_blog"
                                 element={<AdminWriteBlog />}
                             />
                             <Route
+                                exact
                                 path="/administrator/blogs"
                                 element={<AdminBlogs />}
                             />
                             <Route
+                                exact
                                 path="/administrator/blogs/:id"
                                 element={<AdminBlog />}
                             />
                             <Route
+                                exact
                                 path="/administrator/videos"
                                 element={<AdminVideos />}
                             />
                             <Route
+                                exact
                                 path="/administrator/institute-queries"
                                 element={<AdminInstituteQueries />}
                             />
                             <Route
+                                exact
                                 path="/administrator/testimonials"
                                 element={<AdminTestimonials />}
                             />
                             <Route
+                                exact
                                 path="/administrator/students"
                                 element={<AdminStudents />}
                             />
                             <Route
+                                exact
                                 path="/administrator/mentors"
                                 element={<AdminMentors />}
                             />
                             <Route
+                                exact
                                 path="/administrator/squad_members"
                                 element={<AdminTeamMembers />}
                             />
                             <Route
+                                exact
                                 path="/course/fee"
                                 element={<CourseBuy studentData={studentData} studentToken={studentToken} />}
                             />
                             <Route
+                                exact
                                 path="/myprograms"
                                 element={<Myproducts studentToken={studentToken} />}
                             />
@@ -182,10 +212,12 @@ function App() {
                             open={open}
                             handleClose={handleClose}
                         />
-                        <StudentSign open={signOpen} handleClose={handleSignClose} setStudentToken={setStudentToken} studentToken={studentToken} />
+                        <StudentSign open={signOpen} handleClose={handleSignClose} setStudentToken={handleStudentToken} studentToken={studentToken} handleOpenReset={() => setResetPassword(true)} />
                         <ChangePassword open={openPassword} handleClose={() => setOpenPassword(false)} studentToken={studentToken} />
                         <ContactUsPopup open={openContact} handleClose={() => setOpenContact(false)} />
+                        <ResetPassword open={resetPassword} handleClose={() => setResetPassword(false)} handleOpenPassword={() => setOpenPassword(true)} />
                     </Box>
+
                     <WhatsApp />
                 </Fragment>
             )}{" "}

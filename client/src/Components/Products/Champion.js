@@ -2,28 +2,13 @@ import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
-    productHeader: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        width: "100%",
-        marginBottom: "50px",
-        "& > h3": {
-            color: "#42474C",
-            fontWeight: "600",
-            marginBottom: "10px",
-        },
-        "& > p": {
-            color: "#5C656C",
-            fontWeight: "600",
-        },
-    },
     purchaseProducts: {
         display: "flex",
-        width: "40rem",
         maxWidth: "450px",
+        justifyContent: "center",
         [theme.breakpoints.down(800)]: {
             flexDirection: "column",
+            alignItems: "center",
         },
     },
     purchaseProduct: {

@@ -3,7 +3,7 @@ import qs from "qs";
 
 const validateSquadMember = (squadMemberDetails, setError) => {
     const { name, designation, profile, instagram, facebook, linkedIn } =
-        squadMemberDetails;
+    squadMemberDetails;
     if (!name || name.length === 0) {
         setError("Mentor name can't be empty");
         return false;
@@ -32,7 +32,7 @@ const validateSquadMember = (squadMemberDetails, setError) => {
 };
 
 // Get all squad members
-export const getAllSquadMember = async () => {
+export const getAllSquadMember = async() => {
     try {
         const result = await Axios({ method: "GET", url: "/squad" });
         return result.data;
@@ -56,10 +56,9 @@ export const addSquadMember = (
             Axios({
                 method: "POST",
                 url: "/squad/add_member",
-                data: qs.stringify({ ...squadMemberDetails }),
+                data: qs.stringify({...squadMemberDetails }),
                 headers: {
-                    "Content-type":
-                        "application/x-www-form-urlencoded;charset=utf-8",
+                    "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
                 },
             });
             setSuccess("Squad Member Added");
@@ -77,7 +76,7 @@ export const addSquadMember = (
 export const deleteSquadMember = (id, setError) => {
     try {
         if (id) {
-            Axios({ method: "DELETE", url: `/sqad/delete_member?id=${id}` });
+            Axios({ method: "DELETE", url: `/squad/delete_member?id=${id}` });
             return true;
         } else {
             setError("Squad Member id not available");

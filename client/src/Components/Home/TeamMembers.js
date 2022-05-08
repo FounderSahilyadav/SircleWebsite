@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
     teamTop: {
         display: "flex",
+        justifyContent: "center",
         [theme.breakpoints.down("md")]: {
             flexDirection: "column",
         },
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
     teamTopRight: {
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "end",
         alignItems: "flex-start",
         width: "70%",
         "& p": {
@@ -59,8 +60,8 @@ const useStyles = makeStyles((theme) => ({
     },
     teamBottom: {
         display: "flex",
-        justifyContent: "flex-start",
-        overflow: "auto",
+        justifyContent: "center",
+        flexGrow: "1",
         padding: "30px 0px",
     },
     circularProgress: {
@@ -77,6 +78,10 @@ const useStyles = makeStyles((theme) => ({
         padding: "20px",
         background: "lightgray",
     },
+    teamBottomDiv: {
+        display: "flex",
+        overflow: "auto",
+    }
 }));
 
 const TeamMembers = () => {
@@ -115,27 +120,29 @@ const TeamMembers = () => {
                         </Typography>
                     </Box>
                 </Box>
-                <Box className={classes.teamBottom}>
-                    {teamMemberLoader ? (
-                        <Box className={classes.circularProgress}>
-                            <CircularProgress />
-                        </Box>
-                    ) : (
-                        // Map through all the members
-                        teamMembers.map((member, index) => (
-                            <TeamMemberCard member={member} key={index} />
-                        ))
-                    )}
-                    {!teamMemberLoader && teamMembers.length === 0 ? (
-                        <Box className={classes.noMentor}>
-                            <Typography variant="subtitle2">
-                                ~No Squad Members to show yet~
-                            </Typography>
-                        </Box>
-                    ) : (
-                        <></>
-                    )}
-                </Box>
+                <div className={classes.teamBottomDiv}>
+                    <Box className={classes.teamBottom}>
+                        {teamMemberLoader ? (
+                            <Box className={classes.circularProgress}>
+                                <CircularProgress />
+                            </Box>
+                        ) : (
+                            // Map through all the members
+                            teamMembers.map((member, index) => (
+                                <TeamMemberCard member={member} key={index} />
+                            ))
+                        )}
+                        {!teamMemberLoader && teamMembers.length === 0 ? (
+                            <Box className={classes.noMentor}>
+                                <Typography variant="subtitle2">
+                                    ~No Squad Members to show yet~
+                                </Typography>
+                            </Box>
+                        ) : (
+                            <></>
+                        )}
+                    </Box>
+                </div>
             </Container>
         </Box>
     );

@@ -23,10 +23,8 @@ router.get("/", (req, res) => {
                             if (err) return res.sendStatus(403);
                             const id = results[0].id;
                             const key = results[0].login_key;
-                            const accessToken = jwt.sign(
-                                { id, key },
-                                process.env.ACCESS_TOKEN_SECRET,
-                                {
+                            const accessToken = jwt.sign({ id, key },
+                                process.env.ACCESS_TOKEN_SECRET, {
                                     expiresIn: "15s",
                                 }
                             );

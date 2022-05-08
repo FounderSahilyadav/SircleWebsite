@@ -34,7 +34,7 @@ const validateBlog = (blogDetails, setError) => {
 };
 
 // fetch single blog by id
-export const fetchSingleBlog = async (id, setError) => {
+export const fetchSingleBlog = async(id, setError) => {
     setError(null);
     try {
         const results = await Axios({
@@ -48,7 +48,7 @@ export const fetchSingleBlog = async (id, setError) => {
 };
 
 // Get  all blogs
-export const fetchAllBlogs = async (setBlogsError) => {
+export const fetchAllBlogs = async(setBlogsError) => {
     setBlogsError(null);
     try {
         const results = await Axios({ method: "GET", url: "blogs" });
@@ -71,10 +71,9 @@ export const uploadBlog = (blogDetails, setLoader, setError, setSuccess) => {
             Axios({
                 method: "POST",
                 url: "/blogs/new_blog",
-                data: qs.stringify({ ...blogDetails, date: new Date() }),
+                data: qs.stringify({...blogDetails, date: new Date() }),
                 headers: {
-                    "Content-type":
-                        "application/x-www-form-urlencoded;charset=utf-8",
+                    "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
                 },
             });
             setSuccess("Blog Posted");
@@ -107,10 +106,9 @@ export const updateBlog = (
             Axios({
                 method: "PATCH",
                 url: `/blogs/update_blog?id=${id}`,
-                data: qs.stringify({ ...blogDetails }),
+                data: qs.stringify({...blogDetails }),
                 headers: {
-                    "Content-type":
-                        "application/x-www-form-urlencoded;charset=utf-8",
+                    "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
                 },
             });
             setSuccess("Blog Updated");
@@ -142,7 +140,7 @@ export const deleteBlog = (id) => {
 };
 
 // Post a comment
-export const postComment = async (
+export const postComment = async(
     commentDetails,
     blogId,
     setLoader,
@@ -166,8 +164,7 @@ export const postComment = async (
                         date: new Date(),
                     }),
                     headers: {
-                        "Content-type":
-                            "application/x-www-form-urlencoded;charset=utf-8",
+                        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
                     },
                 });
             } else {
@@ -194,7 +191,7 @@ export const postComment = async (
 };
 
 // Fetches verified comments for the database
-export const getVerifiedCOmments = async (id, setError) => {
+export const getVerifiedCOmments = async(id, setError) => {
     setError(null);
     try {
         if (id) {
@@ -214,7 +211,7 @@ export const getVerifiedCOmments = async (id, setError) => {
 };
 
 // Fetches unverified comments from the database
-export const getUnVerifiedComments = async (id, setError) => {
+export const getUnVerifiedComments = async(id, setError) => {
     setError(null);
     try {
         if (id) {

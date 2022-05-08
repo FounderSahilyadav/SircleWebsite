@@ -225,7 +225,7 @@ const Videos = () => {
                                         : videos[0]?.youtubeVidoeId // if value for top video Id is null, then set it to first video in videos
                                 }?autostart=0&modestbranding=0&rel=0&fs=0&showinfo=0`}
                                 title="YouTube video player"
-                                frameborder="0"
+                                frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                             ></iframe>

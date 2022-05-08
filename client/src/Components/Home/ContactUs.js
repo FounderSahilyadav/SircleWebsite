@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "flex-start",
         background: "#fff",
         [theme.breakpoints.down(700)]: {
-            flexDirection: "column-reverse",
+            flexDirection: "column",
         },
     },
 

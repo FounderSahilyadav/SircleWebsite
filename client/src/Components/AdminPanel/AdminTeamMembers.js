@@ -7,8 +7,8 @@ import {
     Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import React, { Fragment, useState } from "react";
-import { addSquadMember, deleteSquadMember } from "../../utils/squadMember";
+import React, { Fragment, useEffect, useState } from "react";
+import { addSquadMember, deleteSquadMember, getAllSquadMember } from "../../utils/squadMember";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useStateValue } from "../../StateProvider";
 import AdminLogin from "./AdminLogin";
@@ -90,6 +90,10 @@ const AdminTeamMembers = () => {
             setNewMemberSuccess
         );
     };
+
+    useEffect(() => {
+        getAllSquadMember().then((res) => setMembers(res));
+    }, []);
 
     const handleDeleteMember = (id) => {
         if (deleteSquadMember(id, setDeleteMemberError)) {

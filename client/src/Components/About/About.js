@@ -8,7 +8,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { useEffect, useState } from "react";
 import { Facebook, Instagram, LinkedIn } from "@material-ui/icons";
-import member1 from "../../assets/member1.png";
+import member1 from "../../assets/sahil_member1.jpg";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
@@ -17,6 +17,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { getAllSquadMember } from "../../utils/squadMember";
 import founderSignature from "../../assets/founderSignature.png";
+import aboutPosture from "../../assets/About_section.jpg"
 
 const useStyles = makeStyles((theme) => ({
     aboutPage: {
@@ -56,9 +57,12 @@ const useStyles = makeStyles((theme) => ({
     },
     aboutPoster: {
         width: "100%",
-        height: "400px",
-        background: "#1A2E39",
         marginBottom: "40px",
+        "& > img": {
+            width: "100%",
+            height: "auto",
+
+        },
     },
     founder: {
         marginTop: "20px",
@@ -368,7 +372,9 @@ const About = () => {
                 </Box>
                 <Box className={classes.aboutDetails}>
                     {/* About Page top picture, yet to be set */}
-                    <Box className={classes.aboutPoster}></Box>
+                    <Box className={classes.aboutPoster}>
+                        <img src={aboutPosture} alt="Not supported by Your Browser" />
+                    </Box>
 
                     {/* Details about founder */}
                     <Box className={classes.founder}>
@@ -385,7 +391,7 @@ const About = () => {
                                     <img src={member1} alt="" />
                                 </Box>
                                 <Typography variant="h6">
-                                    Lorem ipsum dolor
+                                    Sahil Yadav
                                 </Typography>
                             </Box>
 
@@ -397,14 +403,14 @@ const About = () => {
                                         EDUCATION
                                     </Typography>
                                     <Typography variant="body2" component={"p"}>
-                                        B.Tech (2019-2013), IIT BHU.
+                                        NEST - AIR 53 B.Tech, IIT BHU.
                                     </Typography>
                                 </Box>
                                 <Typography
                                     variant="body1"
                                     component={"strong"}
                                 >
-                                    Motivational Speaker, Life Coach.
+                                    Certified Entrepreneurship Trainer, Motivational Speaker and Life Coach
                                 </Typography>
 
                                 {/* Founder's social media links, not set set */}
@@ -414,19 +420,25 @@ const About = () => {
                                     </Typography>
                                     <Box component={"div"}>
                                         <IconButton>
-                                            <Instagram
-                                                style={{ color: "#fb3958" }}
-                                            />
+                                            <a href="https://www.instagram.com/startupboysahil/" target="_blank" rel="noreferrer">
+                                                <Instagram
+                                                    style={{ color: "#fb3958" }}
+                                                />
+                                            </a>
                                         </IconButton>
                                         <IconButton>
-                                            <LinkedIn
-                                                style={{ color: "#0A66C2" }}
-                                            />
+                                            <a href="https://www.linkedin.com/in/sahil-yadav-iitbhu/" target="_blank" rel="noreferrer">
+                                                <LinkedIn
+                                                    style={{ color: "#0A66C2" }}
+                                                />
+                                            </a>
                                         </IconButton>
                                         <IconButton>
-                                            <Facebook
-                                                style={{ color: "#1877F2" }}
-                                            />
+                                            <a href="https://www.facebook.com/StartupBoySahil/" target="_blank" rel="noreferrer">
+                                                <Facebook
+                                                    style={{ color: "#1877F2" }}
+                                                />
+                                            </a>
                                         </IconButton>
                                     </Box>
                                 </Box>

@@ -34,43 +34,7 @@ const validateStudentDetails = (studentDetails, setError) => {
     return true;
 };
 
-const validateOtp = (studentDetails) => {
-    const { phone } = studentDetails;
-    if (!phone || phone.length !== 10 || !filter1.test(phone)) {
-        return false;
-    }
-    return true;
-}
 
-export const sendOtp = async (studentDetails, setLoader, setError, setSuccess) => {
-    const { phone } = studentDetails;
-    setLoader(true);
-    if (validateOtp(studentDetails)) {
-        try {
-            const result = await Axios({
-                method: "POST",
-                url: `${host}/student/verify/phone`,
-                data: qs.stringify({
-                    phone: phone
-                }),
-                withCredentials: true,
-                credentials: "include",
-                headers: {
-                    "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-                },
-            });
-            setLoader(false);
-            setSuccess(result.data.message);
-        } catch (error) {
-            setError(error.response.data);
-            setLoader(false);
-        }
-    } else {
-        console.log("Invalid phone number");
-        setError("Please enter a valid phone number!");
-        setLoader(false);
-    }
-}
 
 
 
@@ -118,8 +82,47 @@ const validateStudentSignUp = (studentDetails, setError) => {
     return true;
 }
 
+const validateOtp = (studentDetails) => {
+    const { phone } = studentDetails;
+    if (!phone || phone.length !== 10 || !filter1.test(phone)) {
+        return false;
+    }
+    return true;
+}
+
+// set OTP
+export const sendOtp = async(studentDetails, setLoader, setError, setSuccess) => {
+    const { phone } = studentDetails;
+    setLoader(true);
+    if (validateOtp(studentDetails)) {
+        try {
+            const result = await Axios({
+                method: "POST",
+                url: `${host}/student/verify/phone`,
+                data: qs.stringify({
+                    phone: phone
+                }),
+                withCredentials: true,
+                credentials: "include",
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+                },
+            });
+            setLoader(false);
+            setSuccess(result.data.message);
+        } catch (error) {
+            setError(error.response.data);
+            setLoader(false);
+        }
+    } else {
+        console.log("Invalid phone number");
+        setError("Please enter a valid phone number!");
+        setLoader(false);
+    }
+}
+
 // Get student details
-export const getStudentDetails = async (studentToken, setStudentToken) => {
+export const getStudentDetails = async(studentToken, setStudentToken) => {
     try {
         const result = await Axios({
             method: "POST",
@@ -143,7 +146,7 @@ export const getStudentDetails = async (studentToken, setStudentToken) => {
 }
 
 // Login a student
-export const loginStudent = async (
+export const loginStudent = async(
     studentDetails,
     setLoader,
     setError,
@@ -171,9 +174,12 @@ export const loginStudent = async (
                     "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
                 },
             });
-            console.log(result);
+            console.log(result.data.token);
             localStorage.setItem('token', result.data.token);
-            setStudentToken(result.data.token);
+            console.log("set student token1");
+            const token = result.data.token;
+            setStudentToken(token);
+            console.log("set student token");
             setLoader(false);
             setSuccess("Logged in!");
             console.log({ "studentToken": studentToken });
@@ -189,7 +195,7 @@ export const loginStudent = async (
 }
 
 // Sign up a student
-export const signUpStudent = async (
+export const signUpStudent = async(
     studentDetails,
     setLoader,
     setError,
@@ -222,7 +228,7 @@ export const signUpStudent = async (
                 }
             });
             localStorage.setItem('token', result.data.token);
-            await setStudentToken(result.data.token);
+            setStudentToken(result.data.token);
             setLoader(false);
             setSuccess("Successfully signed up!");
             handleClose();
@@ -237,8 +243,8 @@ export const signUpStudent = async (
 
 
 
-// Register a student
-export const registerStudent = async (
+// Register a student for free trial
+export const registerStudent = async(
     studentDetails,
     setLoader,
     setError,
@@ -247,13 +253,28 @@ export const registerStudent = async (
     setLoader(true);
     setError(null);
     setSuccess(null);
-    if (validateStudentDetails(studentDetails, setError)) {
+    if (!studentDetails.name || !studentDetails.grade || !studentDetails.phone) {
+        setError("Please Fill all required Field");
+        setLoader(false);
+        return;
+    }
+    if (studentDetails.phone.length !== 10) {
+        setError("Please Enter a Valid 10 digit Number");
+        setLoader(false);
+        return;
+    }
+    if (localStorage.getItem('token')) {
         try {
             await Axios({
                 method: "POST",
-                url: "/student/register",
+                url: "/api/free/trial",
                 data: qs.stringify({
-                    ...studentDetails,
+                    token: localStorage.getItem('token'),
+                    phone: studentDetails.phone,
+                    name: studentDetails.name,
+                    institute: studentDetails.institute,
+                    className: studentDetails.grade,
+                    email: studentDetails.email
                 }),
                 headers: {
                     "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
@@ -266,12 +287,14 @@ export const registerStudent = async (
             setLoader(false);
         }
     } else {
+        setError("Please Login Again");
         setLoader(false);
+        return;
     }
 };
 
 // Get all registered students for demo session (admin)
-export const getAllStudents = async () => {
+export const getAllStudents = async() => {
     try {
         const result = await Axios({ method: "GET", url: "/student" });
         return result.data;

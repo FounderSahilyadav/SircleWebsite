@@ -93,6 +93,16 @@ const AdminNav = () => {
                     </Link>
                 </ListItem>
                 <ListItem button className={classes.listItem}>
+                    <Link to={"/administrator/callrequests"} className={classes.linkTag}>
+                        <ListItemText primary={"Call Requests"} />
+                    </Link>
+                </ListItem>
+                <ListItem button className={classes.listItem}>
+                    <Link to={"/administrator/freetrail"} className={classes.linkTag}>
+                        <ListItemText primary={"Free Trials"} />
+                    </Link>
+                </ListItem>
+                <ListItem button className={classes.listItem}>
                     <Link
                         to={"/administrator/testimonials"}
                         className={classes.linkTag}

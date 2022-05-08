@@ -19,7 +19,7 @@ const validatePlayList = (req, res, next) => {
 router.get("/", (req, res) => {
     connection.query(
         "SELECT * FROM PLAYLISTS",
-        function (err, results, fields) {
+        function(err, results, fields) {
             if (err) {
                 res.status(400).send(err.message);
             } else {
@@ -34,7 +34,7 @@ router.post("/new_playList", VerifyLogin, validatePlayList, (req, res) => {
     const { title } = req.body;
     connection.query(
         `INSERT INTO PLAYLISTS(title) VALUES('${title}')`,
-        function (err, results, fields) {
+        function(err, results, fields) {
             if (err) {
                 res.status(400).send(err.message);
             } else {
@@ -50,7 +50,7 @@ router.delete("/delete_playlist", VerifyLogin, (req, res) => {
     if (playListId) {
         connection.query(
             `SELECT * FROM PLAYLISTS WHERE id = '${playListId}'`,
-            function (err, results, fields) {
+            function(err, results, fields) {
                 if (err) {
                     res.status(400).send(err.message);
                 } else if (results.length === 0) {
@@ -75,3 +75,4 @@ module.exports = router;
 
 //Create table command
 // CREATE TABLE VIDEOS(id int(6) PRIMARY KEY AUTO_INCREMENT, title varchar(225), description text, youtubeVidoeId varchar(225), playListId int);
+// CREATE TABLE PLAYLISTS(id int(6) PRIMARY KEY AUTO_INCREMENT, title varchar(225));

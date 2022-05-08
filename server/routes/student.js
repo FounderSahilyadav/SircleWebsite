@@ -401,7 +401,7 @@ router.post("/update/education", fetchuser, async(req, res) => {
 router.post("/update/password", fetchuser, async(req, res) => {
     try {
         const { newpassword } = req.body;
-        if (newpassword.length < 8) {
+        if (newpassword.length < 7) {
             return res.status(400).send("Password Must Be Atleast 8 Characters Long");
         }
         connection.query(
@@ -444,7 +444,7 @@ router.post("/reset/password", async(req, res) => {
                     res.status(400).send(err.message);
                 } else {
                     if (results.length === 0) {
-                        res.status(401).send("Student Not Found");
+                        res.status(401).send("Invalid OTP or Phone Number");
                     } else {
                         const student = results[0];
                         connection.query(
@@ -454,7 +454,7 @@ router.post("/reset/password", async(req, res) => {
                                     res.status(400).send(err.message);
                                 } else {
                                     if (results.length === 0) {
-                                        res.status(401).send("Phone Number Not Verified");
+                                        res.status(401).send("Invalid OTP or Phone Number");
                                     } else {
                                         const verify = results[0];
                                         bcrypt.compare(otp, verify.otp, function(err, result) {
@@ -480,7 +480,7 @@ router.post("/reset/password", async(req, res) => {
                                                         }
                                                     );
                                                 } else {
-                                                    res.status(401).send("OTP Incorrect");
+                                                    res.status(401).send("Invalid OTP or Phone Number");
                                                 }
                                             }
                                         });
@@ -496,13 +496,6 @@ router.post("/reset/password", async(req, res) => {
         res.status(400).send(error.message);
     }
 });
-
-//                         
-
-
-
-
-
 
 module.exports = router;
 // Create table

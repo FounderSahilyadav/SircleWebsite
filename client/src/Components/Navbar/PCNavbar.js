@@ -7,8 +7,6 @@ import {
     Box,
     Menu,
     MenuItem,
-    Fade,
-    ListItemIcon,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useState } from "react";
@@ -16,7 +14,6 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import userLogo from "../../assets/user_logo.png";
 import keyIcon from "../../assets/key_icon.png";
-import Logout from '@mui/icons-material/Logout';
 // import 
 
 const useStyles = makeStyles((theme) => ({
@@ -79,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     },
     buyPrograms: {
         width: "fit-content",
-        background: "orangered",
+        background: "#EA6915",
         padding: "9px 20px",
         borderRadius: "5px",
         outLine: "none",
@@ -112,7 +109,7 @@ const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentTok
         setStudentToken("");
         localStorage.removeItem("token");
         handleClose();
-        console.log(studentToken);
+        // console.log(studentToken);
     }
     const handleChangePassword = () => {
         setOpenPassword(true);

@@ -9,9 +9,6 @@ const useStyles = makeStyles((theme) => ({
         margin: "10px 10px",
     },
     memberCardTop: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start",
         width: "300px",
         minWidth: "280px",
         height: "300px",
@@ -57,21 +54,27 @@ const TeamMemberCard = ({ member }) => {
                     {about}
                 </Typography>
                 <Box component={"div"}>
-                    <a href={instagram} target={"_blank"} rel="noreferrer">
-                        <IconButton style={{ paddingLeft: "0" }}>
-                            <Instagram style={{ color: "#fb3958" }} />
-                        </IconButton>
-                    </a>
-                    <a href={linkedIn} target={"_blank"} rel="noreferrer">
-                        <IconButton>
-                            <LinkedIn style={{ color: "#0A66C2" }} />
-                        </IconButton>
-                    </a>
-                    <a href={facebook} target={"_blank"} rel="noreferrer">
-                        <IconButton>
-                            <Facebook style={{ color: "#1877F2" }} />
-                        </IconButton>
-                    </a>
+                    {instagram !== '#' ? (
+                        <a href={instagram} target={"_blank"} rel="noreferrer">
+                            <IconButton style={{ paddingLeft: "0" }}>
+                                <Instagram style={{ color: "#fb3958" }} />
+                            </IconButton>
+                        </a>
+                    ) : null}
+                    {linkedIn !== '#' ? (
+                        <a href={linkedIn} target={"_blank"} rel="noreferrer">
+                            <IconButton>
+                                <LinkedIn style={{ color: "#0A66C2" }} />
+                            </IconButton>
+                        </a>
+                    ) : null}
+                    {facebook !== '#' ? (
+                        <a href={facebook} target={"_blank"} rel="noreferrer">
+                            <IconButton>
+                                <Facebook style={{ color: "#1877F2" }} />
+                            </IconButton>
+                        </a>
+                    ) : null}
                 </Box>
             </Box>
         </Box>
