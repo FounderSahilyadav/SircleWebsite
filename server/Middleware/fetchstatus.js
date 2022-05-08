@@ -8,9 +8,9 @@ const fetchstatus = async(req, res, next) => {
     }
     try {
         var stat = await jwt.verify(status, JWT_SECRET);
-        console.log(stat);
+        // console.log(stat);
         req.stat = stat.user;
-        console.log(req.stat);
+        // console.log(req.stat);
         if (req.stat.id === 'TXN_SUCCESS') {
             next();
         } else

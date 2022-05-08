@@ -60,25 +60,25 @@ router.post("/login", validateAdmin, (req, res) => {
     );
 });
 
-router.post("/register", validateAdmin, async(req, res) => {
-    const { key, password } = req.body;
-    const salt = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(password, salt);
-    try {
-        connection.query(
-            `INSERT INTO ADMIN(login_key, password) VALUES('${key}', '${hashPassword}');`,
-            (err, results) => {
-                if (err) {
-                    res.status(401).send(err.message);
-                } else {
-                    res.status(202).send("Registration Successful");
-                }
-            }
-        );
-    } catch (error) {
-        console.log(error);
-    }
-});
+// router.post("/register", validateAdmin, async(req, res) => {
+//     const { key, password } = req.body;
+//     const salt = await bcrypt.genSalt();
+//     const hashPassword = await bcrypt.hash(password, salt);
+//     try {
+//         connection.query(
+//             `INSERT INTO ADMIN(login_key, password) VALUES('${key}', '${hashPassword}');`,
+//             (err, results) => {
+//                 if (err) {
+//                     res.status(401).send(err.message);
+//                 } else {
+//                     res.status(202).send("Registration Successful");
+//                 }
+//             }
+//         );
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });
 
 module.exports = router;
 

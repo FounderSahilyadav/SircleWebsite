@@ -17,7 +17,7 @@ const validateStudent = (req, res, next) => {
     const { error } = studentSchema.validate(req.body);
     if (error) {
         const msg = error.details.map((el) => el.message).join(", ");
-        console.log(msg);
+        // console.log(msg);
         res.status(404).send(msg);
     } else {
         next();
@@ -48,11 +48,11 @@ const validatePhone = (req, res, next) => {
 // });
 
 router.post("/getstudent", fetchuser, (req, res) => {
-    console.log("I ma getstudnet");
+    // console.log("I ma getstudnet");
     try {
         var date = new Date();
         date = date.toISOString().slice(0, 19).replace('T', ' ');
-        console.log(req.user.id);
+        // console.log(req.user.id);
         connection.query(
             `SELECT * FROM Students where id = '${req.user.id}' and expireAt > '${date}';`,
             function(err, results, fields) {
@@ -60,7 +60,7 @@ router.post("/getstudent", fetchuser, (req, res) => {
                     res.status(400).send(err.message);
                 } else {
                     if (results.length > 0) {
-                        console.log(results[0]);
+                        // console.log(results[0]);
                         res.status(202).json(results[0]);
                     } else {
                         res.status(404).send("No student found");
@@ -119,14 +119,14 @@ router.post("/register",
                                                                             }
                                                                         }
                                                                         const token = jwt.sign(data, JWT_SECRET);
-                                                                        console.log(results);
+                                                                        // console.log(results);
                                                                         connection.query(
                                                                             `UPDATE Students SET token = '${token}' WHERE id = '${results.insertId}';`,
                                                                             function(err, results, fields) {
                                                                                 if (err) {
                                                                                     res.status(400).send(err.message);
                                                                                 } else {
-                                                                                    console.log(results);
+                                                                                    // console.log(results);
                                                                                     res.status(202).json({ token });
                                                                                 }
                                                                             }
@@ -162,8 +162,8 @@ router.post("/login", (req, res) => {
 
     try {
         const { email, password } = req.body;
-        console.log('called');
-        console.log(email, password);
+        // console.log('called');
+        // console.log(email, password);
         connection.query(`SELECT * FROM Students WHERE email = '${email}' or phone = '${email}';`,
             function(err, results, fields) {
                 if (err) {
@@ -191,7 +191,7 @@ router.post("/login", (req, res) => {
                                             if (err) {
                                                 res.status(400).send(err.message);
                                             } else {
-                                                console.log(token);
+                                                // console.log(token);
                                                 res.status(202).json({ token });
                                             }
                                         }
@@ -235,7 +235,7 @@ router.post("/verify/phone", validatePhone, (req, res) => {
                                     if (err) {
                                         res.status(400).send(err.message);
                                     } else {
-                                        console.log(code);
+                                        // console.log(code);
                                         res.status(202).json({ message: "OTP Sent" });
                                     }
                                 }
@@ -248,7 +248,7 @@ router.post("/verify/phone", validatePhone, (req, res) => {
                                         res.status(400).send(err.message);
                                     } else {
                                         // conosole.log(code);
-                                        console.log(results);
+                                        // console.log(results);
                                         res.status(202).json({ message: "OTP Sent" });
                                     }
                                 }

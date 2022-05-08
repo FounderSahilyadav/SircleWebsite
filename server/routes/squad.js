@@ -34,7 +34,6 @@ router.post("/add_member", VerifyLogin, validateSquadMember, (req, res) => {
             if (err) {
                 res.status(400).send(err.message);
             } else {
-                console.log("ADDed");
                 res.status(200).send("Squad Member Added");
             }
         }

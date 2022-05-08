@@ -23,12 +23,12 @@ const parseJson = express.json({ extended: false });
 router.post("/paynow", fetchuser, [parseUrl, parseJson], (req, res) => {
     // Route for making payment
     var paymentDetails = {
-        amount: req.body.amount,
-        customerId: req.body.Id,
-        customerEmail: req.body.email,
-        customerPhone: req.body.phone
-    }
-    console.log(paymentDetails);
+            amount: req.body.amount,
+            customerId: req.body.Id,
+            customerEmail: req.body.email,
+            customerPhone: req.body.phone
+        }
+        // console.log(paymentDetails);
     if (!paymentDetails.amount || !paymentDetails.customerId || !paymentDetails.customerEmail || !paymentDetails.customerPhone || req.body.Id != req.user.id) {
         return res.status(400).send('Payment failed');
     } else {
@@ -55,13 +55,13 @@ router.post("/paynow", fetchuser, [parseUrl, parseJson], (req, res) => {
                         params['MOBILE_NO'] = paymentDetails.customerPhone;
                         // return res.send(params);
                         checkSum_lib.genchecksum(params, process.env.MERCHANT_KEY, function(err, checksum) {
-                            console.log("checksum", checksum);
+                            // console.log("checksum", checksum);
                             var par = {
                                 ...params,
                                 "CHECKSUMHASH": checksum
                             }
                             res.json(par);
-                            console.log(par);
+                            // console.log(par);
                         });
                     }
                 }
@@ -84,7 +84,7 @@ router.post("/callback", (req, res) => {
     }
     var isValidChecksum = checkSum_lib.verifychecksum(paytmParams, process.env.MERCHANT_KEY, paytm_Checksum);
     if (isValidChecksum) {
-        console.log("checksum Matched");
+        // console.log("checksum Matched");
         var paytmParams = {};
         paytmParams['MID'] = req.body.MID;
         paytmParams['ORDER_ID'] = req.body.ORDERID;
@@ -107,9 +107,9 @@ router.post("/callback", (req, res) => {
                     response += chunk;
                 });
                 post_res.on('end', function() {
-                    console.log('Status: ', response);
+                    // console.log('Status: ', response);
                     var result = JSON.parse(response);
-                    console.log(result.STATUS);
+                    // console.log(result.STATUS);
                     const data = {
                         user: {
                             id: result.STATUS
@@ -124,7 +124,7 @@ router.post("/callback", (req, res) => {
             post_req.end();
         })
     } else {
-        console.log("checksum Not matched");
+        // console.log("checksum Not matched");
         res.json("Please do not interfere");
     }
 })
@@ -154,7 +154,7 @@ router.post("/update/course", fetchuser, fetchstatus, (req, res) => {
                             if (err) {
                                 res.status(400).send(err.message);
                             } else {
-                                console.log(results);
+                                // console.log(results);
                                 res.status(202).json({ msg: "Course is Successfully Purchased" });
                             }
                         }
