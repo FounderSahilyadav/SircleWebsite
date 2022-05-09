@@ -153,8 +153,8 @@ const HeroSection = () => {
         }
     }
     const handleSubmit = () => {
-        console.log("You clicked submit");
-        console.log(name, className, phone);
+        // console.log("You clicked submit");
+        // console.log(name, className, phone);
         requestCallBack(name, className, phone, setLoader,
             setError, setSuccess);
     }

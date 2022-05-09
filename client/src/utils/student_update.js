@@ -21,7 +21,7 @@ export const changeEmail = async(
         return;
     }
     try {
-        console.log(studentToken);
+        // console.log(studentToken);
         const result = await Axios({
             method: "POST",
             url: `${host}/student/update/email`,
@@ -64,7 +64,7 @@ export const changePhone = async(
         return;
     }
     try {
-        console.log(studentToken);
+        // console.log(studentToken);
         const result = await Axios({
             method: "POST",
             url: `${host}/student/update/phone`,
@@ -117,7 +117,7 @@ export const changeEducation = async(
         return;
     }
     try {
-        console.log(studentToken);
+        // console.log(studentToken);
         const result = await Axios({
             method: "POST",
             url: `${host}/student/update/education`,
@@ -168,7 +168,7 @@ export const changePassword = async(
         return;
     }
     try {
-        console.log(studentToken);
+        // console.log(studentToken);
         let token = studentToken;
         if (studentToken == "") {
             if (localStorage.getItem("resetToken") != null) {

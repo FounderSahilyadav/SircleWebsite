@@ -50,7 +50,7 @@ export const onPayment = async(amount, courseName, studentData, setError) => {
         const Id = studentData.id;
         setError(null);
         localStorage.setItem("coursename", courseName);
-        console.log(token);
+        // console.log(token);
         let result = await Axios({
             method: "POST",
             url: `${host}/api/payment/paynow`,
@@ -68,7 +68,7 @@ export const onPayment = async(amount, courseName, studentData, setError) => {
                 "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
             },
         });
-        console.log("RES", result);
+        // console.log("RES", result);
         // const newRes = await Axios.get(`${result.data.CALLBACK_URL}`)
         // console.log("NEW RES", newRes);
         // const response = await result.data.json;
@@ -80,7 +80,7 @@ export const onPayment = async(amount, courseName, studentData, setError) => {
         }
         post(details);
     } catch (error) {
-        console.log(error.response.data);
+        // console.log(error.response.data);
         setError(error.response.data);
     }
 }
@@ -114,11 +114,11 @@ export const updateCourse = async(
                 "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
             }
         });
-        console.log(result.data);
+        // console.log(result.data);
         setSuccess(result.data.msg);
         setCourse(courseName);
     } catch (error) {
-        console.log("err:", error.response.data);
+        // console.log("err:", error.response.data);
         setError(error.response.data);
     }
 }
@@ -139,13 +139,13 @@ export const fetchCourse = async(token, setCourses, setError, setSuccess) => {
                 "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
             }
         });
-        console.log("data", result.data);
-        console.log(typeof(result.data));
+        // console.log("data", result.data);
+        // console.log(typeof(result.data));
         const response = result.data;
-        console.log(response.length);
+        // console.log(response.length);
         setCourses(response);
     } catch (error) {
-        console.log("err:", error.response.data);
+        // console.log("err:", error.response.data);
         setError(error.response.data);
     }
 }

@@ -25,8 +25,8 @@ const ResetPassword = (props) => {
         }
     }
     const handleStudentSubmtRequset = () => {
-        console.log('phone', phone);
-        console.log('otp', otp);
+        // console.log('phone', phone);
+        // console.log('otp', otp);
         resetPassword(
             phone, otp,
             setLoader, setError, setSuccess, handleClose, handleOpenPassword);
@@ -35,62 +35,53 @@ const ResetPassword = (props) => {
         sendOtp({ phone },
             setLoader, setError, setSuccess);
     }
-    return ( <
-        Dialog open = { open }
-        onClose = { handleClose } >
+    return (<Dialog open={open}
+        onClose={handleClose}>
 
-        <
-        DialogTitle > Reset Password < /DialogTitle> {
-        error ? < Alert severity = "error" > { error } < /Alert> : ""} {
-        success ? < Alert severity = "success" > { success } < /Alert> : ""} <
-        DialogContent >
-        <
-        DialogContentText >
-        Required fields are marked *
-        <
-        /DialogContentText> <
-        Box component = { "form" } >
-        <
-        TextField autoFocus name = "phone"
-        margin = "dense"
-        id = "phone"
-        placeholder = "* Phone Number"
-        type = "NUMBER"
-        fullWidth variant = "outlined"
-        onChange = { handleChange }
-        /> <
-        Typography style = {
-            { color: "blue", cursor: "pointer" }
-        }
-        variant = "caption"
-        component = { "small" } >
-        <
-        span onClick = { handleOtp } > Send OTP * < /span> < /
-        Typography > <
-        TextField autoFocus name = "otp"
-        margin = "dense"
-        id = "OTP"
-        placeholder = "* OTP"
-        type = "text"
-        fullWidth variant = "outlined"
-        onChange = { handleChange }
-        /> < /
-        Box > <
-        /DialogContent> <
-        DialogActions style = {
+        <DialogTitle> Reset Password </DialogTitle>
+        {error ? < Alert severity="error" > {error} </Alert> : ""}
+        {success ? < Alert severity="success" > {success} </Alert> : ""}
+        <DialogContent>
+            <DialogContentText>
+                Required fields are marked *
+            </DialogContentText>
+            <Box component={"form"}>
+                <TextField autoFocus name="phone"
+                    margin="dense"
+                    id="phone"
+                    placeholder="* Phone Number"
+                    type="NUMBER"
+                    fullWidth variant="outlined"
+                    onChange={handleChange}
+                />
+                <Typography style={
+                    { color: "blue", cursor: "pointer" }
+                }
+                    variant="caption"
+                    component={"small"}>
+                    <span onClick={handleOtp} > Send OTP * </span> </Typography>
+                <TextField autoFocus name="otp"
+                    margin="dense"
+                    id="OTP"
+                    placeholder="* OTP"
+                    type="text"
+                    fullWidth variant="outlined"
+                    onChange={handleChange}
+                />
+            </Box>
+        </DialogContent>
+        <DialogActions style={
             { marginRight: "20px", marginBottom: "20px" }
         } >
-        <
-        Button onClick = { handleClose } > Cancel < /Button> {
-        loader ? ( <
-            CircularProgress / >
-        ) :
-        <
-        Button variant = "contained"
-        color = "primary"
-        onClick = { handleStudentSubmtRequset } > Submit < /Button>} < /
-        DialogActions > <
-        /Dialog>
+            <Button onClick={handleClose} > Cancel </Button> {
+                loader ? (<
+                    CircularProgress />
+                ) :
+                    <Button variant="contained"
+                        color="primary"
+                        onClick={handleStudentSubmtRequset} > Submit </Button>}
+        </DialogActions>
+    </Dialog>
     )
 }
 

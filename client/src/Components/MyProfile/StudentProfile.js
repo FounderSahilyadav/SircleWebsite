@@ -93,7 +93,7 @@ const studentClass = [
 const StudentProfile = (props) => {
     const classes = useStyles();
     const { studentToken, studentData } = props;
-    console.log(studentToken);
+    // console.log(studentToken);
     // For email update
     const [updateEmail, setUpdateEmail] = useState(false);
     const [email, setEmail] = useState(studentData.email);
@@ -128,7 +128,7 @@ const StudentProfile = (props) => {
 
     // For Email Update function
     const handleUpdateEmail = () => {
-        console.log('update email');
+        // console.log('update email');
         setUpdateEmail(true);
     }
     const handleClose = () => {
@@ -138,7 +138,7 @@ const StudentProfile = (props) => {
         setNewEmail(e.target.value);
     }
     const handleUpdateEmailSubmit = () => {
-        console.log(newEmail);
+        // console.log(newEmail);
         changeEmail(newEmail, setLoader, setError, setSuccess, handleClose, studentToken, setEmail);
     }
 
@@ -148,7 +148,7 @@ const StudentProfile = (props) => {
     }
 
     const handleUpdatePhone = () => {
-        console.log('update phone');
+        // console.log('update phone');
         setUpdatePhone(true);
     }
     const handlePhoneChange = (e) => {
@@ -158,12 +158,12 @@ const StudentProfile = (props) => {
         setOtp(e.target.value);
     }
     const handleUpdatePhoneSubmit = () => {
-        console.log(newPhone);
+        // console.log(newPhone);
         changePhone(newPhone, otp, setLoader, setError, setSuccess, handlePhoneClose, studentToken, setPhone);
     }
 
     const handleSendOtp = () => {
-        console.log('send otp');
+        // console.log('send otp');
         sendOtp({ phone: newPhone }, setLoader, setError, setSuccess);
     }
 
@@ -222,7 +222,7 @@ const StudentProfile = (props) => {
     //     setNewGrade(e.target.value);
     // }
     const handleEducationUpdateSubmit = async () => {
-        console.log(newInstitute);
+        // console.log(newInstitute);
         await changeEducation(newInstitute, newGrade, newBoard, newYear, setLoader, setError, setSuccess, studentToken,
             setInstitute, setGrade, setBoard, setYear);
         handlecloseYear();

@@ -48,7 +48,7 @@ const validateStudentSign = (studentDetails, setError) => {
     }
     if (email.length !== 0) {
         var a = (!(filter.test(email) || filter1.test(email)));
-        console.log(a);
+        //console.log(a);
         if (!(filter.test(email) || filter1.test(email))) {
             setError("Please enter a valid email! or phone number");
             return false;
@@ -115,7 +115,7 @@ export const sendOtp = async(studentDetails, setLoader, setError, setSuccess) =>
             setLoader(false);
         }
     } else {
-        console.log("Invalid phone number");
+        //console.log("Invalid phone number");
         setError("Please enter a valid phone number!");
         setLoader(false);
     }
@@ -136,10 +136,10 @@ export const getStudentDetails = async(studentToken, setStudentToken) => {
                 "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
             },
         });
-        console.log("get student details", result.data);
+        //console.log("get student details", result.data);
         return result.data;
     } catch (error) {
-        console.log(error);
+        //console.log(error);
         localStorage.removeItem('token');
         setStudentToken("");
     }
@@ -160,7 +160,7 @@ export const loginStudent = async(
     setSuccess(null);
     if (validateStudentSign(studentDetails, setError)) {
         try {
-            console.log("working");
+            //console.log("working");
             const result = await Axios({
                 method: "POST",
                 url: `${host}/student/login`,
@@ -174,15 +174,15 @@ export const loginStudent = async(
                     "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
                 },
             });
-            console.log(result.data.token);
+            //console.log(result.data.token);
             localStorage.setItem('token', result.data.token);
-            console.log("set student token1");
+            //console.log("set student token1");
             const token = result.data.token;
             setStudentToken(token);
-            console.log("set student token");
+            //console.log("set student token");
             setLoader(false);
             setSuccess("Logged in!");
-            console.log({ "studentToken": studentToken });
+            //console.log({ "studentToken": studentToken });
             handleClose();
         } catch (err) {
             setError(err.response.data);
@@ -208,7 +208,7 @@ export const signUpStudent = async(
     setSuccess(null);
     if (validateStudentSignUp(studentDetails, setError)) {
         try {
-            console.log("working");
+            //console.log("working");
             const result = await Axios({
                 method: "POST",
                 url: `${host}/student/register`,

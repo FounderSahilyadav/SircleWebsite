@@ -42,7 +42,7 @@ const CallRequests = () => {
         fetchCalls(setLoader, setError, setSuccess, setData);
     }, []);
     const handleDelete = (id) => {
-        console.log(id);
+        // console.log(id);
         deleteCall(id, setLoader, setError, setSuccess);
     }
     return admin ? (

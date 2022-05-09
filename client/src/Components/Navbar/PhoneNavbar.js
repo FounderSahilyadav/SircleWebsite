@@ -108,7 +108,7 @@ const PhoneNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudent
         setStudentToken("");
         localStorage.removeItem("token");
         handleClose();
-        console.log(studentToken);
+        // console.log(studentToken);
     }
     const handleChangePassword = () => {
         setOpenPassword(true);
