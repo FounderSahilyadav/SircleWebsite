@@ -58,17 +58,26 @@ const useStyles = makeStyles((theme) => ({
     },
     aboutDetailHeader: {
         fontWeight: "bold",
+        fontSize: "2.5rem",
         margin: "30px 0px",
         color: "#101828",
+        [theme.breakpoints.down('md')]: {
+            fontSize: "1.5rem",
+        }
     },
     aboutDetail: {
         display: "flex",
         alignItems: "flex-start",
         marginBottom: "10px",
         "& p": {
-            fontSize: "12px",
+            fontSize: "1.4rem",
             color: "#667085",
         },
+        [theme.breakpoints.down('md')]: {
+            "& p": {
+                fontSize: "1rem",
+            },
+        }
     },
     videoFrame: {
         width: "100%",
@@ -120,6 +129,7 @@ const AboutSection = () => {
                                     style={{
                                         fill: "rgb(82, 229, 248)",
                                         marginRight: "10px",
+                                        marginTop: "4px",
                                     }}
                                 />
                                 <Typography component={"p"}>
@@ -134,6 +144,7 @@ const AboutSection = () => {
                                     style={{
                                         fill: "rgb(82, 229, 248)",
                                         marginRight: "10px",
+                                        marginTop: "4px",
                                     }}
                                 />
                                 <Typography component={"p"}>
@@ -148,6 +159,7 @@ const AboutSection = () => {
                                     style={{
                                         fill: "rgb(82, 229, 248)",
                                         marginRight: "10px",
+                                        marginTop: "4px",
                                     }}
                                 />
                                 <Typography component={"p"}>

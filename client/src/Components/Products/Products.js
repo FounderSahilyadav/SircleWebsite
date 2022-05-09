@@ -325,6 +325,10 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "24px",
         width: "100%",
         margin: "10px 10px",
+        [theme.breakpoints.down(800)]: {
+            margin: "10px 0px",
+            justifyContent: "center",
+        },
     },
     purchaseProductHeader: {
         display: "flex",

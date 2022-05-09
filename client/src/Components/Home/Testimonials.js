@@ -67,7 +67,9 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        minWidth: "500px",
+        [theme.breakpoints.up('md')]: {
+            minWidth: "500px",
+        },
         padding: "20px",
         background: "#1D2939",
     },

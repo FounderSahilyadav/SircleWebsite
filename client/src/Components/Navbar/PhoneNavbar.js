@@ -237,7 +237,7 @@ const PhoneNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudent
                                     }}
                                     className="menu"
                                 >
-                                    <MenuItem onClick={handleClose}>My Profile</MenuItem>
+                                    <MenuItem onClick={handleClose}><Link to="/myprofile"> My Profile</Link></MenuItem>
                                     <MenuItem onClick={handleChangePassword}><img className={classes.keyIcon} src={keyIcon} alt="img" /> Change Password</MenuItem>
                                     <MenuItem onClick={handleClose}><Link to="/myprograms"> My Programs</Link></MenuItem>
                                     <MenuItem onClick={handleContact}>Contact US</MenuItem>
