@@ -52,9 +52,11 @@ const useStyles = makeStyles((theme) => ({
     education: {
         display: 'flex',
         justifyContent: 'space-between',
+        marginRight: "100px",
         marginTop: '20px',
         [theme.breakpoints.down('600')]: {
             display: 'block',
+            marginRight: '0px',
         }
     },
     inp: {

@@ -29,7 +29,7 @@ router.post("/paynow", fetchuser, [parseUrl, parseJson], (req, res) => {
             customerPhone: req.body.phone
         }
         // console.log(paymentDetails);
-    if (!paymentDetails.amount || !paymentDetails.customerId || !paymentDetails.customerEmail || !paymentDetails.customerPhone || req.body.Id != req.user.id) {
+    if (!paymentDetails.amount || !paymentDetails.customerId || !paymentDetails.customerPhone || req.body.Id != req.user.id) {
         return res.status(400).send('Payment failed');
     } else {
         connection.query(
