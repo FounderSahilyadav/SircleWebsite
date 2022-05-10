@@ -1,6 +1,6 @@
 import Axios from "../Axios";
 import qs from "qs";
-const host = "http://localhost:5000";
+const host = process.env.REACT_APP_HOST;
 
 function isDate(val) {
     // Cross realm comptatible

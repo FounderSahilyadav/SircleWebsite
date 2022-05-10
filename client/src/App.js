@@ -76,6 +76,7 @@ function App() {
     };
     const [studentToken, setStudentToken] = useState("");
     useEffect(() => {
+        console.log("host", process.env.REACT_APP_HOST);
         setLoader(true);
         // console.log("err");
         const fetchStudentDetails = async () => {

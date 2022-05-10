@@ -3,36 +3,36 @@ import qs from "qs";
 
 let filter = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 let filter1 = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-const host = "http://localhost:5000";
+const host = process.env.REACT_APP_HOST;
 // Validate student details
-const validateStudentDetails = (studentDetails, setError) => {
-    const { name, grade, institute, email, phone } = studentDetails;
+// const validateStudentDetails = (studentDetails, setError) => {
+//     const { name, grade, institute, email, phone } = studentDetails;
 
-    if (!name || name.length === 0) {
-        setError("Student name is required!");
-        return false;
-    }
-    if (!email || email.length === 0) {
-        setError("Student email is required!");
-        return false;
-    }
-    if (!phone || phone.length === 0) {
-        setError("Student phone number is required!");
-        return false;
-    }
+//     if (!name || name.length === 0) {
+//         setError("Student name is required!");
+//         return false;
+//     }
+//     if (!email || email.length === 0) {
+//         setError("Student email is required!");
+//         return false;
+//     }
+//     if (!phone || phone.length === 0) {
+//         setError("Student phone number is required!");
+//         return false;
+//     }
 
-    if (!grade || grade.length === 0) {
-        setError("Please select your grade!");
-        return false;
-    }
+//     if (!grade || grade.length === 0) {
+//         setError("Please select your grade!");
+//         return false;
+//     }
 
-    if (!institute || institute.length === 0) {
-        setError("Plase fill in your institute name!");
-        return false;
-    }
+//     if (!institute || institute.length === 0) {
+//         setError("Plase fill in your institute name!");
+//         return false;
+//     }
 
-    return true;
-};
+//     return true;
+// };
 
 
 
