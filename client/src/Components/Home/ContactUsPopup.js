@@ -32,11 +32,11 @@ const ContactUsPopup = (props) => {
                 <br />
                 <Typography component={"p"} variant="body1" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-                    <a href="mailto:yash69sharma69@gmail.com">
-                        <span className={classes.emailSection}>&#9993;</span> <b className={classes.textSize}>abc@gmail.com</b>
+                    <a href="mailto:Hello@sircle.in">
+                        <span className={classes.emailSection}>&#9993;</span> <b className={classes.textSize}>Hello@sircle.in</b>
                     </a>
 
-                    <a href="tel:+917673076073"><span className={classes.emailSection}>&#9742;</span> <b className={classes.textSize}>+91 76 73 076 073</b></a>
+                    <a href="tel:+919817134356"><span className={classes.emailSection}>&#9742;</span> <b className={classes.textSize}>+91 98 17 134 356</b></a>
 
                 </Typography>
 

@@ -144,11 +144,11 @@ const ContactUs = () => {
                                 you'd like to contact below.
                             </Typography>
                             <Typography component={"p"} variant="body2">
-                                <a href="mailto:yash69sharma69@gmail.com">
-                                    &#9993; abc@gmail.com</a>
+                                <a href="mailto:Hello@sircle.in">
+                                    &#9993; Hello@sircle.in</a>
                             </Typography>
                             <Typography component={"p"} variant="body2">
-                                <a href="tel:+917673076073">&#9742; +91 76 73 076 073</a>
+                                <a href="tel:+919817134356">&#9742; +91 98 17 134 356</a>
                             </Typography>
                         </Box>
                     </Box>
