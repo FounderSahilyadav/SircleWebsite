@@ -36,7 +36,7 @@ const validatePhone = (req, res, next) => {
 
 // router.get("/", VerifyLogin, (req, res) => {
 //     connection.query(
-//         "SELECT * FROM Students;",
+//         "SELECT * FROM STUDENTS;",
 //         function(err, results, fields) {
 //             if (err) {
 //                 res.status(400).send(err.message);
@@ -54,7 +54,7 @@ router.post("/getstudent", fetchuser, (req, res) => {
         date = date.toISOString().slice(0, 19).replace('T', ' ');
         // console.log(req.user.id);
         connection.query(
-            `SELECT * FROM Students where id = '${req.user.id}' and expireAt > '${date}';`,
+            `SELECT * FROM STUDENTS where id = '${req.user.id}' and expireAt > '${date}';`,
             function(err, results, fields) {
                 if (err) {
                     res.status(400).send(err.message);
@@ -83,14 +83,14 @@ router.post("/register",
             const expireAt = new Date(Date.now() + 3600000 * 24).toISOString().slice(0, 19).replace('T', ' ');
             const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
             connection.query(
-                `SELECT * FROM Students WHERE email = '${email}' or phone = '${phone}';`,
+                `SELECT * FROM STUDENTS WHERE email = '${email}' or phone = '${phone}';`,
                 function(err, results, fields) {
                     if (err) {
                         res.status(400).send(err.message);
                     } else {
                         if (results.length === 0) {
                             connection.query(
-                                `SELECT * FROM PhoneVerify WHERE phone = '${phone}';`,
+                                `SELECT * FROM PHONEVERIFY WHERE phone = '${phone}';`,
                                 function(err, results, fields) {
                                     if (err) {
                                         res.status(400).send(err.message);
@@ -108,7 +108,7 @@ router.post("/register",
                                                         if (result) {
                                                             const verify = 1;
                                                             connection.query(
-                                                                `INSERT INTO Students(name, phone, grade, institute, email, password, verify, expireAt) VALUES('${name}', '${phone}', '${grade}', '${institute}', '${email}', '${userPassword}', '${verify}', '${expireAt}');`,
+                                                                `INSERT INTO STUDENTS(name, phone, grade, institute, email, password, verify, expireAt) VALUES('${name}', '${phone}', '${grade}', '${institute}', '${email}', '${userPassword}', '${verify}', '${expireAt}');`,
                                                                 function(err, results, fields) {
                                                                     if (err) {
                                                                         res.status(400).send(err.message);
@@ -121,7 +121,7 @@ router.post("/register",
                                                                         const token = jwt.sign(data, JWT_SECRET);
                                                                         // console.log(results);
                                                                         connection.query(
-                                                                            `UPDATE Students SET token = '${token}' WHERE id = '${results.insertId}';`,
+                                                                            `UPDATE STUDENTS SET token = '${token}' WHERE id = '${results.insertId}';`,
                                                                             function(err, results, fields) {
                                                                                 if (err) {
                                                                                     res.status(400).send(err.message);
@@ -164,7 +164,7 @@ router.post("/login", (req, res) => {
         const { email, password } = req.body;
         // console.log('called');
         // console.log(email, password);
-        connection.query(`SELECT * FROM Students WHERE email = '${email}' or phone = '${email}';`,
+        connection.query(`SELECT * FROM STUDENTS WHERE email = '${email}' or phone = '${email}';`,
             function(err, results, fields) {
                 if (err) {
                     res.status(400).send(err.message);
@@ -186,7 +186,7 @@ router.post("/login", (req, res) => {
                                     const token = jwt.sign(data, JWT_SECRET);
                                     const expireAt = new Date(Date.now() + 3600000 * 24).toISOString().slice(0, 19).replace('T', ' ');
                                     connection.query(
-                                        `UPDATE Students SET token = '${token}', expireAt = '${expireAt}' WHERE email = '${student.email}' or phone = '${student.email}';`,
+                                        `UPDATE STUDENTS SET token = '${token}', expireAt = '${expireAt}' WHERE email = '${student.email}' or phone = '${student.email}';`,
                                         function(err, results, fields) {
                                             if (err) {
                                                 res.status(400).send(err.message);
@@ -216,7 +216,7 @@ router.post("/verify/phone", validatePhone, (req, res) => {
         let date = new Date(Date.now() + 1000 * 60 * 10);
         date = date.toISOString().slice(0, 19).replace('T', ' ');
         connection.query(
-            `SELECT * FROM PhoneVerify WHERE phone = '${phone}'`,
+            `SELECT * FROM PHONEVERIFY WHERE phone = '${phone}'`,
             async function(err, results, fields) {
                 if (err) {
                     res.status(400).send(err.message);
@@ -230,7 +230,7 @@ router.post("/verify/phone", validatePhone, (req, res) => {
                     if (response.return) {
                         if (results.length === 0) {
                             connection.query(
-                                `INSERT INTO PhoneVerify(phone, otp, expireAt) VALUES('${phone}', '${otp}', '${date}');`,
+                                `INSERT INTO PHONEVERIFY(phone, otp, expireAt) VALUES('${phone}', '${otp}', '${date}');`,
                                 function(err, results, fields) {
                                     if (err) {
                                         res.status(400).send(err.message);
@@ -270,14 +270,14 @@ router.post("/update/phone", fetchuser, async(req, res) => {
         let date = new Date();
         date = date.toISOString().slice(0, 19).replace('T', ' ');
         connection.query(
-            `SELECT * FROM Students WHERE phone = '${phone}'`,
+            `SELECT * FROM STUDENTS WHERE phone = '${phone}'`,
             async function(err, results, fields) {
                 if (err) {
                     res.status(400).send(err.message);
                 } else {
                     if (results.length === 0) {
                         connection.query(
-                            `SELECT * FROM Students WHERE id='${req.user.id}';`,
+                            `SELECT * FROM STUDENTS WHERE id='${req.user.id}';`,
                             function(err, results, fields) {
                                 if (err) {
                                     res.status(400).send(err.message);
@@ -290,7 +290,7 @@ router.post("/update/phone", fetchuser, async(req, res) => {
                                             res.status(401).send("Phone Number Already Verified");
                                         } else {
                                             connection.query(
-                                                `SELECT * FROM PhoneVerify WHERE phone = '${phone}';`,
+                                                `SELECT * FROM PHONEVERIFY WHERE phone = '${phone}';`,
                                                 function(err, results, fields) {
                                                     if (err) {
                                                         res.status(400).send(err.message);
@@ -305,13 +305,13 @@ router.post("/update/phone", fetchuser, async(req, res) => {
                                                                 } else {
                                                                     if (result) {
                                                                         connection.query(
-                                                                            `UPDATE Students SET phone = '${phone}' WHERE id = '${req.user.id}';`,
+                                                                            `UPDATE STUDENTS SET phone = '${phone}' WHERE id = '${req.user.id}';`,
                                                                             function(err, results, fields) {
                                                                                 if (err) {
                                                                                     res.status(400).send(err.message);
                                                                                 } else {
                                                                                     connection.query(
-                                                                                        `DELETE FROM PhoneVerify WHERE phone = '${oldphone}';`);
+                                                                                        `DELETE FROM PHONEVERIFY WHERE phone = '${oldphone}';`);
                                                                                     res.status(202).json({ message: "Phone Number Verified" });
                                                                                 }
                                                                             });
@@ -350,14 +350,14 @@ router.post("/update/email", fetchuser, async(req, res) => {
     try {
         const { email } = req.body;
         connection.query(
-            `SELECT * FROM Students WHERE email = '${email}';`,
+            `SELECT * FROM STUDENTS WHERE email = '${email}';`,
             function(err, results, fields) {
                 if (err) {
                     res.status(400).send(err.message);
                 } else {
                     if (results.length === 0) {
                         connection.query(
-                            `UPDATE Students SET email = '${email}' WHERE id = '${req.user.id}';`,
+                            `UPDATE STUDENTS SET email = '${email}' WHERE id = '${req.user.id}';`,
                             function(err, results, fields) {
                                 if (err) {
                                     res.status(400).send(err.message);
@@ -382,7 +382,7 @@ router.post("/update/education", fetchuser, async(req, res) => {
     try {
         const { institute, grade, board, year } = req.body;
         connection.query(
-            `UPDATE Students SET institute = '${institute}', grade = '${grade}', board = '${board}', year = '${year}' WHERE id = '${req.user.id}';`,
+            `UPDATE STUDENTS SET institute = '${institute}', grade = '${grade}', board = '${board}', year = '${year}' WHERE id = '${req.user.id}';`,
             function(err, results, fields) {
 
                 if (err) {
@@ -405,7 +405,7 @@ router.post("/update/password", fetchuser, async(req, res) => {
             return res.status(400).send("Password Must Be Atleast 8 Characters Long");
         }
         connection.query(
-            `SELECT * FROM Students WHERE id = '${req.user.id}';`,
+            `SELECT * FROM STUDENTS WHERE id = '${req.user.id}';`,
             async function(err, results, fields) {
                 if (err) {
                     res.status(400).send(err.message);
@@ -416,7 +416,7 @@ router.post("/update/password", fetchuser, async(req, res) => {
                         const salt = await bcrypt.genSalt(10);
                         const userPassword = await bcrypt.hash(newpassword, salt);
                         connection.query(
-                            `UPDATE Students SET password = '${userPassword}' WHERE id = '${req.user.id}';`,
+                            `UPDATE STUDENTS SET password = '${userPassword}' WHERE id = '${req.user.id}';`,
                             function(err, results, fields) {
                                 if (err) {
                                     res.status(400).send(err.message);
@@ -438,7 +438,7 @@ router.post("/reset/password", async(req, res) => {
     try {
         const { phone, otp } = req.body;
         connection.query(
-            `SELECT * FROM Students WHERE phone = '${phone}';`,
+            `SELECT * FROM STUDENTS WHERE phone = '${phone}';`,
             function(err, results, fields) {
                 if (err) {
                     res.status(400).send(err.message);
@@ -448,7 +448,7 @@ router.post("/reset/password", async(req, res) => {
                     } else {
                         const student = results[0];
                         connection.query(
-                            `SELECT * FROM PhoneVerify WHERE phone = '${phone}';`,
+                            `SELECT * FROM PHONEVERIFY WHERE phone = '${phone}';`,
                             function(err, results, fields) {
                                 if (err) {
                                     res.status(400).send(err.message);
@@ -470,7 +470,7 @@ router.post("/reset/password", async(req, res) => {
                                                     const token = jwt.sign(data, JWT_SECRET);
                                                     const expireAt = new Date(Date.now() + 3600000 * 24).toISOString().slice(0, 19).replace('T', ' ');
                                                     connection.query(
-                                                        `UPDATE Students SET token = '${token}', expireAt = '${expireAt}' WHERE  phone = '${student.phone}';`,
+                                                        `UPDATE STUDENTS SET token = '${token}', expireAt = '${expireAt}' WHERE  phone = '${student.phone}';`,
                                                         function(err, results, fields) {
                                                             if (err) {
                                                                 res.status(400).send(err.message);
@@ -499,6 +499,6 @@ router.post("/reset/password", async(req, res) => {
 
 module.exports = router;
 // Create table
-// CREATE TABLE Students(id int(6) PRIMARY KEY AUTO_INCREMENT, name text not NULL, phone text not NULL, grade text not NULL, institute text, email text, password text, token text, expireAt text, verify bool DEFAULT false);
-// Create table phoneVerify(id int(6) PRIMARY KEY AUTO_INCREMENT, phone text not NULL, otp text, expireAt datetime);
-// Alter TABLE Students ADD Board text, Year text;
+// CREATE TABLE STUDENTS(id int(6) PRIMARY KEY AUTO_INCREMENT, name text not NULL, phone text not NULL, grade text not NULL, institute text, email text, password text, token text, expireAt text, verify bool DEFAULT false);
+// Create table PHONEVERIFY(id int(6) PRIMARY KEY AUTO_INCREMENT, phone text not NULL, otp text, expireAt datetime);
+// Alter TABLE STUDENTS ADD Board text, Year text;

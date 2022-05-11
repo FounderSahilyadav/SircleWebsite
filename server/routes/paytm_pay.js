@@ -33,7 +33,7 @@ router.post("/paynow", fetchuser, [parseUrl, parseJson], (req, res) => {
         return res.status(400).send('Payment failed');
     } else {
         connection.query(
-            `SELECT * FROM Orders where studentId = '${req.user.id}' and courseName = '${req.body.courseName}';`,
+            `SELECT * FROM ORDERS where studentId = '${req.user.id}' and courseName = '${req.body.courseName}';`,
             function(err, results, fields) {
                 if (err) {
                     return res.status(400).send(err.message);
@@ -140,7 +140,7 @@ router.post("/update/course", fetchuser, fetchstatus, (req, res) => {
             return res.status(400).send("Please Purchase valid course");
         }
         connection.query(
-            `SELECT * FROM Orders where studentId = '${req.user.id}' and courseName = '${courseName}';`,
+            `SELECT * FROM ORDERS where studentId = '${req.user.id}' and courseName = '${courseName}';`,
             function(err, results, fields) {
                 if (err) {
                     res.status(400).send(err.message);
@@ -149,7 +149,7 @@ router.post("/update/course", fetchuser, fetchstatus, (req, res) => {
                         return res.status(202).json({ msg: "You have already Purchased this course" });
                     }
                     connection.query(
-                        `INSERT INTO Orders(studentId, phone, courseName) VALUES('${studentId}', '${phone}', '${courseName}');`,
+                        `INSERT INTO ORDERS(studentId, phone, courseName) VALUES('${studentId}', '${phone}', '${courseName}');`,
                         function(err, results, fields) {
                             if (err) {
                                 res.status(400).send(err.message);
@@ -169,7 +169,7 @@ router.post("/update/course", fetchuser, fetchstatus, (req, res) => {
 
 router.post("/fetch/orders", fetchuser, async(req, res) => {
     connection.query(
-        `SELECT courseName FROM Orders where studentId = '${req.user.id}'`,
+        `SELECT courseName FROM ORDERS where studentId = '${req.user.id}'`,
         function(err, results, fields) {
             if (err) {
                 res.status(400).send(err.message);
@@ -183,4 +183,4 @@ router.post("/fetch/orders", fetchuser, async(req, res) => {
 
 module.exports = router;
 
-// CREATE TABLE Orders(id int PRIMARY KEY AUTO_INCREMENT, studentId text not NULL, phone text not NULL, courseName text not NULL);
+// CREATE TABLE ORDERS(id int PRIMARY KEY AUTO_INCREMENT, studentId text not NULL, phone text not NULL, courseName text not NULL);

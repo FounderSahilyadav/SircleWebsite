@@ -7,7 +7,7 @@ const router = express.Router();
 // Get all Call back request
 router.post("/all/callback", VerifyLogin, (req, res) => {
     connection.query(
-        `SELECT * FROM Callback`,
+        `SELECT * FROM CALLBACK`,
         (err, results) => {
             if (err) {
                 res.status(400).send(err.message);
@@ -22,7 +22,7 @@ router.post("/all/callback", VerifyLogin, (req, res) => {
 router.post("/delete/callback", VerifyLogin, (req, res) => {
     const { id } = req.body;
     connection.query(
-        `DELETE FROM Callback WHERE id = '${id}'`,
+        `DELETE FROM CALLBACK WHERE id = '${id}'`,
         (err, results) => {
             if (err) {
                 res.status(400).send(err.message);
@@ -46,7 +46,7 @@ router.post("/callback/request", fetchuser, (req, res) => {
     var date = new Date();
     date = date.toISOString().slice(0, 19).replace('T', ' ');
     connection.query(
-        `SELECT * FROM Students where id = '${req.user.id}' and expireAt > '${date}';`,
+        `SELECT * FROM STUDENTS where id = '${req.user.id}' and expireAt > '${date}';`,
         function(err, results, fields) {
             if (err) {
                 res.status(400).send(err.message);
@@ -55,7 +55,7 @@ router.post("/callback/request", fetchuser, (req, res) => {
                     return res.status(402).send("User Not Found Login Again");
                 }
                 connection.query(
-                    `SELECT * FROM Callback where studentId = '${req.user.id}' and phone = '${phone}';`,
+                    `SELECT * FROM CALLBACK where studentId = '${req.user.id}' and phone = '${phone}';`,
                     function(err, results, fields) {
                         if (err) {
                             return res.status(400).send(err.message);
@@ -65,7 +65,7 @@ router.post("/callback/request", fetchuser, (req, res) => {
                             return res.status(202).json({ msg: "Your call back already registered" });
                         }
                         connection.query(
-                            `INSERT INTO Callback(studentId, phone, className, name) VALUES('${req.user.id}', '${phone}', '${className}', '${name}');`,
+                            `INSERT INTO CALLBACK(studentId, phone, className, name) VALUES('${req.user.id}', '${phone}', '${className}', '${name}');`,
                             function(err, results, fields) {
                                 if (err) {
                                     res.status(400).send(err.message);
@@ -93,7 +93,7 @@ router.post("/free/trial", fetchuser, (req, res) => {
     var date = new Date();
     date = date.toISOString().slice(0, 19).replace('T', ' ');
     connection.query(
-        `SELECT * FROM Students where id = '${req.user.id}' and expireAt > '${date}';`,
+        `SELECT * FROM STUDENTS where id = '${req.user.id}' and expireAt > '${date}';`,
         function(err, results, fields) {
             if (err) {
                 res.status(400).send(err.message);
@@ -102,7 +102,7 @@ router.post("/free/trial", fetchuser, (req, res) => {
                     return res.status(402).send("User Not Found Login Again");
                 }
                 connection.query(
-                    `SELECT * FROM FreeTrial where studentId = '${req.user.id}' and phone = '${phone}';`,
+                    `SELECT * FROM FREETRIAL where studentId = '${req.user.id}' and phone = '${phone}';`,
                     function(err, results, fields) {
                         if (err) {
                             return res.status(400).send(err.message);
@@ -112,7 +112,7 @@ router.post("/free/trial", fetchuser, (req, res) => {
                             return res.status(202).json({ msg: "Your free trial already registered" });
                         }
                         connection.query(
-                            `INSERT INTO FreeTrial(studentId, phone, name, email, className, institute) VALUES('${req.user.id}', '${phone}', '${name}', '${email}', '${className}', '${institute}');`,
+                            `INSERT INTO FREETRIAL(studentId, phone, name, email, className, institute) VALUES('${req.user.id}', '${phone}', '${name}', '${email}', '${className}', '${institute}');`,
                             function(err, results, fields) {
                                 if (err) {
                                     res.status(400).send(err.message);
@@ -132,7 +132,7 @@ router.post("/free/trial", fetchuser, (req, res) => {
 // Fetch all Free Trial booking
 router.post("/all/freetrial", VerifyLogin, (req, res) => {
     connection.query(
-        `SELECT * FROM FreeTrial`,
+        `SELECT * FROM FREETRIAL`,
         (err, results) => {
             if (err) {
                 res.status(400).send(err.message);
@@ -147,7 +147,7 @@ router.post("/all/freetrial", VerifyLogin, (req, res) => {
 router.post("/delete/freetrial", VerifyLogin, (req, res) => {
     const { id } = req.body;
     connection.query(
-        `DELETE FROM FreeTrial WHERE id = '${id}'`,
+        `DELETE FROM FREETRIAL WHERE id = '${id}'`,
         (err, results) => {
             if (err) {
                 res.status(400).send(err.message);
@@ -159,7 +159,7 @@ router.post("/delete/freetrial", VerifyLogin, (req, res) => {
     );
 });
 
-// CREATE TABLE Callback(id int PRIMARY KEY AUTO_INCREMENT, studentId text not NULL, phone text not NULL, className text not NULL, name text not NULL);
+// CREATE TABLE CALLBACK(id int PRIMARY KEY AUTO_INCREMENT, studentId text not NULL, phone text not NULL, className text not NULL, name text not NULL);
 // CREATE TABLE FreeTrial(id int PRIMARY KEY AUTO_INCREMENT, studentId text not NULL, phone text not NULL,  name text not NULL,email text, institute text, className text not NULL);
 
 module.exports = router;
