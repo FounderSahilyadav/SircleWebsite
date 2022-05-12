@@ -53,14 +53,12 @@ const CourseBuy = ({ studentData, studentToken }) => {
                 <div className={classes.Alert}>
                     {error ? (<> <Alert severity="error" > {error} </Alert> <h1> Payment Failed </h1></>) : ""}
                     {success ? <Alert severity="success" > {course} : {success} </Alert> : ""} </div> {
-                    (course === 'DISHA' || course === "SAKHA" || course === "PERSONA") ? (<
-                        Champion name={course}
-                    />
+                    (course === 'DISHA' || course === "SAKHA" || course === "PERSONA") ? (
+                        <Champion name={course}/>
                     ) : null
                 } {
-                    (course === 'DISHA_CRASH' || course === "ALL_COURSE") ? (<
-                        Accelrator name={course}
-                    />
+                    (course === 'DISHA_CRASH' || course === "ALL_COURSE") ? (
+                        <Accelrator name={course}/>
                     ) : null
                 }
 
