@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-end",
-        height: "100vh",
+        height: "fit-content",
         [theme.breakpoints.down("md")]: {
             height: "auto",
         },
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     about: {
         display: "flex",
         width: "100%",
-        height: "50%",
+        height: "33.75vw",
         [theme.breakpoints.down("md")]: {
             flexDirection: "column",
             height: "fit-content",
@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
         margin: "auto",
         width: "60%",
         height: "100%",
-        padding: "20px 0",
         background: "#1D2939",
         "& video": {
             maxHeight: "100%",
@@ -34,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
         },
         [theme.breakpoints.down("md")]: {
             width: "100%",
+            height: "56.25vw",
         },
     },
     aboutRight: {
@@ -92,14 +92,13 @@ const AboutSection = () => {
             <Box className={classes.about}>
                 {/* Video for the left side of about section, not set yet */}
                 <Box className={classes.aboutLeft}>
-                    <iframe
-                        className={classes.videoFrame}
-                        src={`https://www.youtube.com/embed/muWv4jatUt8?autostart=0&modestbranding=0&rel=0&fs=0&showinfo=0`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                    ></iframe>
+                <iframe  
+                className={classes.videoFrame}
+                src="https://www.youtube.com/embed/sV5Ii1iFwjs" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen></iframe>
                 </Box>
                 <Box className={classes.aboutRight}>
                     <Box margin="auto 20px">
