@@ -50,7 +50,7 @@ router.post("/paynow", fetchuser, [parseUrl, parseJson], (req, res) => {
                         params['ORDER_ID'] = 'TEST_' + new Date().getTime();
                         params['CUST_ID'] = paymentDetails.customerId;
                         params['TXN_AMOUNT'] = paymentDetails.amount;
-                        params['CALLBACK_URL'] = 'http://localhost:5000/api/payment/callback';
+                        params['CALLBACK_URL'] = 'https://server.sircle.in/api/payment/callback';
                         params['EMAIL'] = paymentDetails.customerEmail;
                         params['MOBILE_NO'] = paymentDetails.customerPhone;
                         // return res.send(params);
@@ -116,7 +116,7 @@ router.post("/callback", (req, res) => {
                         }
                     }
                     const token = jwt.sign(data, JWT_SECRET);
-                    res.redirect(`http://localhost:3000/course/fee?status=${token}`);
+                    res.redirect(`https://www.sircle.in/course/fee?status=${token}`);
                 });
             });
             post_req.write(post_data);
