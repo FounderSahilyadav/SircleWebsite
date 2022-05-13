@@ -148,7 +148,7 @@ const ContactUs = () => {
                                     &#9993; Hello@sircle.in</a>
                             </Typography>
                             <Typography component={"p"} variant="body2">
-                                <a href="tel:+919817134356">&#9742; +91 98 17 134 356</a>
+                                <a href="tel:+919817134356">&#9742; +91 98171 34356</a>
                             </Typography>
                         </Box>
                     </Box>

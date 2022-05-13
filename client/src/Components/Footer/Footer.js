@@ -130,7 +130,7 @@ const Footer = () => {
                     {/* Social media links for the website */}
                     <Box className={classes.footerContactLinks}>
                         <a
-                            href="https://www.linkedin.com/company/sircle-education"
+                            href="https://www.facebook.com/Sircleeducation"
                             target={"_blank"}
                             rel="noreferrer"
                             className={classes.footerSocial}
@@ -150,7 +150,7 @@ const Footer = () => {
                         </a>
                         {/* <br /> */}
                         <a
-                            href="https://www.facebook.com/Sircleeducation"
+                            href="https://www.linkedin.com/company/sircle-education"
                             target={"_blank"}
                             rel="noreferrer"
                             className={classes.footerSocial}

@@ -223,7 +223,13 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
     },
+    founderDescription: {
+        [theme.breakpoints.down(600)]: {
+            textAlign: "center",
+        },
+    },
 }));
+
 
 const About = () => {
     const classes = useStyles();
@@ -403,12 +409,13 @@ const About = () => {
                                         EDUCATION
                                     </Typography>
                                     <Typography variant="body2" component={"p"}>
-                                        NEST - AIR 53 B.Tech, IIT BHU.
+                                        B.Tech, IIT BHU.
                                     </Typography>
                                 </Box>
                                 <Typography
                                     variant="body1"
                                     component={"strong"}
+                                    className={classes.founderDescription}
                                 >
                                     Certified Entrepreneurship Trainer, Motivational Speaker and Life Coach
                                 </Typography>

@@ -573,8 +573,10 @@ const Products = ({ studentData }) => {
                                         variant="h6"
                                         className={classes.sakhaHeader}
                                     >
-                                        PERSONA MAKES YOU BETTER VERSIONS OF
+                                        <span style={{color: "#a4501a"}}> 
+                                            PERSONA MAKES YOU BETTER VERSIONS OF
                                         YOURSELF BY-
+                                        </span>
                                     </Typography>
                                     <List
                                         className={`${classes.productList} ${classes.middleProductList}`}
@@ -1093,13 +1095,13 @@ const Products = ({ studentData }) => {
                                 >
                                     <Tab
                                         value="one"
-                                        label="For Organisations"
+                                        label="For Students"
                                         wrapped
                                         {...a11yProps("one")}
                                     />
                                     <Tab
                                         value="two"
-                                        label="For Students"
+                                        label="For Organisations"
                                         {...a11yProps("two")}
                                     />
                                 </Tabs>
@@ -1107,13 +1109,13 @@ const Products = ({ studentData }) => {
 
                             {/* Tab panel for dispaying selected form */}
                             <TabPanel value={value} index="one">
-                                {/* Institute query form */}
-                                <InstituteQuery />
+                                <StudentRegistration />
                             </TabPanel>
 
                             {/* Tab panel for student registration */}
                             <TabPanel value={value} index="two">
-                                <StudentRegistration />
+                                {/* Institute query form */}
+                                <InstituteQuery />
                             </TabPanel>
 
                             {/* Contact section an bottom of the forms */}
@@ -1123,14 +1125,14 @@ const Products = ({ studentData }) => {
                                     <Typography variant="h5">CONTACT US</Typography>
 
                                     <Typography component={"p"} variant="body2">
-                                        <a href="mailto:yash69sharma69@gmail.com">
+                                    <a href="mailto:Hello@sircle.in">
                                             <span style={{ fontSize: "20px" }}>
-                                                &#9993;</span> abc@gmail.com</a>
+                                                &#9993;</span> Hello@sircle.in</a>
                                     </Typography>
                                     <Typography component={"p"} variant="body2">
-                                        <a href="tel:+917673076073">
+                                        <a href="tel:+919817134356">
                                             <span style={{ fontSize: "15px", marginLeft: "4px" }}>&#9742; </span>
-                                            +91 76 73 076 073</a>
+                                            +91 98171 34356</a>
                                     </Typography>
                                 </Box>
                             </Box>

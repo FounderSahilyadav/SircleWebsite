@@ -8,7 +8,6 @@ import Champion from '../Products/Champion';
 
 function useQuery() {
     const { search } = useLocation();
-
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
@@ -45,25 +44,29 @@ const CourseBuy = ({ studentData, studentToken }) => {
         if (studentToken)
             set();
     }, []);
-    return (<div>
-        <h1 >
-            Your Course:
-        </h1> {studentToken === "" ? (<h1> Please Login </h1>) :
-            (<div>
-                <div className={classes.Alert}>
-                    {error ? (<> <Alert severity="error" > {error} </Alert> <h1> Payment Failed </h1></>) : ""}
-                    {success ? <Alert severity="success" > {course} : {success} </Alert> : ""} </div> {
-                    (course === 'DISHA' || course === "SAKHA" || course === "PERSONA") ? (
-                        <Champion name={course}/>
-                    ) : null
-                } {
-                    (course === 'DISHA_CRASH' || course === "ALL_COURSE") ? (
-                        <Accelrator name={course}/>
-                    ) : null
-                }
+    return (
+        <div>
+            <h1 >
+                Your Course:
+            </h1>
+            {studentToken === "" ? (<h1> Please Login </h1>) :
+                (<div>
+                    <div className={classes.Alert}>
+                        {error ? (<> <Alert severity="error" > {error} </Alert> <h1> Payment Failed </h1></>) : ""}
+                        {success ? <Alert severity="success" > {course} : {success} </Alert> : ""} 
+                        </div> 
+                        {(course === 'DISHA' || course === "SAKHA" || course === "PERSONA") ? (
+                            <Champion name={course} />
+                        ) : null} 
+                    {
+                        (course === 'DISHA_CRASH' || course === "ALL_COURSE") ? (
+                            <Accelrator name={course} />
+                        ) : null
+                    }
 
-            </div>)}
-    </div>
+                </div>
+                )}
+        </div>
     )
 }
 
