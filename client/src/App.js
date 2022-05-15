@@ -37,8 +37,8 @@ import ResetPassword from "./Components/Home/ResetPassword";
 import CallRequests from "./Components/AdminPanel/CallRequests";
 import FreeTrial from "./Components/AdminPanel/FreeTrial";
 import ContactUs from "./Components/Home/ContactUs";
-import Terms from "./Components/Policies/Terms";
-import PrivacyPolicy from "./Components/Policies/PrivacyPolicy";
+import Terms from "./Components/TermsPolicies/Terms";
+import PrivacyPolicy from "./Components/TermsPolicies/PrivacyPolicy";
 
 const useStyles = makeStyles((theme) => ({
     circularProgress: {

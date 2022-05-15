@@ -12,7 +12,6 @@ import logo from "../../assets/logo.png";
 import facebook from "../../assets/facebook_icon.png";
 import instagram from "../../assets/instagram_icon.png";
 import linkedin from "../../assets/linkedin_icon.png";
-import TermsAndConditions from "../Policies/Terms";
 
 const useStyles = makeStyles((theme) => ({
     h1:{
@@ -229,7 +228,7 @@ const Footer = () => {
                             &#169; 2022 Sircle. All rights reserved.
                         </Typography>
                         
-                        <Link to={ TermsAndConditions }>Terms and Condition</Link> 
+                        {/* <Link to={ TermsAndConditions }>Terms and Condition</Link>  */}
                     </Box>
                 </Container>
             </Box>
