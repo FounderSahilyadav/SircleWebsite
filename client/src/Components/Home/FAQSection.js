@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Container,
@@ -7,7 +8,6 @@ import {
     AccordionSummary,
     CircularProgress,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { ExpandMoreOutlined } from "@material-ui/icons";
 import { getFaqs } from "../../utils/faqs";

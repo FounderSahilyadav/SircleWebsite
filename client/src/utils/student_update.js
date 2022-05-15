@@ -170,7 +170,7 @@ export const changePassword = async(
     try {
         // console.log(studentToken);
         let token = studentToken;
-        if (studentToken == "") {
+        if (studentToken === "") {
             if (localStorage.getItem("resetToken") != null) {
                 token = localStorage.getItem("resetToken");
                 localStorage.removeItem("resetToken");

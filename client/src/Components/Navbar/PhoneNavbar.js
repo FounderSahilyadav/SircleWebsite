@@ -19,7 +19,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { useState } from "react";
 import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
-
+import ContactUs from "../Home/ContactUs";
 import userLogo from "../../assets/user_logo.png";
 import keyIcon from "../../assets/key_icon.png";
 
@@ -165,6 +165,11 @@ const PhoneNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudent
                 <ListItem button className={classes.listItem}>
                     <Link to={"/about"} className={classes.linkTag}>
                         <ListItemText primary={"About Us"} />
+                    </Link>
+                </ListItem>
+                <ListItem button className={classes.listItem}>
+                    <Link to={"/ContactUs"} className={classes.linkTag}>
+                        <ListItemText primary={"Contact Us"} />
                     </Link>
                 </ListItem>
             </List>

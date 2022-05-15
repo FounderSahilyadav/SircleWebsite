@@ -166,6 +166,11 @@ const PCNavbar = ({ handleClickOpen, handleSignOpen, studentToken, setStudentTok
                                 About Us
                             </Link>
                         </Box>
+                        <Box className={classes.navLink}>
+                            <Link to={"/ContactUs"} className={classes.link}>
+                                Contact Us
+                            </Link>
+                        </Box>
                     </Box>
                     <Box className={classes.navButtons}>
                         <Box boxShadow={2} className={classes.buyPrograms}>

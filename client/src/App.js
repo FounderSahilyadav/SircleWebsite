@@ -36,6 +36,9 @@ import Myproducts from "./Components/Products/Myproducts";
 import ResetPassword from "./Components/Home/ResetPassword";
 import CallRequests from "./Components/AdminPanel/CallRequests";
 import FreeTrial from "./Components/AdminPanel/FreeTrial";
+import ContactUs from "./Components/Home/ContactUs";
+import Terms from "./Components/Policies/Terms";
+import PrivacyPolicy from "./Components/Policies/PrivacyPolicy";
 
 const useStyles = makeStyles((theme) => ({
     circularProgress: {
@@ -119,7 +122,7 @@ function App() {
                     <CircularProgress />
                 </Box>
             ) : (
-                <Fragment>
+                <>
                     <Box component={"div"} className="App">
                         <Navbar handleClickOpen={handleClickOpen} handleSignOpen={handleSignOpen} studentToken={studentToken}
                             setStudentToken={handleStudentToken} studentData={studentData} setOpenPassword={setOpenPassword} setOpenContact={setOpenContact} />
@@ -132,6 +135,10 @@ function App() {
                             <Route exact path="/myprofile" element={<StudentProfile studentData={studentData} studentToken={studentToken} />} />
                             <Route exact path="/videos" element={<Videos />} />
                             <Route exact path="/about" element={<About />} />
+                            <Route exact path="/ContactUs" element={<ContactUs />} />
+                            <Route exact path="/Terms" element={<Terms />} />
+                            <Route exact path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+
                             <Route exact path="/blogs" element={<Blogs />} />
                             <Route path="/blogs/:id" element={<Blog />} />
                             <Route
@@ -204,7 +211,6 @@ function App() {
                                 path="/myprograms"
                                 element={<Myproducts studentToken={studentToken} />}
                             />
-
                         </Routes>
                         <Footer />
                     </Box>
@@ -220,7 +226,7 @@ function App() {
                     </Box>
 
                     <WhatsApp />
-                </Fragment>
+                </>
             )}{" "}
         </Router>
     );

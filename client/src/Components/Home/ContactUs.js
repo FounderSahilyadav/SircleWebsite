@@ -150,6 +150,10 @@ const ContactUs = () => {
                             <Typography component={"p"} variant="body2">
                                 <a href="tel:+919817134356">&#9742; +91 98171 34356</a>
                             </Typography>
+                            <Typography component={"p"} variant="body2">
+
+                                Address:<br/> HUDA H. NO. 442, NARNAUL, MAHENDRAGARH, HARYANA, INDIA, 123001
+                            </Typography>
                         </Box>
                     </Box>
                     <Box className={classes.contactSections}>

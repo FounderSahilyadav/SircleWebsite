@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
     Box,
     Button,
@@ -7,7 +8,6 @@ import {
     TextField,
     Typography,
 } from "@material-ui/core";
-import React, { useState } from "react";
 import { loginStudent } from "../utils/student";
 import { makeStyles } from "@material-ui/core/styles";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const Alert = (props) => {
-    return <MuiAlert {...props }
+    return <MuiAlert {...props}
     />;
 };
 
@@ -81,90 +81,77 @@ export default function StudentSignIn({ handleClose, setStudentToken, studentTok
         handleOpenReset();
     };
 
-    return ( <
-        DialogContent >
-        <
-        Typography variant = "body1"
-        component = { "p" } >
-        Share your details here!
-        <
-        /Typography> <
-        Typography variant = "caption"
-        component = { "small" } >
-        Required fields are marked *
-        <
-        /Typography> {
-        error ? < Alert severity = "error" > { error } < /Alert> : ""} {
-        success ? < Alert severity = "success" > { success } < /Alert> : ""}
+    return (
+        <>
+            <DialogContent />
+            <Typography variant="body1"
+                component={"p"} >
+                Share your details here!
+            </Typography>
+            <Typography variant="caption"
+                component={"small"} >
+                Required fields are marked *
+            </Typography> {
+                error ? < Alert severity="error" > {error} </Alert> : ""} {
+                success ? < Alert severity="success" > {success} </Alert> : ""}
 
-        <
-        Box component = { "form" } >
-        <
-        TextField name = "email"
-        type = "email"
-        className = { classes.textField }
-        placeholder = "* Phone Number or Email Address"
-        fullWidth size = "small"
-        margin = "normal"
-        variant = "outlined"
-        InputLabelProps = {
-            {
-                shrink: true,
-            }
-        }
-        value = { studentDetails.email }
-        onChange = { handleStudentDetails }
-        /> <
-        TextField name = "password"
-        type = "password"
-        className = { classes.textField }
-        placeholder = "* Enter Password (Minimum 7 characters)"
-        fullWidth size = "small"
-        margin = "normal"
-        variant = "outlined"
-        InputLabelProps = {
-            {
-                shrink: true,
-            }
-        }
-        value = { studentDetails.password }
-        onChange = { handleStudentDetails }
-        /> < /
-        Box > <
-        Button onClick = { handleResetPassword }
-        color = "primary"
-        style = {
-            { fontSize: '12px' }
-        } >
-        Forgot password ?
-        <
-        /Button> <
-        DialogActions >
-        <
-        Button onClick = { handleClose }
-        color = "primary"
-        style = {
-            { marginTop: "15px" }
-        } >
-        Cancel <
-        /Button> {
-        loader ? ( <
-            CircularProgress / >
-        ) : ( <
-            Button onClick = { handleStudentSubmtRequset }
-            style = {
-                { marginTop: "15px" }
-            }
-            variant = "contained"
-            color = "primary"
-            width = "100%" >
-            Sign In <
-            /Button>
-        )
-    }
-
-    <
-    /DialogActions> < /
-    DialogContent >
-);
+            <Box component={"form"} >
+                <TextField name="email"
+                    type="email"
+                    className={classes.textField}
+                    placeholder="* Phone Number or Email Address"
+                    fullWidth size="small"
+                    margin="normal"
+                    variant="outlined"
+                    InputLabelProps={
+                        {
+                            shrink: true,
+                        }
+                    }
+                    value={studentDetails.email}
+                    onChange={handleStudentDetails}
+                /> 
+                <TextField name="password"
+                    type="password"
+                    className={classes.textField}
+                    placeholder="* Enter Password (Minimum 7 characters)"
+                    fullWidth size="small"
+                    margin="normal"
+                    variant="outlined"
+                    InputLabelProps={
+                        {
+                            shrink: true,
+                        }
+                    }
+                    value={studentDetails.password}
+                    onChange={handleStudentDetails}
+                /> 
+                </Box > <Button onClick={handleResetPassword}
+                    color="primary"
+                    style={
+                        { fontSize: '12px' }
+                    } >
+                Forgot password ?
+            </Button> 
+            <DialogActions >
+                <Button onClick={handleClose}
+                    color="primary"
+                    style={
+                        { marginTop: "15px" }
+                    } >
+                    Cancel </Button> {
+                    loader ? (< CircularProgress />
+                    ) : (<Button onClick={handleStudentSubmtRequset}
+                        style={
+                            { marginTop: "15px" }
+                        }
+                        variant="contained"
+                        color="primary"
+                        width="100%" >
+                        Sign In </Button>
+                    )
+                }
+            </DialogActions >
+</>
+)
 };
