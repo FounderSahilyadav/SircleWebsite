@@ -3,4 +3,6 @@ padding-top: 4rem;
 }
 .cent{
      align-items: center;
+}.f-page{
+     min-height: 31vh;
 }

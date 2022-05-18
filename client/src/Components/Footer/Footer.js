@@ -12,7 +12,6 @@ import logo from "../../assets/logo.png";
 import facebook from "../../assets/facebook_icon.png";
 import instagram from "../../assets/instagram_icon.png";
 import linkedin from "../../assets/linkedin_icon.png";
-// import Terms from "../TermsPolicies/Terms"
 
 const useStyles = makeStyles((theme) => ({
     h1: {
@@ -246,6 +245,11 @@ const Footer = () => {
                             <li><Link component={"p"}
                                 variant={"body2"}
                                 style={{ textAlign: "right", color: "white" }} to={"/PrivacyPolicy"}>Privacy Policy</Link>
+                            </li>
+                            &nbsp;
+                            <li><Link component={"p"}
+                                variant={"body2"}
+                                style={{ textAlign: "right", color: "white" }} to={"/refundpolicy"}>Refund Policy</Link>
                             </li>
                         </ul>
 

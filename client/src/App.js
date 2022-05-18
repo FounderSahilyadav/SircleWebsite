@@ -39,6 +39,7 @@ import FreeTrial from "./Components/AdminPanel/FreeTrial";
 import ContactUs from "./Components/Home/ContactUs";
 import Terms from "./Components/TermsPolicies/Terms";
 import PrivacyPolicy from "./Components/TermsPolicies/PrivacyPolicy";
+import RefundPolicy from "./Components/TermsPolicies/RefundPolicy";
 
 const useStyles = makeStyles((theme) => ({
     circularProgress: {
@@ -138,6 +139,7 @@ function App() {
                             <Route exact path="/ContactUs" element={<ContactUs />} />
                             <Route exact path="/Terms" element={<Terms />} />
                             <Route exact path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+                            <Route exact path="/refundpolicy" element={<RefundPolicy />} />
 
                             <Route exact path="/blogs" element={<Blogs />} />
                             <Route path="/blogs/:id" element={<Blog />} />
