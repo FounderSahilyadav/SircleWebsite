@@ -382,6 +382,45 @@ const About = () => {
                         <img src={aboutPosture} alt="Not supported by Your Browser" />
                     </Box>
 
+                    <Box>
+                        <Container>
+                            <h1 style={{ textAlign: "center" }}>
+                                Sircle ‘The Smart Education’
+                            </h1>
+                            <p style={{ textAlign: "justify" }}>
+                                In our education system students are undernourished in personality & communication.
+                                Students are suffering from depression/anxiety in this digital era.
+                                Maximum Students are participating in Rat Race without knowing self & best career fit.
+                                <h2 >
+                                    Vision:
+                                </h2>
+                                Every student do thing for that they are made for.
+                                <h2 >
+                                    Solution:
+                                </h2>
+                                Right Things at the Right Time is the most important thing to become Successful
+                                And in a students life the right time for developing core skills from stage fear to finding their interest/superpower is schooling time but where is the right thing?
+                                <h2 >
+                                    Introducing ‘Sircle’
+                                </h2>
+                                The first-ever community-based platform worked on the basis of a club system at the school level
+                                (Students + Circle = Sircle)
+                                <br />
+                                We are providing 3 to 4 clubs on our platforms to School students. Working on a model of theoretical knowledge plus their practical to absorb all the learnings.
+                                <br/>
+                                For example: -<br/>
+                                Communication and Personality club<br/>
+                                Mental and Physical health club<br/>
+                                Career counselling club<br/>
+                                Means the things students/education system missing the most <br/>
+
+                                <h3>
+                                    Thank you <br />
+                                    Team Sircle
+                                </h3>
+                            </p>
+                        </Container>
+                    </Box>
                     {/* Details about founder */}
                     <Box className={classes.founder}>
                         <Box className={classes.founderHeader}>

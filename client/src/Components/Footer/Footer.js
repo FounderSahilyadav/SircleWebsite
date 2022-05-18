@@ -12,9 +12,10 @@ import logo from "../../assets/logo.png";
 import facebook from "../../assets/facebook_icon.png";
 import instagram from "../../assets/instagram_icon.png";
 import linkedin from "../../assets/linkedin_icon.png";
+// import Terms from "../TermsPolicies/Terms"
 
 const useStyles = makeStyles((theme) => ({
-    h1:{
+    h1: {
         textAlign: "center",
 
     }
@@ -132,7 +133,7 @@ const Footer = () => {
                         </Typography>
                     </Box>
 
-                    /* Social media links for the website */
+                    {/* Social media links for the website */}
                     <Box className={classes.footerContactLinks}>
                         <a
                             href="https://www.facebook.com/Sircleeducation"
@@ -227,8 +228,27 @@ const Footer = () => {
                         >
                             &#169; 2022 Sircle. All rights reserved.
                         </Typography>
-                        
-                        {/* <Link to={ TermsAndConditions }>Terms and Condition</Link>  */}
+                        <br />
+                    </Box>
+                    <Box
+                        className={`${classes.footerBottomItem} ${classes.lastFooterBottomItem}`}
+                        justifyContent="flex-end"
+                    >
+                        <br />
+                        <ul style={{listStyleType:"none"}}>
+                            <li>
+                                <Link component={"p"}
+                                    variant={"body2"}
+                                    style={{ textAlign: "right", color: "white" }} to={"/Terms"}>Terms and Condition</Link>
+
+                            </li>
+                            &nbsp;
+                            <li><Link component={"p"}
+                                variant={"body2"}
+                                style={{ textAlign: "right", color: "white" }} to={"/PrivacyPolicy"}>Privacy Policy</Link>
+                            </li>
+                        </ul>
+
                     </Box>
                 </Container>
             </Box>
