@@ -7,10 +7,10 @@ import {
     Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { HashLink } from "react-router-hash-link";
 import dishaImg from "../../assets/dishaImg.jpg";
 import personaImg from "../../assets/personaImg.jpg";
 import sakhaImg from "../../assets/sakhaImg.jpg";
-import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     productSection: {
@@ -220,14 +220,15 @@ const ProductSection = () => {
 
                         {/* Redirects to the products page */}
                         <Box className={classes.productPageNav}>
-                            <Link
+                            <HashLink
+                                smooth
                                 style={{ color: "#18a9e2" }}
-                                to={"/our-products"}
+                                to={"/our-products#champion"}
                             >
                                 <Typography variant="body1">
                                     Learn more &#10093;
                                 </Typography>
-                            </Link>
+                            </HashLink>
                         </Box>
                     </Box>
                     <Box className={classes.product}>
@@ -322,11 +323,12 @@ const ProductSection = () => {
 
                         {/* Redirects to the products page */}
                         <Box className={classes.productPageNav}>
-                            <Link color="#fff" to={"/our-products"}>
+                            <HashLink
+                                smooth color="#fff" to={"/our-products#champion"}>
                                 <Typography variant="body1">
                                     Learn more &#10093;
                                 </Typography>
-                            </Link>
+                            </HashLink>
                         </Box>
                     </Box>
                     <Box
@@ -424,14 +426,15 @@ const ProductSection = () => {
 
                         {/* Redirects to the products page */}
                         <Box className={classes.productPageNav}>
-                            <Link
+                            <HashLink
+                                smooth
                                 style={{ color: "#18a9e2" }}
-                                to={"/our-products"}
+                                to={"/our-products#champion"}
                             >
                                 <Typography variant="body1">
                                     Learn more &#10093;
                                 </Typography>
-                            </Link>
+                            </HashLink>
                         </Box>
                     </Box>
                 </Box>

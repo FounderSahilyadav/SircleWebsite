@@ -573,9 +573,9 @@ const Products = ({ studentData }) => {
                                         variant="h6"
                                         className={classes.sakhaHeader}
                                     >
-                                        <span style={{color: "#a4501a"}}> 
+                                        <span style={{ color: "#a4501a" }}>
                                             PERSONA MAKES YOU BETTER VERSIONS OF
-                                        YOURSELF BY-
+                                            YOURSELF BY-
                                         </span>
                                     </Typography>
                                     <List
@@ -719,7 +719,7 @@ const Products = ({ studentData }) => {
                         {/* Product purchase section */}
                         <Box className={classes.productPurchaseSection}>
                             <Box className={classes.productPurchaseSectionHeader}>
-                                <Typography variant="h5">CHAMPION</Typography>
+                                <Typography variant="h5" id="champion">CHAMPION</Typography>
                             </Box>
                             <Box className={classes.purchaseProducts}>
                                 {/* Addition details about product */}
@@ -1125,7 +1125,7 @@ const Products = ({ studentData }) => {
                                     <Typography variant="h5">CONTACT US</Typography>
 
                                     <Typography component={"p"} variant="body2">
-                                    <a href="mailto:Hello@sircle.in">
+                                        <a href="mailto:Hello@sircle.in">
                                             <span style={{ fontSize: "20px" }}>
                                                 &#9993;</span> Hello@sircle.in</a>
                                     </Typography>

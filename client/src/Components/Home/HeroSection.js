@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     heroSection: {
         minHeight: "calc(100vh - 72px)",
         marginTop: "72px",
-        marginBottom: "72px",
+        // marginBottom: "72px",
         color: "#25AEE4",
         background: `linear-gradient(to Right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url(${heroBackground})`,
         backgroundRepeat: "no-repeat",
@@ -52,10 +52,23 @@ const useStyles = makeStyles((theme) => ({
             alignItems: "center",
             justifyContent: "center",
         },
+        [theme.breakpoints.between(600, 1000)]: {
+            "& > video": {
+                marginLeft: "0px",
+                width: "80%",
+                marginTop: "-100px",
+            },
+            width: "100%",
+            height: "90%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+        },
     },
     form: {
         zIndex: "99",
-        marginTop: "-100px",
+        marginTop: "150px",
         marginLeft: "50px",
         borderRadius: "10px",
         outlineStyle: "solid",
@@ -77,6 +90,15 @@ const useStyles = makeStyles((theme) => ({
             width: "80%",
             paddingLeft: "0px",
             marginLeft: "0px",
+            marginTop: -100,
+            marginBottom: "300px"
+        },
+        [theme.breakpoints.between(600, 1000)]: {
+            width: "80%",
+            paddingLeft: "0px",
+            marginLeft: "100px",
+            marginTop: "0px",
+            marginBottom: "450px"
         },
 
     },
@@ -89,6 +111,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down("600")]: {
             width: "100%",
         },
+        [theme.breakpoints.between(600, 1000)]: {
+            width: "100%",
+        },
     },
     button: {
         marginTop: "30px",
@@ -97,6 +122,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('600')]: {
             marginLeft: "0",
             marginRight: "0"
+        },
+        [theme.breakpoints.between(600, 1000)]: {
+            marginLeft: 65
         },
     },
     tagline: {
